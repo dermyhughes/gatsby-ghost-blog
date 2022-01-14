@@ -151,7 +151,8 @@
     }
 }
 
-.kg-image image {
+.kg-card .kg-image,
+.kg-image {
     max-width: 100%;
     height: auto;
 }
