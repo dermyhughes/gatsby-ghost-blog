@@ -33,7 +33,7 @@
     "lint:fix": "eslint . --fix"
   },
   "devDependencies": {
-    "@babel/core": "^7.13.16",
+    "@babel/core": "^7.16.7",
     "@babel/node": "^7.13.13",
     "babel-eslint": "^10.1.0",
     "eslint": "^7.26.0",
@@ -43,7 +43,7 @@
     "eslint-plugin-ghost": "^2.11.0",
     "eslint-plugin-html": "^6.2.0",
     "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-react": "^7.23.2",
     "eslint-plugin-react-hooks": "^4.2.0",
@@ -53,7 +53,7 @@
   "dependencies": {
     "@tryghost/helpers": "1.1.22",
     "@tryghost/helpers-gatsby": "1.0.61",
-    "babel-plugin-prismjs": "^2.0.1",
+    "babel-plugin-prismjs": "^2.1.0",
     "babel-preset-gatsby": "^2.5.0",
     "cheerio": "^1.0.0-rc.10",
     "gatsby": "^2.32.12",
