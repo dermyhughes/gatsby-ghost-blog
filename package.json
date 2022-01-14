@@ -51,7 +51,7 @@
     "puppeteer": "^4.0.1"
   },
   "dependencies": {
-    "@tryghost/helpers": "1.1.22",
+    "@tryghost/helpers": "1.1.54",
     "@tryghost/helpers-gatsby": "1.0.61",
     "babel-plugin-prismjs": "^2.1.0",
     "babel-preset-gatsby": "^2.5.0",
@@ -64,7 +64,7 @@
     "gatsby-plugin-catch-links": "2.3.15",
     "gatsby-plugin-feed": "2.6.0",
     "gatsby-plugin-force-trailing-slashes": "1.0.4",
-    "gatsby-plugin-manifest": "2.5.2",
+    "gatsby-plugin-manifest": "2.12.1",
     "gatsby-plugin-offline": "3.3.3",
     "gatsby-plugin-react-helmet": "3.3.14",
     "gatsby-plugin-sass": "^2.8.0",
