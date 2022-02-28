@@ -26,7 +26,7 @@
   "scripts": {
     "generate-cv": "npx babel-node src/utils/generate-pdf.js",
     "serve": "gatsby build && NODE_ENV=production gatsby serve",
-    "build": "gatsby build && npm run generate-cv",
+    "build": "gatsby serve && npm run generate-cv",
     "dev": "gatsby develop",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint .",
