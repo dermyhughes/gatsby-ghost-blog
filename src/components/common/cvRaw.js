@@ -68,21 +68,17 @@ const CVRaw = () => (
                             </div>
                             <div className="coverLetter sectionContent">
                                 <p>
-                                    I&apos;m a Front End Developer and UX
-                                    Designer based in Belfast, Northern Ireland.
-                                    I love to solve problems and create
-                                    solutions.
-                                </p>
-                                <p>
-                                    I&apos;m very passionate about well designed
-                                    and accessible UX and front end web
-                                    technologies. I love bringing designs to
-                                    life.
-                                    <span className="print-only">
-                                        In fact, this CV is actually written in
-                                        HTML and CSS. You can view the web
-                                        version at www.dermothughes.com/cv
-                                    </span>
+                                    I&apos;m a UX Engineer based in Belfast,
+                                    Northern Ireland, with a focus on{' '}
+                                    <a
+                                        href="https://dermothughes.com/blog/is-the-title-front-end-developer-dead/"
+                                        target="_blank"
+                                        rel="noreferrer"
+                                    >
+                                        "Front of the Front End".
+                                    </a>{' '}
+                                    I strive in bridging the gap between Design
+                                    and Development.
                                 </p>
                             </div>
                         </article>
@@ -102,7 +98,8 @@ const CVRaw = () => (
                                 <p>
                                     Front End Developer using React. Focusing on
                                     developing and managing an internal design
-                                    system.
+                                    system of reusable React components, Design
+                                    Tokens, and more.
                                 </p>
                             </article>
                             <article>
@@ -141,15 +138,6 @@ const CVRaw = () => (
                                     </a>
                                     .
                                 </p>
-                                <ul className="jobSkills">
-                                    <li>Angular</li>
-                                    <li>Front End Development</li>
-                                    <li>HTML</li>
-                                    <li>SCSS</li>
-                                    <li>Javascript</li>
-                                    <li>UI Design</li>
-                                    <li>Component Library Development</li>
-                                </ul>
                             </article>
 
                             <article className="second-job">
@@ -170,16 +158,6 @@ const CVRaw = () => (
                                     design and development for award winning
                                     bank loyalty programmes.
                                 </p>
-                                <ul className="jobSkills">
-                                    <li>Angular</li>
-                                    <li>Front End Development</li>
-                                    <li>HTML</li>
-                                    <li>CSS</li>
-                                    <li>Javascript</li>
-                                    <li>UI Design</li>
-                                    <li>UX Research and Design</li>
-                                    <li>Email Development</li>
-                                </ul>
                             </article>
                             <article>
                                 <h2>Email Development Lead</h2>
@@ -197,24 +175,6 @@ const CVRaw = () => (
                                     to extreme deadlines and turnarounds as
                                     short as hours.
                                 </p>
-                                <ul className="jobSkills">
-                                    <li>HTML and CSS Development</li>
-                                    <li>
-                                        Robust and Modular Templating
-                                        Development
-                                    </li>
-                                    <li>Responsive Email Development</li>
-                                    <li>Personalisation</li>
-                                    <li>Complex Automation campaigns</li>
-                                    <li>Landing pages</li>
-                                    <li>Release Management</li>
-                                    <li>
-                                        Database Management and Segmentation
-                                    </li>
-                                    <li>Workflow review and improvement</li>
-                                    <li>A/B Split Testing</li>
-                                    <li>Line Manager</li>
-                                </ul>
                             </article>
                             <article>
                                 <h2>Technical Support Engineer</h2>
@@ -230,29 +190,6 @@ const CVRaw = () => (
                                     June 2014 - March 2016
                                 </p>
                             </article>
-                        </div>
-                        <div className="clear" />
-                    </section>
-
-                    <section className="key-skills-section">
-                        <div className="sectionTitle">
-                            <h1>Key Skills</h1>
-                        </div>
-                        <div className="sectionContent">
-                            <ul className="keySkills">
-                                <li>HTML</li>
-                                <li>CSS</li>
-                                <li>Javascript</li>
-                                <li>Angular</li>
-                                <li>Responsive Design</li>
-                                <li>Responsive Email Development</li>
-                                <li>UX/UI Design</li>
-                                <li>Adobe Creative Suite</li>
-                                <li>Sketch</li>
-                                <li>Video Production</li>
-                                <li>Audio Engineering</li>
-                                <li>Git</li>
-                            </ul>
                         </div>
                         <div className="clear" />
                     </section>

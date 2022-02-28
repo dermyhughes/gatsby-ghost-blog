@@ -29,7 +29,7 @@
 
 #cv-body {
     background: #181818;
-    font-family: 'Lato', Helvetica, Arial, sans-serif;
+    font-family: "Lato", Helvetica, Arial, sans-serif;
     font-size: 16px;
     color: #222;
     line-height: 140%;
@@ -75,13 +75,13 @@
         h1 {
             font-size: 2.5em;
             font-weight: 700;
-            font-family: 'Exo', Helvetica, Arial, sans-serif;
+            font-family: "Exo", Helvetica, Arial, sans-serif;
             margin-bottom: -6px;
         }
 
         h2 {
             font-size: 2em;
-            font-family: 'Exo', Helvetica, Arial, sans-serif;
+            font-family: "Exo", Helvetica, Arial, sans-serif;
             margin: 1rem 2px;
         }
     }
@@ -120,7 +120,7 @@
         }
     }
 
-    a[href^='tel'] {
+    a[href^="tel"] {
         color: #444;
         text-decoration: none;
         -webkit-transition: all 0.3s ease-in;
@@ -175,7 +175,7 @@
     }
 
     .sectionTitle h1 {
-        font-family: 'Exo', Helvetica, Arial, sans-serif;
+        font-family: "Exo", Helvetica, Arial, sans-serif;
         font-style: italic;
         font-size: 1.2em;
         color: #007a90;
@@ -184,7 +184,7 @@
 
     .sectionContent {
         h2 {
-            font-family: 'Lato', Helvetica, Arial, sans-serif;
+            font-family: "Lato", Helvetica, Arial, sans-serif;
             font-weight: 700;
             font-size: 1.5em;
             margin-bottom: 0.1em;
@@ -350,7 +350,6 @@
             break-after: always !important;
         }
 
-        .key-skills-section,
         .second-job {
             page-break-before: always;
         }
