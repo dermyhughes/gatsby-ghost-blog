@@ -91,7 +91,7 @@ const CVRaw = () => (
                         <div className="sectionContent">
                             <article>
                                 <h2>Senior UI Engineer</h2>
-                                <h3>Bazaarvoice</h3>
+                                <h3>Bamboo Rose</h3>
                                 <p className="subDetails">
                                     April 2022 - Present
                                 </p>
