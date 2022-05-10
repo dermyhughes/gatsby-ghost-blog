@@ -1,7 +1,7 @@
-import Helmet from 'react-helmet';
-import React from 'react';
+import Helmet from "react-helmet";
+import React from "react";
 
-import '../../styles/app.scss';
+import "../../styles/app.scss";
 
 const CVRaw = () => (
     <>
@@ -69,14 +69,14 @@ const CVRaw = () => (
                             <div className="coverLetter sectionContent">
                                 <p>
                                     I&apos;m a UX Engineer based in Belfast,
-                                    Northern Ireland, with a focus on{' '}
+                                    Northern Ireland, with a focus on{" "}
                                     <a
                                         href="https://dermothughes.com/blog/is-the-title-front-end-developer-dead/"
                                         target="_blank"
                                         rel="noreferrer"
                                     >
                                         "Front of the Front End".
-                                    </a>{' '}
+                                    </a>{" "}
                                     I strive in bridging the gap between Design
                                     and Development.
                                 </p>
@@ -90,10 +90,18 @@ const CVRaw = () => (
                         </div>
                         <div className="sectionContent">
                             <article>
+                                <h2>Senior UI Engineer</h2>
+                                <h3>Bazaarvoice</h3>
+                                <p className="subDetails">
+                                    April 2022 - Present
+                                </p>
+                                <p>Senior Front End Engineer using React.</p>
+                            </article>
+                            <article>
                                 <h2>Software Engineer II</h2>
                                 <h3>Bazaarvoice</h3>
                                 <p className="subDetails">
-                                    Feburary 2021 - Present
+                                    Feburary 2021 - April 2022
                                 </p>
                                 <p>
                                     Front End Developer using React. Focusing on
@@ -128,12 +136,12 @@ const CVRaw = () => (
                                     open and closed source design system and UI
                                     Angular component library,
                                     <a href="https://uxaspects.github.io/UXAspects/#/landing">
-                                        {' '}
+                                        {" "}
                                         UX Aspects
                                     </a>
                                     . Application development for UI of
                                     <a href="https://www.microfocus.com/en-us/products/digital-safe-cloud-archiving/overview">
-                                        {' '}
+                                        {" "}
                                         Digital Safe
                                     </a>
                                     .
