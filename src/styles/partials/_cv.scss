@@ -344,14 +344,5 @@
         .print-only {
             display: inline;
         }
-
-        .page-break {
-            page-break-after: always !important;
-            break-after: always !important;
-        }
-
-        .second-job {
-            page-break-before: always;
-        }
     }
 }
