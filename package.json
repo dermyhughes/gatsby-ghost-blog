@@ -58,7 +58,7 @@
     "cheerio": "^1.0.0-rc.10",
     "gatsby": "^2.32.12",
     "gatsby-awesome-pagination": "0.3.8",
-    "gatsby-cli": "^2.19.2",
+    "gatsby-cli": "^4.24.0",
     "gatsby-image": "3.11.0",
     "gatsby-plugin-advanced-sitemap": "1.6.0",
     "gatsby-plugin-catch-links": "2.10.0",
