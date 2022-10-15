@@ -6,7 +6,6 @@ import { Link, StaticQuery, graphql } from 'gatsby';
 import Prism from 'prismjs';
 
 import { Navigation } from '.';
-import config from '../../utils/siteConfig';
 
 // Styles
 import '../../styles/app.css';
@@ -125,6 +124,11 @@ DefaultLayout.propTypes = {
   }).isRequired,
 };
 
+DefaultLayout.defaultProps = {
+  bodyClass: '',
+  isHome: false,
+};
+
 function SocialLinks({ isHome }) {
   return (
     <div className='social-container'>
@@ -167,6 +171,11 @@ function SocialLinks({ isHome }) {
 SocialLinks.propTypes = {
   isHome: PropTypes.bool,
 };
+
+SocialLinks.defaultProps = {
+  isHome: false,
+};
+
 function DefaultLayoutSettingsQuery(props) {
   return (
     <StaticQuery
