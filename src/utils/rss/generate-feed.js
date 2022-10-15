@@ -15,10 +15,7 @@ const generateItem = function generateItem(siteUrl, post) {
     guid: post.id,
     url: itemUrl,
     date: post.published_at,
-    categories: _.map(
-      tagsHelper(post, { visibility: 'public', fn: (tag) => tag }),
-      'name',
-    ),
+    categories: _.map(tagsHelper(post, { visibility: 'public', fn: (tag) => tag }), 'name'),
     author: post.primary_author ? post.primary_author.name : null,
     custom_elements: [],
   };
@@ -38,9 +35,7 @@ const generateItem = function generateItem(siteUrl, post) {
     });
 
     // Also add the image to the content, because not all readers support media:content
-    htmlContent('p')
-      .first()
-      .before(`<img src="${imageUrl}" />`);
+    htmlContent('p').first().before(`<img src="${imageUrl}" />`);
     htmlContent('img').attr('alt', post.title);
   }
 
@@ -55,7 +50,8 @@ const generateItem = function generateItem(siteUrl, post) {
 const generateRSSFeed = function generateRSSFeed(siteConfig) {
   return {
     title: 'No title',
-    serialize: ({ query: { allGhostPost } }) => allGhostPost.edges.map((edge) => ({ ...generateItem(siteConfig.siteUrl, edge.node) })),
+    serialize: ({ query: { allGhostPost } }) =>
+      allGhostPost.edges.map((edge) => ({ ...generateItem(siteConfig.siteUrl, edge.node) })),
     setup: ({ query: { allGhostSettings } }) => {
       const siteTitle = allGhostSettings.edges[0].node.title || 'No Title';
       const siteDescription = allGhostSettings.edges[0].node.description || 'No Description';

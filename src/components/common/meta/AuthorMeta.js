@@ -24,11 +24,11 @@ function AuthorMeta({ data, settings, canonical }) {
     url: canonical,
     image: shareImage
       ? {
-        '@type': 'ImageObject',
-        url: shareImage,
-        width: config.shareImageWidth,
-        height: config.shareImageHeight,
-      }
+          '@type': 'ImageObject',
+          url: shareImage,
+          width: config.shareImageWidth,
+          height: config.shareImageHeight,
+        }
       : undefined,
     mainEntityOfPage: {
       '@type': 'WebPage',
@@ -41,31 +41,24 @@ function AuthorMeta({ data, settings, canonical }) {
     <>
       <Helmet>
         <title>{title}</title>
-        <meta name="description" content={description} />
-        <link rel="canonical" href={canonical} />
-        <meta property="og:site_name" content={settings.title} />
-        <meta property="og:type" content="profile" />
-        <meta property="og:title" content={title} />
-        <meta property="og:description" content={description} />
-        <meta property="og:url" content={canonical} />
-        <meta name="twitter:title" content={title} />
-        <meta name="twitter:description" content={description} />
-        <meta name="twitter:url" content={canonical} />
+        <meta name='description' content={description} />
+        <link rel='canonical' href={canonical} />
+        <meta property='og:site_name' content={settings.title} />
+        <meta property='og:type' content='profile' />
+        <meta property='og:title' content={title} />
+        <meta property='og:description' content={description} />
+        <meta property='og:url' content={canonical} />
+        <meta name='twitter:title' content={title} />
+        <meta name='twitter:description' content={description} />
+        <meta name='twitter:url' content={canonical} />
         {settings.twitter && (
-        <meta
-          name="twitter:site"
-          content={`https://twitter.com/${settings.twitter.replace(
-            /^@/,
-            '',
-          )}/`}
-        />
+          <meta
+            name='twitter:site'
+            content={`https://twitter.com/${settings.twitter.replace(/^@/, '')}/`}
+          />
         )}
-        {settings.twitter && (
-        <meta name="twitter:creator" content={settings.twitter} />
-        )}
-        <script type="application/ld+json">
-          {JSON.stringify(jsonLd, undefined, 4)}
-        </script>
+        {settings.twitter && <meta name='twitter:creator' content={settings.twitter} />}
+        <script type='application/ld+json'>{JSON.stringify(jsonLd, undefined, 4)}</script>
       </Helmet>
       <ImageMeta image={shareImage} />
     </>
@@ -94,16 +87,16 @@ function AuthorMetaQuery(props) {
   return (
     <StaticQuery
       query={graphql`
-            query GhostSettingsAuthorMeta {
-                allGhostSettings {
-                    edges {
-                        node {
-                            ...GhostSettingsFields
-                        }
-                    }
-                }
+        query GhostSettingsAuthorMeta {
+          allGhostSettings {
+            edges {
+              node {
+                ...GhostSettingsFields
+              }
             }
-        `}
+          }
+        }
+      `}
       render={(data) => <AuthorMeta settings={data} {...props} />}
     />
   );

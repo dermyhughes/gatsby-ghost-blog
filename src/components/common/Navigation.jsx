@@ -22,8 +22,8 @@ function Navigation({ data, navClass }) {
               className={navClass}
               href={navItem.url}
               key={i}
-              target="_blank"
-              rel="noopener noreferrer"
+              target='_blank'
+              rel='noopener noreferrer'
             >
               {navItem.label}
             </a>
@@ -32,7 +32,7 @@ function Navigation({ data, navClass }) {
         return (
           <Link
             className={navClass}
-            activeClassName="active-link"
+            activeClassName='active-link'
             partiallyActive={navItem.url !== '/'}
             to={navItem.url}
             key={i}
@@ -54,7 +54,7 @@ Navigation.propTypes = {
     PropTypes.shape({
       label: PropTypes.string.isRequired,
       url: PropTypes.string.isRequired,
-    }).isRequired
+    }).isRequired,
   ).isRequired,
   navClass: PropTypes.string,
 };

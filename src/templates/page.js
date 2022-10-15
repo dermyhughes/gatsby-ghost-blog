@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-filename-extension */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
@@ -17,18 +18,18 @@ function Page({ data, location }) {
 
   return (
     <>
-      <MetaData data={data} location={location} type="website" />
+      <MetaData data={data} location={location} type='website' />
       <Helmet>
-        <style type="text/css">{`${page.codeinjection_styles}`}</style>
+        <style type='text/css'>{`${page.codeinjection_styles}`}</style>
       </Helmet>
       <Layout>
-        <div className="container">
-          <article className="content">
-            <h1 className="content-title">{page.title}</h1>
+        <div className='container'>
+          <article className='content'>
+            <h1 className='content-title'>{page.title}</h1>
 
             {/* The main page content */}
             <section
-              className="content-body load-external-scripts"
+              className='content-body load-external-scripts'
               dangerouslySetInnerHTML={{ __html: page.html }}
             />
           </article>
@@ -53,9 +54,9 @@ Page.propTypes = {
 export default Page;
 
 export const postQuery = graphql`
-    query ($slug: String!) {
-        ghostPage(slug: { eq: $slug }) {
-            ...GhostPageFields
-        }
+  query ($slug: String!) {
+    ghostPage(slug: { eq: $slug }) {
+      ...GhostPageFields
     }
+  }
 `;

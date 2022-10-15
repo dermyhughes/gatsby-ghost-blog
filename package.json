@@ -26,18 +26,23 @@
     "dev": "gatsby develop",
     "develop": "gatsby develop",
     "start": "gatsby serve",
-    "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
+    "lint": "eslint src/**/*.{js,jsx,ts,tsx,json}",
+    "lint:fix": "eslint --fix 'src/**/*.{js,jsx,ts,tsx,json}'",
+    "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
     "clean": "gatsby clean",
     "generate-cv": "npx babel-node src/utils/generate-pdf.js"
   },
   "devDependencies": {
-    "eslint": "^8.2.0",
+    "eslint": "^8.25.0",
     "eslint-config-airbnb": "19.0.4",
+    "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-ghost": "2.16.0",
     "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-jsx-a11y": "^6.5.1",
-    "eslint-plugin-react": "^7.28.0",
-    "eslint-plugin-react-hooks": "^4.3.0"
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react": "^7.31.10",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "prettier": "^2.7.1"
   },
   "dependencies": {
     "@tryghost/helpers": "1.1.74",
@@ -61,6 +66,7 @@
     "lodash": "4.17.21",
     "node-sass": "^7.0.3",
     "prismjs": "^1.29.0",
+    "prop-types": "^15.8.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-helmet": "6.1.0",

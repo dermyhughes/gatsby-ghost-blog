@@ -13,31 +13,22 @@ import AuthorMeta from './AuthorMeta';
  * JSON-LD (schema.org), Open Graph (Facebook) and Twitter properties.
  *
  */
-function MetaData({
-  data, settings, title, description, image, location,
-}) {
+function MetaData({ data, settings, title, description, image, location }) {
   const canonical = url.resolve(config.siteUrl, location.pathname);
-  const {
-    ghostPost, ghostTag, ghostAuthor, ghostPage,
-  } = data;
+  const { ghostPost, ghostTag, ghostAuthor, ghostPage } = data;
   settings = settings.allGhostSettings.edges[0].node;
 
   if (ghostPost) {
     return <ArticleMeta data={ghostPost} canonical={canonical} />;
-  } if (ghostTag) {
-    return (
-      <WebsiteMeta data={ghostTag} canonical={canonical} type="Series" />
-    );
-  } if (ghostAuthor) {
+  }
+  if (ghostTag) {
+    return <WebsiteMeta data={ghostTag} canonical={canonical} type='Series' />;
+  }
+  if (ghostAuthor) {
     return <AuthorMeta data={ghostAuthor} canonical={canonical} />;
-  } if (ghostPage) {
-    return (
-      <WebsiteMeta
-        data={ghostPage}
-        canonical={canonical}
-        type="WebSite"
-      />
-    );
+  }
+  if (ghostPage) {
+    return <WebsiteMeta data={ghostPage} canonical={canonical} type='WebSite' />;
   }
   title = title || config.siteTitleMeta || settings.title;
   description = description || config.siteDescriptionMeta || settings.description;
@@ -52,7 +43,7 @@ function MetaData({
       title={title}
       description={description}
       image={image}
-      type="WebSite"
+      type='WebSite'
     />
   );
 }
@@ -83,17 +74,17 @@ function MetaDataQuery(props) {
   return (
     <StaticQuery
       query={graphql`
-            query GhostSettingsMetaData {
-                allGhostSettings {
-                    edges {
-                        node {
-                            title
-                            description
-                        }
-                    }
-                }
+        query GhostSettingsMetaData {
+          allGhostSettings {
+            edges {
+              node {
+                title
+                description
+              }
             }
-        `}
+          }
+        }
+      `}
       render={(data) => <MetaData settings={data} {...props} />}
     />
   );

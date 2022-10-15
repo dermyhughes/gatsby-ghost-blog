@@ -19,9 +19,7 @@ import '../../styles/app.css';
  * styles, and meta data for each page.
  *
  */
-function DefaultLayout({
-  data, children, bodyClass, isHome,
-}) {
+function DefaultLayout({ data, children, bodyClass, isHome }) {
   const site = data.allGhostSettings.edges[0].node;
   site.cover_image = null;
   const nameSplit = site.description.split('.');
@@ -37,96 +35,77 @@ function DefaultLayout({
     <>
       <Helmet>
         <html lang={site.lang} />
-        <style type="text/css">{`${site.codeinjection_styles}`}</style>
+        <style type='text/css'>{`${site.codeinjection_styles}`}</style>
         <link
-          href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap"
-          rel="stylesheet"
+          href='https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap'
+          rel='stylesheet'
         />
         <body className={bodyClass} />
       </Helmet>
 
-      <div className="viewport">
-        <div className="viewport-top">
+      <div className='viewport'>
+        <div className='viewport-top'>
           {/* The main header section on top of the screen */}
           <header
-            className="site-head"
+            className='site-head'
             style={{
               ...(site.cover_image && {
                 backgroundImage: `url(${site.cover_image})`,
               }),
             }}
           >
-            <div className="container">
+            <div className='container'>
               {!isHome && (
-                <div className="site-mast">
-                  <div className="site-nav-left">
-                    <Navigation
-                      data={site.navigation}
-                      navClass="site-nav-item"
-                    />
+                <div className='site-mast'>
+                  <div className='site-nav-left'>
+                    <Navigation data={site.navigation} navClass='site-nav-item' />
                   </div>
-                  <div className="site-mast-right mast-small">
+                  <div className='site-mast-right mast-small'>
                     <SocialLinks isHome={isHome} />
                   </div>
                 </div>
               )}
               {isHome && (
                 <div>
-                  <div className="site-banner">
-                    <h1
-                      className="site-banner-title three-d"
-                      data-line={site.title}
-                    >
+                  <div className='site-banner'>
+                    <h1 className='site-banner-title three-d' data-line={site.title}>
                       {site.title}
                     </h1>
-                    <div className="site-banner-desc">
+                    <div className='site-banner-desc'>
                       {nameSplit.map((item, i) => (
-                        <div className="highlight-container" key={i}>
-                          <span className="highlight">
-                            {item}
-                            .
-                          </span>
+                        <div className='highlight-container' key={i}>
+                          <span className='highlight'>{item}.</span>
                         </div>
                       ))}
                     </div>
                     <SocialLinks isHome={isHome} />
                   </div>
 
-                  <nav className="site-nav">
-                    <div className="site-nav-left">
-                      <Navigation
-                        data={site.navigation}
-                        navClass="site-nav-item"
-                      />
+                  <nav className='site-nav'>
+                    <div className='site-nav-left'>
+                      <Navigation data={site.navigation} navClass='site-nav-item' />
                     </div>
                   </nav>
                 </div>
               )}
             </div>
           </header>
-          <section aria-hidden="true" className="skewed" />
-          <main className="site-main">
+          <section aria-hidden='true' className='skewed' />
+          <main className='site-main'>
             {/* All the main content gets inserted here, index.js, post.js */}
             {children}
           </main>
         </div>
 
-        <div className="viewport-bottom">
+        <div className='viewport-bottom'>
           {/* The footer at the very bottom of the screen */}
-          <footer className="site-foot">
-            <div className="site-foot-nav container">
-              <div className="site-foot-nav-left">
-                <Link to="/">{site.title}</Link>
-                {' '}
-                ©
-                {d.getFullYear()}
-                .
+          <footer className='site-foot'>
+            <div className='site-foot-nav container'>
+              <div className='site-foot-nav-left'>
+                <Link to='/'>{site.title}</Link> ©{d.getFullYear()}.
               </div>
-              <div className="site-foot-nav-right">
-                <Navigation
-                  data={site.navigation}
-                  navClass="site-foot-nav-item"
-                />
+              <div className='site-foot-nav-right'>
+                <Navigation data={site.navigation} navClass='site-foot-nav-item' />
               </div>
             </div>
           </footer>
@@ -148,54 +127,38 @@ DefaultLayout.propTypes = {
 
 function SocialLinks({ isHome }) {
   return (
-    <div className="social-container">
+    <div className='social-container'>
       <a
         className={`site-nav-item ${isHome ? 'home' : ''}`}
-        href="https://github.com/dermyhughes"
-        target="_blank"
-        rel="noopener noreferrer"
+        href='https://github.com/dermyhughes'
+        target='_blank'
+        rel='noopener noreferrer'
       >
-        <img
-          className="site-nav-icon"
-          src="/images/icons/github.svg"
-          alt="GitHub"
-        />
+        <img className='site-nav-icon' src='/images/icons/github.svg' alt='GitHub' />
       </a>
       <a
         className={`site-nav-item ${isHome ? 'home' : ''}`}
-        href="https://codepen.io/dermyhughes/"
-        target="_blank"
-        rel="noopener noreferrer"
+        href='https://codepen.io/dermyhughes/'
+        target='_blank'
+        rel='noopener noreferrer'
       >
-        <img
-          className="site-nav-icon"
-          src="/images/icons/codepen.svg"
-          alt="Codepen"
-        />
+        <img className='site-nav-icon' src='/images/icons/codepen.svg' alt='Codepen' />
       </a>
       <a
         className={`site-nav-item ${isHome ? 'home' : ''}`}
-        href="https://www.linkedin.com/in/dermot-hughes-a96b67b6"
-        target="_blank"
-        rel="noopener noreferrer"
+        href='https://www.linkedin.com/in/dermot-hughes-a96b67b6'
+        target='_blank'
+        rel='noopener noreferrer'
       >
-        <img
-          className="site-nav-icon"
-          src="/images/icons/linkedin.svg"
-          alt="LinkedIn"
-        />
+        <img className='site-nav-icon' src='/images/icons/linkedin.svg' alt='LinkedIn' />
       </a>
       <a
         className={`site-nav-item ${isHome ? 'home' : ''}`}
-        href="https://twitter.com/DermyHughes"
-        target="_blank"
-        rel="noopener noreferrer"
+        href='https://twitter.com/DermyHughes'
+        target='_blank'
+        rel='noopener noreferrer'
       >
-        <img
-          className="site-nav-icon"
-          src="/images/icons/twitter.svg"
-          alt="Twitter"
-        />
+        <img className='site-nav-icon' src='/images/icons/twitter.svg' alt='Twitter' />
       </a>
     </div>
   );

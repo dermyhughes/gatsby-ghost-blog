@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-filename-extension */
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
@@ -20,8 +21,8 @@ function Index({ data, location, pageContext }) {
     <>
       <MetaData location={location} />
       <Layout isHome>
-        <div className="container">
-          <section className="post-feed">
+        <div className='container'>
+          <section className='post-feed'>
             {posts.map(({ node }) => (
               // The tag below includes the markup for each post - components/common/PostCard.js
               <PostCard key={node.id} post={node} />
@@ -49,17 +50,13 @@ export default Index;
 // This page query loads all posts sorted descending by published date
 // The `limit` and `skip` values are used for pagination
 export const pageQuery = graphql`
-    query GhostPostQuery($limit: Int!, $skip: Int!) {
-        allGhostPost(
-            sort: { order: DESC, fields: [published_at] }
-            limit: $limit
-            skip: $skip
-        ) {
-            edges {
-                node {
-                    ...GhostPostFields
-                }
-            }
+  query GhostPostQuery($limit: Int!, $skip: Int!) {
+    allGhostPost(sort: { order: DESC, fields: [published_at] }, limit: $limit, skip: $skip) {
+      edges {
+        node {
+          ...GhostPostFields
         }
+      }
     }
+  }
 `;

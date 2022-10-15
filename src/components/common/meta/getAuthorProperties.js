@@ -10,10 +10,7 @@ export const getAuthorProperties = (primaryAuthor) => {
       ? `https://twitter.com/${primaryAuthor.twitter.replace(/^@/, '')}/`
       : null,
     primaryAuthor.facebook
-      ? `https://www.facebook.com/${primaryAuthor.facebook.replace(
-        /^\//,
-        '',
-      )}/`
+      ? `https://www.facebook.com/${primaryAuthor.facebook.replace(/^\//, '')}/`
       : null,
   );
 
@@ -21,15 +18,10 @@ export const getAuthorProperties = (primaryAuthor) => {
 
   return {
     name: primaryAuthor.name || null,
-    sameAsArray: authorProfiles.length
-      ? `["${_.join(authorProfiles, '", "')}"]`
-      : null,
+    sameAsArray: authorProfiles.length ? `["${_.join(authorProfiles, '", "')}"]` : null,
     image: primaryAuthor.profile_image || null,
     facebookUrl: primaryAuthor.facebook
-      ? `https://www.facebook.com/${primaryAuthor.facebook.replace(
-        /^\//,
-        '',
-      )}/`
+      ? `https://www.facebook.com/${primaryAuthor.facebook.replace(/^\//, '')}/`
       : null,
   };
 };
