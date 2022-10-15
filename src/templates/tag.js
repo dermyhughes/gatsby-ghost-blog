@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
 
@@ -11,44 +11,44 @@ import { MetaData } from '../components/common/meta';
  * Loads all posts for the requested tag incl. pagination.
  *
  */
-const Tag = ({ data, location, pageContext }) => {
-    const tag = data.ghostTag;
-    const posts = data.allGhostPost.edges;
+function Tag({ data, location, pageContext }) {
+  const tag = data.ghostTag;
+  const posts = data.allGhostPost.edges;
 
-    return (
-        <>
-            <MetaData data={data} location={location} type="series" />
-            <Layout>
-                <div className="container">
-                    <header className="tag-header">
-                        <h1>{tag.name}</h1>
-                        {tag.description ? <p>{tag.description}</p> : null}
-                    </header>
-                    <section className="post-feed">
-                        {posts.map(({ node }) => (
-                            // The tag below includes the markup for each post - components/common/PostCard.js
-                            <PostCard key={node.id} post={node} />
-                        ))}
-                    </section>
-                    <Pagination pageContext={pageContext} />
-                </div>
-            </Layout>
-        </>
-    );
-};
+  return (
+    <>
+      <MetaData data={data} location={location} type="series" />
+      <Layout>
+        <div className="container">
+          <header className="tag-header">
+            <h1>{tag.name}</h1>
+            {tag.description ? <p>{tag.description}</p> : null}
+          </header>
+          <section className="post-feed">
+            {posts.map(({ node }) => (
+              // The tag below includes the markup for each post - components/common/PostCard.js
+              <PostCard key={node.id} post={node} />
+            ))}
+          </section>
+          <Pagination pageContext={pageContext} />
+        </div>
+      </Layout>
+    </>
+  );
+}
 
 Tag.propTypes = {
-    data: PropTypes.shape({
-        ghostTag: PropTypes.shape({
-            name: PropTypes.string.isRequired,
-            description: PropTypes.string,
-        }),
-        allGhostPost: PropTypes.object.isRequired,
-    }).isRequired,
-    location: PropTypes.shape({
-        pathname: PropTypes.string.isRequired,
-    }).isRequired,
-    pageContext: PropTypes.object,
+  data: PropTypes.shape({
+    ghostTag: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      description: PropTypes.string,
+    }),
+    allGhostPost: PropTypes.object.isRequired,
+  }).isRequired,
+  location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired,
+  }).isRequired,
+  pageContext: PropTypes.object,
 };
 
 export default Tag;

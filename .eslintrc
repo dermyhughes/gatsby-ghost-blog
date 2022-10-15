@@ -1,5 +1,3 @@
 {
-  "extends": [
-    "wesbos"
-  ]
+  "extends": ["airbnb", "airbnb/hooks"]
 }

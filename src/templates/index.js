@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
 
@@ -13,35 +13,35 @@ import { MetaData } from '../components/common/meta';
  * in /utils/siteConfig.js under `postsPerPage`.
  *
  */
-const Index = ({ data, location, pageContext }) => {
-    const posts = data.allGhostPost.edges;
+function Index({ data, location, pageContext }) {
+  const posts = data.allGhostPost.edges;
 
-    return (
-        <>
-            <MetaData location={location} />
-            <Layout isHome>
-                <div className="container">
-                    <section className="post-feed">
-                        {posts.map(({ node }) => (
-                            // The tag below includes the markup for each post - components/common/PostCard.js
-                            <PostCard key={node.id} post={node} />
-                        ))}
-                    </section>
-                    <Pagination pageContext={pageContext} />
-                </div>
-            </Layout>
-        </>
-    );
-};
+  return (
+    <>
+      <MetaData location={location} />
+      <Layout isHome>
+        <div className="container">
+          <section className="post-feed">
+            {posts.map(({ node }) => (
+              // The tag below includes the markup for each post - components/common/PostCard.js
+              <PostCard key={node.id} post={node} />
+            ))}
+          </section>
+          <Pagination pageContext={pageContext} />
+        </div>
+      </Layout>
+    </>
+  );
+}
 
 Index.propTypes = {
-    data: PropTypes.shape({
-        allGhostPost: PropTypes.object.isRequired,
-    }).isRequired,
-    location: PropTypes.shape({
-        pathname: PropTypes.string.isRequired,
-    }).isRequired,
-    pageContext: PropTypes.object,
+  data: PropTypes.shape({
+    allGhostPost: PropTypes.object.isRequired,
+  }).isRequired,
+  location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired,
+  }).isRequired,
+  pageContext: PropTypes.object,
 };
 
 export default Index;
