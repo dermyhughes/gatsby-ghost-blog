@@ -18,25 +18,24 @@ try {
     },
   };
 } finally {
-  const { apiUrl, contentApiKey } = process.env.NODE_ENV === 'development'
-    ? ghostConfig.development
-    : ghostConfig.production;
+  const { apiUrl, contentApiKey } =
+    process.env.NODE_ENV === 'development' ? ghostConfig.development : ghostConfig.production;
 
   if (!apiUrl || !contentApiKey || contentApiKey.match(/<key>/)) {
     throw new Error(
       'GHOST_API_URL and GHOST_CONTENT_API_KEY are required to build. Check the README.',
-        ); // eslint-disable-line
+    ); // eslint-disable-line
   }
 }
 
 if (
-  process.env.NODE_ENV === 'production'
-    && config.siteUrl === 'http://localhost:8000'
-    && !process.env.SITEURL
+  process.env.NODE_ENV === 'production' &&
+  config.siteUrl === 'http://localhost:8000' &&
+  !process.env.SITEURL
 ) {
   throw new Error(
-    'siteUrl can\'t be localhost and needs to be configured in siteConfig. Check the README.',
-    ); // eslint-disable-line
+    "siteUrl can't be localhost and needs to be configured in siteConfig. Check the README.",
+  ); // eslint-disable-line
 }
 
 /**
@@ -53,8 +52,8 @@ module.exports = {
   trailingSlash: 'always',
   plugins: [
     /**
-         *  Content Plugins
-         */
+     *  Content Plugins
+     */
     {
       resolve: 'gatsby-source-filesystem',
       options: {
@@ -77,13 +76,11 @@ module.exports = {
     {
       resolve: 'gatsby-source-ghost',
       options:
-                process.env.NODE_ENV === 'development'
-                  ? ghostConfig.development
-                  : ghostConfig.production,
+        process.env.NODE_ENV === 'development' ? ghostConfig.development : ghostConfig.production,
     },
     /**
-         *  Utility Plugins
-         */
+     *  Utility Plugins
+     */
     {
       resolve: 'gatsby-plugin-ghost-manifest',
       options: {
@@ -130,5 +127,16 @@ module.exports = {
     'gatsby-plugin-react-helmet',
     'gatsby-plugin-offline',
     'gatsby-plugin-sass',
+    {
+      resolve: 'gatsby-plugin-pdf',
+      options: {
+        paths: ['/cvraw'],
+        outputPath: '/public/exports',
+        filePrefix: 'dermot-hughes-',
+        pdfOptions: {
+          format: 'A4',
+        },
+      },
+    },
   ],
 };
