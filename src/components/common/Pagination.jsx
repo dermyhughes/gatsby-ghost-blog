@@ -16,8 +16,7 @@ function Pagination({ pageContext }) {
       </div>
       {numberOfPages > 1 && (
         <div className='pagination-location'>
-          Page {humanPageNumber} of
-          {numberOfPages}
+          Page {humanPageNumber} of {numberOfPages}
         </div>
       )}
       <div>
