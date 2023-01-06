@@ -22,7 +22,7 @@
   "main": "n/a",
   "scripts": {
     "serve": "gatsby build && NODE_ENV=production gatsby serve",
-    "build": "npm run build:cv && gatsby build",
+    "build": "gatsby build",
     "build:cv": "node build-cv.js",
     "dev": "gatsby develop",
     "develop": "gatsby develop",
