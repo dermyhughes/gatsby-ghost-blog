@@ -1,26 +1,28 @@
-name: Generate PDF
+name: Build CV
 
 on:
   pull_request:
-    types: [closed]
+    types: [opened, synchronize]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+        with:
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.ref }}
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
           node-version: 16.x
       - name: Install dependencies
         run: npm install
-      - name: Generate PDF
+      - name: Check out pull request branch
+        run: git checkout ${{ github.head_ref }}
+      - name: Build CV
         run: npm run build:cv
-      - name: Commit PDF
-        run: |
-          git config --local user.email "github-actions@example.com"
-          git config --local user.name "GitHub Actions"
-          git add *
-          git commit -m "Generate PDF"
-          git push
+      - name: Commit CV
+        uses: EndBug/add-and-commit@v9
+        with:
+          default_author: github_actions
