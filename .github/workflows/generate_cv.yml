@@ -23,7 +23,6 @@ jobs:
       - name: Build CV
         run: npm run build:cv
       - name: Commit CV
-          uses: EndBug/add-and-commit@v9
+        uses: EndBug/add-and-commit@v9
           with:
             default_author: github_actions
-
