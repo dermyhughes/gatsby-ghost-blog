@@ -16,11 +16,7 @@ async function generatePdf() {
   const pdfBuffer = await page.pdf({ format: 'A4' });
 
   // Write the PDF to a file in the 'public/exports' directory
-  // ensure that the directory exists
-  if (!fs.existsSync(`${__dirname}/public/exports`)) {
-    fs.mkdirSync(`${__dirname}/public/exports`);
-  }
-  fs.writeFileSync(`${__dirname}/public/exports/dermot-hughes-cv.pdf`, pdfBuffer);
+  fs.writeFileSync(`${__dirname}/public/dermot-hughes-cv.pdf`, pdfBuffer);
 
   // Close Puppeteer
   await browser.close();
