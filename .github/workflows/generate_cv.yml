@@ -1,8 +1,8 @@
-name: Generate PDF
+name: Build CV
 
 on:
   pull_request:
-    types: [closed]
+    types: [opened, synchronize]
 
 jobs:
   build:
@@ -15,12 +15,12 @@ jobs:
           node-version: 16.x
       - name: Install dependencies
         run: npm install
-      - name: Generate PDF
+      - name: Build CV
         run: npm run build:cv
-      - name: Commit PDF
+      - name: Commit CV
         run: |
           git config --local user.email "github-actions@example.com"
           git config --local user.name "GitHub Actions"
-          git add *
-          git commit -m "Generate PDF"
+          git add -f *
+          git commit -m "Build CV"
           git push
