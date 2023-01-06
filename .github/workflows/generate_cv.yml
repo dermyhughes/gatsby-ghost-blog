@@ -9,6 +9,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
@@ -16,7 +18,7 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Check out pull request branch
-        run: git checkout ${{ github.head_ref }}
+        run: git checkout ${{ github.ref_name }}
       - name: Build CV
         run: npm run build:cv
       - name: Commit CV
