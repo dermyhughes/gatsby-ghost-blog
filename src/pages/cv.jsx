@@ -11,7 +11,7 @@ function CVPage() {
       </Helmet>
       <Layout>
         <div className='download-link'>
-          <a href='../exports/dermot-hughes-cvraw.pdf'>
+          <a href='../exports/dermot-hughes-cv.pdf'>
             <button className='download-btn' type='button'>
               👉 Download PDF
             </button>

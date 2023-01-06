@@ -22,7 +22,8 @@
   "main": "n/a",
   "scripts": {
     "serve": "gatsby build && NODE_ENV=production gatsby serve",
-    "build": "gatsby build",
+    "build": "npm run build:cv && gatsby build",
+    "build:cv": "node build-cv.js",
     "dev": "gatsby develop",
     "develop": "gatsby develop",
     "start": "gatsby serve",
@@ -55,7 +56,6 @@
     "gatsby-plugin-image": "2.15.1",
     "gatsby-plugin-manifest": "4.15.1",
     "gatsby-plugin-offline": "5.15.1",
-    "gatsby-plugin-pdf": "^0.0.1",
     "gatsby-plugin-react-helmet": "5.15.0",
     "gatsby-plugin-sass": "^5.24.0",
     "gatsby-plugin-sharp": "^4.24.0",
@@ -70,6 +70,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-helmet": "6.1.0",
-    "url": "0.11.0"
+    "url": "0.11.0",
+    "wait-on": "^7.0.1"
   }
 }
