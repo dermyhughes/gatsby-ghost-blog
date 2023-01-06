@@ -127,16 +127,5 @@ module.exports = {
     'gatsby-plugin-react-helmet',
     'gatsby-plugin-offline',
     'gatsby-plugin-sass',
-    {
-      resolve: 'gatsby-plugin-pdf',
-      options: {
-        paths: ['/cvraw'],
-        outputPath: '/public/exports',
-        filePrefix: 'dermot-hughes-',
-        pdfOptions: {
-          format: 'A4',
-        },
-      },
-    },
   ],
 };

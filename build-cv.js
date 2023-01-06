@@ -16,7 +16,7 @@ async function generatePdf() {
   const pdfBuffer = await page.pdf({ format: 'A4' });
 
   // Write the PDF to a file in the 'public/exports' directory
-  fs.writeFileSync(`${__dirname}/public/exports/cv.pdf`, pdfBuffer);
+  fs.writeFileSync(`${__dirname}/public/exports/dermot-hughes-cv.pdf`, pdfBuffer);
   console.log('CV generated');
 
   // Close Puppeteer
