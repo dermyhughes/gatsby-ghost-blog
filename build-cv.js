@@ -1,6 +1,6 @@
 const puppeteer = require('puppeteer');
 const fs = require('fs');
-const { spawn } = require('child_process');
+const { spawn, execSync } = require('child_process');
 const waitOn = require('wait-on');
 
 async function generatePdf() {
@@ -16,8 +16,7 @@ async function generatePdf() {
   const pdfBuffer = await page.pdf({ format: 'A4' });
 
   // Write the PDF to a file in the 'public/exports' directory
-  fs.writeFileSync(`${__dirname}/public/exports/dermot-hughes-cv.pdf`, pdfBuffer);
-  console.log('CV generated');
+  fs.writeFileSync(`${__dirname}/public/dermot-hughes-cv.pdf`, pdfBuffer);
 
   // Close Puppeteer
   await browser.close();
@@ -29,9 +28,7 @@ async function main() {
 
   // Wait for the development server to start
   await waitOn({
-    resources: [
-      'tcp:localhost:9000'
-    ]
+    resources: ['tcp:localhost:9000'],
   });
 
   // Generate the PDF
@@ -39,6 +36,9 @@ async function main() {
 
   // Stop the Gatsby development server
   gatsby.kill();
+
+  // Build the Gatsby site
+  execSync('gatsby build', { stdio: 'inherit' });
 }
 
 main();
