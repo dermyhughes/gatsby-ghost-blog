@@ -21,6 +21,6 @@ jobs:
         run: |
           git config --local user.email "github-actions@example.com"
           git config --local user.name "GitHub Actions"
-          git add public/cv.pdf
+          git add *
           git commit -m "Generate PDF"
           git push
