@@ -8,19 +8,21 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
           node-version: 16.x
       - name: Install dependencies
         run: npm install
+      - name: Check out pull request branch
+        run: git checkout ${{ github.head_ref }}
       - name: Build CV
         run: npm run build:cv
       - name: Commit CV
-      - uses: actions/checkout@v3
         run: |
           git config --local user.email "github-actions@example.com"
           git config --local user.name "GitHub Actions"
-          git add -f static/dermot-hughes-cv.pdf
+          git add public/dermot-hughes-cv.pdf
           git commit -m "Build CV"
-          git push origin HEAD:${{ github.head_ref }}
+          git push
