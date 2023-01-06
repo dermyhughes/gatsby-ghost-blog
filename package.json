@@ -23,6 +23,7 @@
   "scripts": {
     "serve": "gatsby build && NODE_ENV=production gatsby serve",
     "build": "gatsby build",
+    "build:cv": "node build-cv.js",
     "dev": "gatsby develop",
     "develop": "gatsby develop",
     "start": "gatsby serve",
@@ -70,6 +71,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-helmet": "6.1.0",
-    "url": "0.11.0"
+    "url": "0.11.0",
+    "wait-on": "^7.0.1"
   }
 }
