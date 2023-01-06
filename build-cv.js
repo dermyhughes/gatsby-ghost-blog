@@ -1,6 +1,6 @@
 const puppeteer = require('puppeteer');
 const fs = require('fs');
-const { spawn, execSync } = require('child_process');
+const { spawn } = require('child_process');
 const waitOn = require('wait-on');
 
 async function generatePdf() {
@@ -36,9 +36,6 @@ async function main() {
 
   // Stop the Gatsby development server
   gatsby.kill();
-
-  // Build the Gatsby site
-  execSync('gatsby build', { stdio: 'inherit' });
 }
 
 main();
