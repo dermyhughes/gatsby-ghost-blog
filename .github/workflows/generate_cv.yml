@@ -20,8 +20,16 @@ jobs:
         run: npm install
       - name: Check out pull request branch
         run: git checkout ${{ github.head_ref }}
+      - name: Waiting for Netlify Preview
+        uses: kamranayub/wait-for-netlify-action@v2.1.1
+        id: wait-for-netflify-preview
+        with:
+          site_name: "https://dermothughes.com/"
+          max_timeout: 60
+        env:
+          NETLIFY_TOKEN: ${{secrets.NETLIFY_TOKEN}}
       - name: Build CV
-        run: npm run build:cv
+        run: npm run build:cv '${{ steps.wait-for-netflify-preview.outputs.url }}/cvraw'
       - name: Commit CV
         uses: EndBug/add-and-commit@v9
         with:

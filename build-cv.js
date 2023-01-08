@@ -1,18 +1,18 @@
-/* eslint-disable no-console */
 const puppeteer = require('puppeteer');
 const fs = require('fs');
-const { spawn } = require('child_process');
 const waitOn = require('wait-on');
 
 // The URL of the webpage you want to generate a PDF from
-const PORT = '9001';
-const URL = `http://localhost:${PORT}/cvraw`;
+const URL = process.argv[2]; // URL passed as argument
 
 async function generatePdf() {
   // Set up Puppeteer
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
-  await page.goto(URL, { waitUntil: 'networkidle2' });
+  await page.goto(URL, {
+    waitUntil: 'networkidle2',
+    timeout: 120000, // 2 minutes
+  });
 
   // Check if the page has loaded
   const pageLoaded = await page.evaluate(() => {
@@ -29,13 +29,12 @@ async function generatePdf() {
     if (!actualContent.includes(expectedContent)) {
       return false;
     }
+
     return true;
   });
 
   if (!pageLoaded) {
     throw new Error('Page did not load');
-  } else {
-    console.log('Page loaded');
   }
 
   // Generate the PDF file
@@ -54,28 +53,13 @@ async function generatePdf() {
 }
 
 async function main() {
-  // Start the Gatsby development server as a child process
-  const gatsby = spawn('gatsby', ['serve', '--port', PORT]);
-
-  // Wait for the localhost URL to become available
+  // Wait for the specified URL to become available
   await waitOn({
     resources: [URL],
   });
 
   // Generate the PDF
   await generatePdf();
-
-  // Stop the Gatsby development server
-  gatsby.kill();
-
-  // Wait for the development server to stop
-  await waitOn({
-    resources: [`tcp:localhost:${PORT}`],
-    reverse: true,
-  });
-
-  // Run gatsby build command
-  spawn('gatsby', ['build']);
 }
 
 main();
