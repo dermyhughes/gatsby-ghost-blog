@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const puppeteer = require('puppeteer');
 const fs = require('fs');
 const { spawn } = require('child_process');
@@ -12,6 +13,30 @@ async function generatePdf() {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
   await page.goto(URL, { waitUntil: 'networkidle2' });
+
+  // Check if the page has loaded
+  const pageLoaded = await page.evaluate(() => {
+    // Check if the page has the expected title
+    const expectedTitle = 'Dermot Hughes CV';
+    const actualTitle = document.title;
+    if (actualTitle !== expectedTitle) {
+      return false;
+    }
+
+    // Check if the page has the expected content
+    const expectedContent = 'Personal Profile';
+    const actualContent = document.body.innerText;
+    if (!actualContent.includes(expectedContent)) {
+      return false;
+    }
+    return true;
+  });
+
+  if (!pageLoaded) {
+    throw new Error('Page did not load');
+  } else {
+    console.log('Page loaded');
+  }
 
   // Generate the PDF file
   const pdfBuffer = await page.pdf({ format: 'A4' });
@@ -28,19 +53,14 @@ async function generatePdf() {
   await browser.close();
 }
 
-// A simple utility function to wait for a specified amount of time
-async function delay(ms) {
-  return new Promise((resolve) => {
-    setTimeout(resolve, ms);
-  });
-}
-
 async function main() {
   // Start the Gatsby development server as a child process
   const gatsby = spawn('gatsby', ['serve', '--port', PORT]);
 
-  // Wait for the development server to start
-  await delay(30000);
+  // Wait for the localhost URL to become available
+  await waitOn({
+    resources: [URL],
+  });
 
   // Generate the PDF
   await generatePdf();
