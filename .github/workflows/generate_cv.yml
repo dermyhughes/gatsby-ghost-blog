@@ -1,0 +1,36 @@
+name: Build CV
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.ref }}
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16.x
+      - name: Install dependencies
+        run: npm install
+      - name: Check out pull request branch
+        run: git checkout ${{ github.head_ref }}
+      - name: Waiting for Netlify Preview
+        uses: kamranayub/wait-for-netlify-action@v2.1.1
+        id: wait-for-netflify-preview
+        with:
+          site_name: "dermothughes"
+          max_timeout: 60
+        env:
+          NETLIFY_TOKEN: ${{secrets.NETLIFY_TOKEN}}
+      - name: Build CV
+        run: npm run build:cv '${{ steps.wait-for-netflify-preview.outputs.url }}/cvraw'
+      - name: Commit CV
+        uses: EndBug/add-and-commit@v9
+        with:
+          default_author: github_actions
