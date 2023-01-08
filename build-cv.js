@@ -28,14 +28,19 @@ async function generatePdf() {
   await browser.close();
 }
 
+// A simple utility function to wait for a specified amount of time
+async function delay(ms) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+}
+
 async function main() {
   // Start the Gatsby development server as a child process
   const gatsby = spawn('gatsby', ['serve', '--port', PORT]);
 
   // Wait for the development server to start
-  await waitOn({
-    resources: [`tcp:localhost:${PORT}`],
-  });
+  await delay(30000);
 
   // Generate the PDF
   await generatePdf();
