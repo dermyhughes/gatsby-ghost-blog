@@ -24,7 +24,7 @@ jobs:
         uses: kamranayub/wait-for-netlify-action@v2.1.1
         id: wait-for-netflify-preview
         with:
-          site_name: "https://dermothughes.netlify.app/"
+          site_name: "dermothughes"
           max_timeout: 60
         env:
           NETLIFY_TOKEN: ${{secrets.NETLIFY_TOKEN}}
