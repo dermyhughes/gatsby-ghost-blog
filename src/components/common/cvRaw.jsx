@@ -60,7 +60,7 @@ function CVRaw() {
                   <p>
                     I&apos;m a UX Engineer based in Belfast, Northern Ireland, with a focus on{' '}
                     <a
-                      href='https://dermothughes.com/blog/is-the-title-front-end-developer-dead/'
+                      href='https://dermothughes.com/is-the-title-front-end-developer-dead/'
                       target='_blank'
                       rel='noreferrer'
                     >
