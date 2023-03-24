@@ -58,7 +58,7 @@ function CVRaw() {
                 </div>
                 <div className='coverLetter sectionContent'>
                   <p>
-                    I&apos;m a UX Engineer based in Belfast, Northern Ireland, with a focus on{' '}
+                    UX Engineer based in Belfast, Northern Ireland, specializing in{' '}
                     <a
                       href='https://dermothughes.com/is-the-title-front-end-developer-dead/'
                       target='_blank'
@@ -66,7 +66,8 @@ function CVRaw() {
                     >
                       &quot;Front of the Front End&quot;.
                     </a>{' '}
-                    I strive in bridging the gap between Design and Development.
+                    Passionate about bridging the gap between design and development to create
+                    seamless user experiences.
                   </p>
                 </div>
               </article>
