@@ -7,7 +7,7 @@ const fs = require('fs');
   try {
     console.log('Launching Puppeteer...');
     const browser = await puppeteer.launch({
-      executablePath: await chromium.executablePath,
+      executablePath: process.env.NODE_ENV === 'production' ? await chromium.executablePath : puppeteer.executablePath(),
       args: chromium.args,
       defaultViewport: chromium.defaultViewport,
       headless: chromium.headless,
