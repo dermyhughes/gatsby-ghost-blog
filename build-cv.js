@@ -4,10 +4,13 @@ const chromium = require('chrome-aws-lambda');
 const fs = require('fs');
 
 (async () => {
+  const executablePath = process.env.NETLIFY
+    ? await chromium.executablePath
+    : '/usr/bin/chromium-browser';
   try {
     console.log('Launching Puppeteer...');
     const browser = await puppeteer.launch({
-      executablePath: process.env.NODE_ENV === 'production' ? await chromium.executablePath : puppeteer.executablePath(),
+      executablePath,
       args: chromium.args,
       defaultViewport: chromium.defaultViewport,
       headless: chromium.headless,
