@@ -1,16 +1,12 @@
-/* eslint-disable no-console */
-const puppeteer = require('puppeteer-core');
+const puppeteer = require('puppeteer');
 const chromium = require('chrome-aws-lambda');
 const fs = require('fs');
 
 (async () => {
-  const executablePath = process.env.NETLIFY
-    ? await chromium.executablePath
-    : '/usr/bin/chromium-browser';
   try {
     console.log('Launching Puppeteer...');
     const browser = await puppeteer.launch({
-      executablePath,
+      executablePath: await chromium.executablePath,
       args: chromium.args,
       defaultViewport: chromium.defaultViewport,
       headless: chromium.headless,
