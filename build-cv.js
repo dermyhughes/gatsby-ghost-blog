@@ -14,14 +14,27 @@ const fs = require('fs');
       waitUntil: 'networkidle2',
     });
 
-    console.log('Generating the PDF...');
-    await page.pdf({
-      path: `${__dirname}/static/dermot-hughes-cv.pdf`,
-      format: 'A4',
-      printBackground: true,
+    // Check if the page has loaded
+    const pageLoaded = await page.evaluate(() => {
+      // Check if the page has the expected title
+      const expectedTitle = 'Dermot Hughes CV';
+      const actualTitle = document.title;
+      if (actualTitle !== expectedTitle) {
+        return false;
+      }
     });
 
-    console.log('PDF generated successfully. Closing Puppeteer...');
+    if (!pageLoaded) {
+      console.log('Generating the PDF...');
+      await page.pdf({
+        path: `${__dirname}/static/dermot-hughes-cv.pdf`,
+        format: 'A4',
+        printBackground: true,
+      });
+      console.log('PDF generated successfully.');
+    } else {
+      console.log('Page did not load successfully. Aborting PDF generation...');
+    }
     await browser.close();
 
     // Read server PID and kill the process
