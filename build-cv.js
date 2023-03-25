@@ -29,7 +29,6 @@ const fs = require('fs');
       await page.pdf({
         path: `${__dirname}/static/dermot-hughes-cv.pdf`,
         format: 'A4',
-        printBackground: true,
       });
       console.log('PDF generated successfully.');
     } else {
