@@ -1,22 +1,16 @@
 const puppeteer = require('puppeteer');
-const chromium = require('chrome-aws-lambda');
 const fs = require('fs');
 
 (async () => {
   try {
     console.log('Launching Puppeteer...');
-    const browser = await puppeteer.launch({
-      executablePath: await chromium.executablePath,
-      args: chromium.args,
-      defaultViewport: chromium.defaultViewport,
-      headless: chromium.headless,
-    });
+    const browser = await puppeteer.launch();
 
     console.log('Creating a new page...');
     const page = await browser.newPage();
 
     console.log('Navigating to the cv page...');
-    await page.goto('http://localhost:9001/cv', {
+    await page.goto('http://localhost:9000/cvraw', {
       waitUntil: 'networkidle2',
     });
 

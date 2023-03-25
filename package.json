@@ -1,5 +1,5 @@
 {
-  "name": "gatsby-starter-ghost",
+  "name": "dermot-hughes-blog",
   "description": "Portfolio site for Dermot Hughes based on Ghost and Gatsby",
   "version": "2.0.0",
   "license": "MIT",
@@ -8,9 +8,6 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/dermyhughes/gatsby-ghost-blog/.git"
-  },
-  "engines": {
-    "node": ">= 12.13.0"
   },
   "bugs": {
     "url": "https://github.com/dermyhughes/gatsby-ghost-blog/issues"
@@ -23,9 +20,7 @@
   "scripts": {
     "serve": "gatsby build && NODE_ENV=production gatsby serve",
     "build": "gatsby build",
-    "serve:build": "http-server public -p 9001 --silent",
-    "build-cv": "node build-cv.js",
-    "build-with-server": "start-server-and-test serve:build http://localhost:9001 build-cv",
+    "build:cv": "concurrently 'gatsby serve & echo $! > server.pid' 'sleep 5 && node build-cv.js'",
     "dev": "gatsby develop",
     "develop": "gatsby develop",
     "start": "gatsby serve",
@@ -34,15 +29,8 @@
     "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
     "clean": "gatsby clean"
   },
-  "lint-staged": {
-    "src/components/common/cvRaw.*": "npm run build-with-server"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "devDependencies": {
+    "concurrently": "^7.6.0",
     "eslint": "^8.25.0",
     "eslint-config-airbnb": "19.0.4",
     "eslint-config-prettier": "^8.5.0",
@@ -53,8 +41,6 @@
     "eslint-plugin-react": "^7.31.10",
     "eslint-plugin-react-hooks": "^4.6.0",
     "http-server": "^14.1.1",
-    "husky": "^8.0.3",
-    "lint-staged": "^13.2.0",
     "prettier": "^2.7.1",
     "start-server-and-test": "^2.0.0"
   },
@@ -64,7 +50,6 @@
     "@tryghost/helpers-gatsby": "2.0.4",
     "babel-plugin-prismjs": "^2.1.0",
     "cheerio": "1.0.0-rc.11",
-    "chrome-aws-lambda": "^10.1.0",
     "gatsby": "^5.8.0",
     "gatsby-awesome-pagination": "0.3.8",
     "gatsby-link": "^5.8.0",
@@ -86,7 +71,6 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-helmet": "6.1.0",
-    "url": "0.11.0",
-    "wait-on": "^7.0.1"
+    "url": "0.11.0"
   }
 }
