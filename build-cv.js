@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const puppeteer = require('puppeteer');
 const fs = require('fs');
 
