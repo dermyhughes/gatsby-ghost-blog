@@ -5,7 +5,7 @@ import { Helmet } from 'react-helmet';
 import { Link, StaticQuery, graphql } from 'gatsby';
 import Prism from 'prismjs';
 
-import { Navigation } from '.';
+import { Navigation, SocialLinks } from '.';
 
 // Styles
 import '../../styles/app.css';
@@ -24,6 +24,7 @@ function DefaultLayout({ data, children, bodyClass, isHome }) {
   const nameSplit = site.description.split('.');
   nameSplit.pop();
   const d = new Date();
+  const year = d.getFullYear();
 
   useEffect(() => {
     // call the highlightAll() function to style our code blocks
@@ -79,7 +80,6 @@ function DefaultLayout({ data, children, bodyClass, isHome }) {
                     </div>
                     <SocialLinks isHome={isHome} />
                   </div>
-
                   <nav className='site-nav'>
                     <div className='site-nav-left'>
                       <Navigation data={site.navigation} navClass='site-nav-item' />
@@ -101,7 +101,7 @@ function DefaultLayout({ data, children, bodyClass, isHome }) {
           <footer className='site-foot'>
             <div className='site-foot-nav container'>
               <div className='site-foot-nav-left'>
-                <Link to='/'>{site.title}</Link> ©{d.getFullYear()}.
+                <Link to='/'>{site.title}</Link> ©{year}.
               </div>
               <div className='site-foot-nav-right'>
                 <Navigation data={site.navigation} navClass='site-foot-nav-item' />
@@ -126,53 +126,6 @@ DefaultLayout.propTypes = {
 
 DefaultLayout.defaultProps = {
   bodyClass: '',
-  isHome: false,
-};
-
-function SocialLinks({ isHome }) {
-  return (
-    <div className='social-container'>
-      <a
-        className={`site-nav-item ${isHome ? 'home' : ''}`}
-        href='https://github.com/dermyhughes'
-        target='_blank'
-        rel='noopener noreferrer'
-      >
-        <img className='site-nav-icon' src='/images/icons/github.svg' alt='GitHub' />
-      </a>
-      <a
-        className={`site-nav-item ${isHome ? 'home' : ''}`}
-        href='https://codepen.io/dermyhughes/'
-        target='_blank'
-        rel='noopener noreferrer'
-      >
-        <img className='site-nav-icon' src='/images/icons/codepen.svg' alt='Codepen' />
-      </a>
-      <a
-        className={`site-nav-item ${isHome ? 'home' : ''}`}
-        href='https://www.linkedin.com/in/dermot-hughes-a96b67b6'
-        target='_blank'
-        rel='noopener noreferrer'
-      >
-        <img className='site-nav-icon' src='/images/icons/linkedin.svg' alt='LinkedIn' />
-      </a>
-      <a
-        className={`site-nav-item ${isHome ? 'home' : ''}`}
-        href='https://twitter.com/DermyHughes'
-        target='_blank'
-        rel='noopener noreferrer'
-      >
-        <img className='site-nav-icon' src='/images/icons/twitter.svg' alt='Twitter' />
-      </a>
-    </div>
-  );
-}
-
-SocialLinks.propTypes = {
-  isHome: PropTypes.bool,
-};
-
-SocialLinks.defaultProps = {
   isHome: false,
 };
 
