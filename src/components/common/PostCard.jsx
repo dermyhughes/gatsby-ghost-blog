@@ -5,7 +5,8 @@ import { Tags } from '@tryghost/helpers-gatsby';
 import { readingTime as readingTimeHelper } from '@tryghost/helpers';
 
 function PostCard({ post }) {
-  const url = `/${post.slug}/`;
+  const postTag = post.primary_tag ? post.primary_tag.slug : 'post';
+  const url = `/${postTag}/${post.slug}/`;
   const readingTime = readingTimeHelper(post);
 
   return (
@@ -60,6 +61,9 @@ PostCard.propTypes = {
   post: PropTypes.shape({
     slug: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
+    primary_tag: PropTypes.shape({
+      slug: PropTypes.string,
+    }),
     feature_image: PropTypes.string,
     featured: PropTypes.bool,
     tags: PropTypes.arrayOf(
