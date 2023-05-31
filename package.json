@@ -20,10 +20,11 @@
   "scripts": {
     "serve": "gatsby build && NODE_ENV=production gatsby serve",
     "build": "gatsby build",
-    "build:cv": "concurrently 'gatsby serve & echo $! > server.pid' 'sleep 5 && node build-cv.js'",
+    "start": "gatsby build && gatsby serve",
+    "generate-pdf": "node build-cv.js",
+    "ci": "start-server-and-test start http://localhost:9000 generate-pdf",
     "dev": "gatsby develop",
     "develop": "gatsby develop",
-    "start": "gatsby serve",
     "lint": "eslint src/**/*.{js,jsx,ts,tsx,json}",
     "lint:fix": "eslint --fix 'src/**/*.{js,jsx,ts,tsx,json}'",
     "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
