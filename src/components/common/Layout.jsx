@@ -10,6 +10,8 @@ import { Navigation, SocialLinks } from '.';
 // Styles
 import '../../styles/app.css';
 
+const CURRENT_YEAR = new Date().getFullYear();
+
 /**
  * Main layout component
  *
@@ -23,13 +25,10 @@ function DefaultLayout({ data, children, bodyClass, isHome }) {
   site.cover_image = null;
   const nameSplit = site.description.split('.');
   nameSplit.pop();
-  const d = new Date();
-  const year = d.getFullYear();
 
   useEffect(() => {
-    // call the highlightAll() function to style our code blocks
     Prism.highlightAll();
-  });
+  }, [children]);
 
   return (
     <>
@@ -101,7 +100,7 @@ function DefaultLayout({ data, children, bodyClass, isHome }) {
           <footer className='site-foot'>
             <div className='site-foot-nav container'>
               <div className='site-foot-nav-left'>
-                <Link to='/'>{site.title}</Link> ©{year}.
+                <Link to='/'>{site.title}</Link> ©{CURRENT_YEAR}.
               </div>
               <div className='site-foot-nav-right'>
                 <Navigation data={site.navigation} navClass='site-foot-nav-item' />

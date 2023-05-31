@@ -9,44 +9,46 @@ const { paginate } = require(`gatsby-awesome-pagination`);
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions;
 
-  const result = await graphql(`{
-  allGhostPost(sort: {published_at: ASC}) {
-    edges {
-      node {
-        slug
-        primary_tag {
-          slug
+  const result = await graphql(`
+    {
+      allGhostPost(sort: { published_at: ASC }) {
+        edges {
+          node {
+            slug
+            primary_tag {
+              slug
+            }
+          }
+        }
+      }
+      allGhostTag(sort: { name: ASC }) {
+        edges {
+          node {
+            slug
+            url
+            postCount
+          }
+        }
+      }
+      allGhostAuthor(sort: { name: ASC }) {
+        edges {
+          node {
+            slug
+            url
+            postCount
+          }
+        }
+      }
+      allGhostPage(sort: { published_at: ASC }) {
+        edges {
+          node {
+            slug
+            url
+          }
         }
       }
     }
-  }
-  allGhostTag(sort: {name: ASC}) {
-    edges {
-      node {
-        slug
-        url
-        postCount
-      }
-    }
-  }
-  allGhostAuthor(sort: {name: ASC}) {
-    edges {
-      node {
-        slug
-        url
-        postCount
-      }
-    }
-  }
-  allGhostPage(sort: {published_at: ASC}) {
-    edges {
-      node {
-        slug
-        url
-      }
-    }
-  }
-}`);
+  `);
 
   // Check for any errors
   if (result.errors) {
@@ -132,8 +134,10 @@ exports.createPages = async ({ graphql, actions }) => {
   // Create post pages
   posts.forEach(({ node }) => {
     // This part here defines, that our posts will use
-    // a `/:slug/` permalink.
-    node.url = `/${node.slug}/`;
+    // a `/:tag/:slug/` permalink.
+    // If a post doesn't have a primary_tag, it will fall back to 'post' as the default tag
+    const postTag = node.primary_tag ? node.primary_tag.slug : 'post';
+    node.url = `/${postTag}/${node.slug}/`;
 
     createPage({
       path: node.url,
