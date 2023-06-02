@@ -1,5 +1,4 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-npm run generate-pdf:ci
-if git diff --name-only --staged | grep -q 'src/components/common/cvRaw.jsx'; then npm run generate-pdf:ci; fi
+if ! git diff --staged --quiet -- 'src/components/common/cvRaw.jsx'; then npm run generate-pdf:ci; fi
