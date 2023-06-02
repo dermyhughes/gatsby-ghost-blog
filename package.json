@@ -28,7 +28,8 @@
     "lint": "eslint src/**/*.{js,jsx,ts,tsx,json}",
     "lint:fix": "eslint --fix 'src/**/*.{js,jsx,ts,tsx,json}'",
     "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
-    "clean": "gatsby clean"
+    "clean": "gatsby clean",
+    "prepare": "husky install"
   },
   "devDependencies": {
     "concurrently": "^7.6.0",
@@ -42,6 +43,7 @@
     "eslint-plugin-react": "^7.31.10",
     "eslint-plugin-react-hooks": "^4.6.0",
     "http-server": "^14.1.1",
+    "husky": "^8.0.3",
     "prettier": "^2.7.1",
     "start-server-and-test": "^2.0.0"
   },
