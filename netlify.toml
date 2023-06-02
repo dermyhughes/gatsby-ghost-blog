@@ -1,10 +1,6 @@
 [build]
-  command = "NODE_ENV=production npm run generate-pdf:ci && npm run build"
+  command = "NODE_ENV=production npm run build"
   publish = "public/"
 
 [template]
   incoming-hooks = ["Ghost"]
-
-[[plugins]]
-package = "netlify-plugin-puppeteer"
-
