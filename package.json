@@ -22,7 +22,7 @@
     "build": "gatsby build",
     "start": "gatsby build && gatsby serve",
     "generate-pdf": "node build-cv.js",
-    "ci": "start-server-and-test start http://localhost:9000 generate-pdf",
+    "generate-pdf:ci": "start-server-and-test start http://localhost:9000 generate-pdf",
     "dev": "gatsby develop",
     "develop": "gatsby develop",
     "lint": "eslint src/**/*.{js,jsx,ts,tsx,json}",

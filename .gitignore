@@ -78,3 +78,7 @@ yarn-error.log
 
 # Local Netlify folder
 .netlify
+
+
+# CV PDF
+static/dermot-hughes-cv.pdf
