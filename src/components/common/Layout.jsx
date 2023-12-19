@@ -21,10 +21,9 @@ const CURRENT_YEAR = new Date().getFullYear();
  *
  */
 function DefaultLayout({ data, children, bodyClass, isHome }) {
-  const site = data.allGhostSettings.edges[0].node;
-  site.cover_image = null;
-  const nameSplit = site.description.split('.');
-  nameSplit.pop();
+  const site = { ...data.allGhostSettings.edges[0].node, cover_image: null };
+  const descriptionParts = site.description.split('.');
+  descriptionParts.pop();
 
   useEffect(() => {
     Prism.highlightAll();
@@ -71,7 +70,7 @@ function DefaultLayout({ data, children, bodyClass, isHome }) {
                       {site.title}
                     </h1>
                     <div className='site-banner-desc'>
-                      {nameSplit.map((item, i) => (
+                      {descriptionParts.map((item, i) => (
                         <div className='highlight-container' key={i}>
                           <span className='highlight'>{item}.</span>
                         </div>
