@@ -100,11 +100,10 @@
 .site-banner {
   display: grid;
   place-content: center;
-  max-width: 80%;
   padding: 5vw 0;
   text-align: center;
   background-image: url('/images/hexagon.svg');
-  background-size: 150%;
+  background-size: 120%;
   background-repeat: no-repeat;
   background-position: center;
 }
@@ -117,7 +116,7 @@
   line-height: 1.1em;
   font-family: 'Permanent Marker', Helvetica, Arial, sans-serif;
   font-size: 6rem;
-  font-size: clamp(2rem, 15vw, 26rem);
+  font-size: clamp(2rem, 15vw, 22rem);
   text-transform: uppercase;
   letter-spacing: 0.8rem;
 }

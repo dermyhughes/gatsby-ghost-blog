@@ -16,7 +16,6 @@ const generateItem = function generateItem(siteUrl, post) {
     url: itemUrl,
     date: post.published_at,
     categories: _.map(tagsHelper(post, { visibility: `public`, fn: (tag) => tag }), `name`),
-    author: post.primary_author ? post.primary_author.name : null,
     custom_elements: [],
   };
   let imageUrl;
@@ -92,12 +91,6 @@ const generateRSSFeed = function generateRSSFeed(siteConfig) {
         excerpt
         meta_title
         meta_description
-        authors {
-          name
-        }
-        primary_author {
-          name
-        }
         tags {
           name
           visibility

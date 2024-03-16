@@ -6,7 +6,6 @@ import url from 'url';
 import config from '../../../utils/siteConfig';
 import ArticleMeta from './ArticleMeta';
 import WebsiteMeta from './WebsiteMeta';
-import AuthorMeta from './AuthorMeta';
 
 /**
  * MetaData will generate all relevant meta data information incl.
@@ -23,9 +22,6 @@ function MetaData({ data, settings, title, description, image, location }) {
   }
   if (ghostTag) {
     return <WebsiteMeta data={ghostTag} canonical={canonical} type='Series' />;
-  }
-  if (ghostAuthor) {
-    return <AuthorMeta data={ghostAuthor} canonical={canonical} />;
   }
   if (ghostPage) {
     return <WebsiteMeta data={ghostPage} canonical={canonical} type='WebSite' />;

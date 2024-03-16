@@ -24,20 +24,6 @@ export const ghostTagFields = graphql`
   }
 `;
 
-// Used for author pages
-export const ghostAuthorFields = graphql`
-  fragment GhostAuthorFields on GhostAuthor {
-    slug
-    name
-    bio
-    cover_image
-    profile_image
-    location
-    website
-    twitter
-    facebook
-  }
-`;
 
 // Used for single posts
 export const ghostPostFields = graphql`
@@ -71,28 +57,6 @@ export const ghostPostFields = graphql`
     twitter_description
     twitter_image
     twitter_title
-
-    # Authors
-    authors {
-      name
-      slug
-      bio
-      # email
-      profile_image
-      twitter
-      facebook
-      website
-    }
-    primary_author {
-      name
-      slug
-      bio
-      # email
-      profile_image
-      twitter
-      facebook
-      website
-    }
 
     # Tags
     primary_tag {
@@ -162,28 +126,6 @@ export const ghostPageFields = graphql`
     twitter_description
     twitter_image
     twitter_title
-
-    # Authors
-    authors {
-      name
-      slug
-      bio
-      # email
-      profile_image
-      twitter
-      facebook
-      website
-    }
-    primary_author {
-      name
-      slug
-      bio
-      # email
-      profile_image
-      twitter
-      facebook
-      website
-    }
 
     # Tags
     primary_tag {

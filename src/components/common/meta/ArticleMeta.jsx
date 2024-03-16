@@ -6,7 +6,6 @@ import _ from 'lodash';
 import url from 'url';
 
 import { tags as tagsHelper } from '@tryghost/helpers';
-import getAuthorProperties from './getAuthorProperties';
 import ImageMeta from './ImageMeta';
 import config from '../../../utils/siteConfig';
 
@@ -14,7 +13,6 @@ function ArticleMetaGhost({ data, settings, canonical }) {
   const ghostPost = data;
   settings = settings.allGhostSettings.edges[0].node;
 
-  const author = getAuthorProperties(ghostPost.primary_author);
   const publicTags = _.map(
     tagsHelper(ghostPost, { visibility: 'public', fn: (tag) => tag }),
     'name',
@@ -31,12 +29,6 @@ function ArticleMetaGhost({ data, settings, canonical }) {
   const jsonLd = {
     '@context': 'https://schema.org/',
     '@type': 'Article',
-    author: {
-      '@type': 'Person',
-      name: author.name,
-      image: author.image ? author.image : undefined,
-      sameAs: author.sameAsArray ? author.sameAsArray : undefined,
-    },
     keywords: publicTags.length ? publicTags.join(', ') : undefined,
     headline: ghostPost.meta_title || ghostPost.title,
     url: canonical,
@@ -90,7 +82,6 @@ function ArticleMetaGhost({ data, settings, canonical }) {
         {publicTags.map((keyword, i) => (
           <meta property='article:tag' content={keyword} key={i} />
         ))}
-        {author.facebookUrl && <meta property='article:author' content={author.facebookUrl} />}
 
         <meta
           name='twitter:title'
@@ -101,8 +92,6 @@ function ArticleMetaGhost({ data, settings, canonical }) {
           content={ghostPost.twitter_description || ghostPost.excerpt || ghostPost.meta_description}
         />
         <meta name='twitter:url' content={canonical} />
-        <meta name='twitter:label1' content='Written by' />
-        <meta name='twitter:data1' content={author.name} />
         {primaryTag && <meta name='twitter:label2' content='Filed under' />}
         {primaryTag && <meta name='twitter:data2' content={primaryTag} />}
 
@@ -127,7 +116,6 @@ ArticleMetaGhost.propTypes = {
     updated_at: PropTypes.string.isRequired,
     meta_title: PropTypes.string,
     meta_description: PropTypes.string,
-    primary_author: PropTypes.object.isRequired,
     feature_image: PropTypes.string,
     tags: PropTypes.arrayOf(
       PropTypes.shape({
