@@ -235,7 +235,7 @@
 // Animation delay. Will add 0.5s per item.
 @for $i from 1 through 4 {
   .highlight-container:nth-child(#{$i})::before {
-    animation-delay: #{$i/2}s;
+    animation-delay: calc($i / 2) s;
   }
 }
 
