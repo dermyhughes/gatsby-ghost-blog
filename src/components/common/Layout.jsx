@@ -8,7 +8,7 @@ import Prism from 'prismjs';
 import { Navigation, SocialLinks } from '.';
 
 // Styles
-import '../../styles/app.css';
+import '../../styles/app.scss';
 
 const CURRENT_YEAR = new Date().getFullYear();
 
