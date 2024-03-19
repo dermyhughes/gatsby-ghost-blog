@@ -44,6 +44,13 @@ function DefaultLayout({ data, children, bodyClass, isHome }) {
     };
 
     loadFont();
+    // Set a timeout to set isFontLoaded to true after 3 seconds
+    const timeoutId = setTimeout(() => {
+      setIsFontLoaded(true);
+    }, 3000);
+
+    // Clear the timeout when the component is unmounted
+    return () => clearTimeout(timeoutId);
   }, []);
 
   return (
