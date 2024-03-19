@@ -1,7 +1,13 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-function SocialLink({ isHome, href, icon, alt }) {
+interface SocialLinkProps {
+  isHome?: boolean;
+  href: string;
+  icon: string;
+  alt: string;
+}
+
+const SocialLink = ({ isHome = false, href, icon, alt }: SocialLinkProps) => {
   return (
     <a
       className={`site-nav-item ${isHome ? 'home' : ''}`}
@@ -12,21 +18,14 @@ function SocialLink({ isHome, href, icon, alt }) {
       <img className='site-nav-icon' src={`/images/icons/${icon}.svg`} alt={alt} />
     </a>
   );
+};
+
+interface SocialLinksProps {
+  isHome?: boolean;
 }
 
-SocialLink.propTypes = {
-  isHome: PropTypes.bool,
-  href: PropTypes.string.isRequired,
-  icon: PropTypes.string.isRequired,
-  alt: PropTypes.string.isRequired,
-};
-
-SocialLink.defaultProps = {
-  isHome: false,
-};
-
-function SocialLinks({ isHome }) {
-  const socialLinks = [
+const SocialLinks = ({ isHome = false }: SocialLinksProps) => {
+  const socialLinks: SocialLinkProps[] = [
     {
       href: 'https://github.com/dermyhughes',
       icon: 'github',
@@ -56,14 +55,6 @@ function SocialLinks({ isHome }) {
       ))}
     </div>
   );
-}
-
-SocialLinks.propTypes = {
-  isHome: PropTypes.bool,
-};
-
-SocialLinks.defaultProps = {
-  isHome: false,
 };
 
 export default SocialLinks;

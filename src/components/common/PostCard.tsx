@@ -1,10 +1,29 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import { Link } from 'gatsby';
 import { Tags } from '@tryghost/helpers-gatsby';
 import { readingTime as readingTimeHelper } from '@tryghost/helpers';
 
-function PostCard({ post }) {
+interface Tag {
+  name?: string;
+}
+
+interface Post {
+  slug: string;
+  title: string;
+  primary_tag?: {
+    slug?: string;
+  };
+  feature_image?: string;
+  featured?: boolean;
+  tags?: Tag[];
+  excerpt: string;
+}
+
+interface PostCardProps {
+  post: Post;
+}
+
+const PostCard = ({ post }: PostCardProps) => {
   const postTag = post.primary_tag ? post.primary_tag.slug : 'post';
   const url = `/${postTag}/${post.slug}/`;
   const readingTime = readingTimeHelper(post);
@@ -37,24 +56,6 @@ function PostCard({ post }) {
       </footer>
     </Link>
   );
-}
-
-PostCard.propTypes = {
-  post: PropTypes.shape({
-    slug: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    primary_tag: PropTypes.shape({
-      slug: PropTypes.string,
-    }),
-    feature_image: PropTypes.string,
-    featured: PropTypes.bool,
-    tags: PropTypes.arrayOf(
-      PropTypes.shape({
-        name: PropTypes.string,
-      }),
-    ),
-    excerpt: PropTypes.string.isRequired,
-  }).isRequired,
 };
 
 export default PostCard;

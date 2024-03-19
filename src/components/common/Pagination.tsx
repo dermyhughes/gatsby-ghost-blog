@@ -1,8 +1,18 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import { Link } from 'gatsby';
 
-function Pagination({ pageContext }) {
+interface PageContext {
+  previousPagePath?: string;
+  nextPagePath?: string;
+  humanPageNumber: number;
+  numberOfPages: number;
+}
+
+interface PaginationProps {
+  pageContext: PageContext;
+}
+
+const Pagination = ({ pageContext }: PaginationProps) => {
   const { previousPagePath, nextPagePath, humanPageNumber, numberOfPages } = pageContext;
 
   return (
@@ -28,10 +38,6 @@ function Pagination({ pageContext }) {
       </div>
     </nav>
   );
-}
-
-Pagination.propTypes = {
-  pageContext: PropTypes.object.isRequired,
 };
 
 export default Pagination;
