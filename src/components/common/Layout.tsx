@@ -29,13 +29,37 @@ function DefaultLayout({ data, children, bodyClass, isHome }) {
     Prism.highlightAll();
   }, [children]);
 
+  const [isFontLoaded, setIsFontLoaded] = React.useState(false);
+  useEffect(() => {
+    const loadFont = async () => {
+      try {
+        const font = 'Permanent Marker';
+        await document.fonts.load(`1em "${font}"`);
+        if (document.fonts.check(`1em "${font}"`)) {
+          setIsFontLoaded(true);
+        }
+      } catch (error) {
+        console.error(`Failed to load font: ${error}`);
+      }
+    };
+
+    loadFont();
+    // Set a timeout to set isFontLoaded to true after 3 seconds
+    const timeoutId = setTimeout(() => {
+      setIsFontLoaded(true);
+    }, 3000);
+
+    // Clear the timeout when the component is unmounted
+    return () => clearTimeout(timeoutId);
+  }, []);
+
   return (
     <>
       <Helmet>
         <html lang={site.lang} />
         <style type='text/css'>{`${site.codeinjection_styles}`}</style>
         <link
-          href='https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap'
+          href='https://fonts.googleapis.com/css2?family=Permanent+Marker&display=block'
           rel='stylesheet'
         />
         <body className={bodyClass} />
@@ -66,9 +90,14 @@ function DefaultLayout({ data, children, bodyClass, isHome }) {
               {isHome && (
                 <div>
                   <div className='site-banner'>
-                    <h1 className='site-banner-title three-d' data-line={site.title}>
+                    <h1
+                      style={{ visibility: isFontLoaded ? 'visible' : 'hidden' }}
+                      className='site-banner-title three-d'
+                      data-line={site.title}
+                    >
                       {site.title}
                     </h1>
+
                     <div className='site-banner-desc'>
                       {descriptionParts.map((item, i) => (
                         <div className='highlight-container' key={i}>
