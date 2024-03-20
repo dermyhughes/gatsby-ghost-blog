@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-filename-extension */
 import * as React from 'react';
 import PropTypes from 'prop-types';
+import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import { graphql } from 'gatsby';
 import { Helmet } from 'react-helmet';
 
@@ -15,6 +16,7 @@ import { MetaData } from '../components/common/meta';
  */
 function Post({ data, location }) {
   const post = data.ghostPost;
+  const image = getImage(post.feature_image);
 
   return (
     <>
@@ -25,9 +27,9 @@ function Post({ data, location }) {
       <Layout>
         <div className='container'>
           <article className='content'>
-            {post.feature_image ? (
+            {image ? (
               <figure className='post-feature-image poster'>
-                <img src={post.feature_image} alt={post.title} />
+                <GatsbyImage image={image} alt={post.title} />
               </figure>
             ) : null}
             <section className='post-full-content'>
