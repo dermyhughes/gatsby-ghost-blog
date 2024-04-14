@@ -2,7 +2,7 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import { Layout, CVRaw } from '../components/common';
 
-function CVPage() {
+const CVPage: React.FunctionComponent = () => {
   return (
     <>
       <Helmet>
@@ -21,6 +21,6 @@ function CVPage() {
       </Layout>
     </>
   );
-}
+};
 
 export default CVPage;
