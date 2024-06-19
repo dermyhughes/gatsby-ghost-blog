@@ -57,7 +57,7 @@
     "@types/react-dom": "^18.2.22",
     "babel-plugin-prismjs": "^2.1.0",
     "cheerio": "1.0.0-rc.11",
-    "gatsby": "^5.8.0",
+    "gatsby": "^5.13.6",
     "gatsby-awesome-pagination": "0.3.8",
     "gatsby-link": "^5.8.0",
     "gatsby-plugin-catch-links": "5.7.0",
