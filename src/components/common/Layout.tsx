@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { Link, StaticQuery, graphql } from 'gatsby';
 import Prism from 'prismjs';
+import 'prismjs/components/prism-jsx';
 
 import { Navigation, SocialLinks } from '.';
 
