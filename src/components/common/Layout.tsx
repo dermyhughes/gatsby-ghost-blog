@@ -62,8 +62,10 @@ function DefaultLayout({ data, children, bodyClass, isHome }) {
         <html lang={site.lang} />
         <style type='text/css'>{`${site.codeinjection_styles}`}</style>
         <link
-          href='https://fonts.googleapis.com/css2?family=Permanent+Marker&display=block'
-          rel='stylesheet'
+          rel='preload'
+          href='https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap'
+          as='style'
+          onLoad="this.onload=null;this.rel='stylesheet'"
         />
         <body className={bodyClass} />
       </Helmet>
