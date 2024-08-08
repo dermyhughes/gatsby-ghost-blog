@@ -108,18 +108,31 @@
   background-position: center;
 }
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    filter: blur(5px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
 .site-banner-title {
   margin: 0;
   margin-bottom: 2rem;
   padding: 0;
   color: #fff;
   line-height: 1.1em;
-  font-display: block;
-  font-family: 'Permanent Marker', Helvetica, Arial, sans-serif;
+  font-family: 'Permanent Marker', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
   font-size: 6rem;
   font-size: clamp(2rem, 15vw, 22rem);
   text-transform: uppercase;
   letter-spacing: 0.8rem;
+  opacity: 0;
+  animation: fadeIn 2500ms ease-in-out forwards;
 }
 
 .three-d {
