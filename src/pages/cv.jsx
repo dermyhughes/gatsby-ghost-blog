@@ -10,13 +10,13 @@ function CVPage() {
         <title>Dermot Hughes CV</title>
       </Helmet>
       <Layout>
-        <div className='download-link'>
+        {/* <div className='download-link'>
           <a href='/dermot-hughes-cv.pdf'>
             <button className='download-btn' type='button'>
               👉 Download PDF
             </button>
           </a>
-        </div>
+        </div> */}
         <CVRaw />
       </Layout>
     </>

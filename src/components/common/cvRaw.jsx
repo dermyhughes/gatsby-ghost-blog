@@ -1,23 +1,97 @@
 import Helmet from 'react-helmet';
 import React from 'react';
-
 import '../../styles/app.scss';
+
+function MetaData() {
+  return (
+    <Helmet>
+      <meta name='robots' content='noindex' />
+      <link
+        href='https://fonts.googleapis.com/css2?family=Lato:wght@300;400;500;700&display=swap'
+        rel='stylesheet'
+      />
+      <link
+        href='https://fonts.googleapis.com/css2?family=Exo:wght@300;400;500;700&display=swap'
+        rel='stylesheet'
+      />
+      <title>Dermot Hughes CV</title>
+    </Helmet>
+  );
+}
+
+function ContactDetail({ icon, text, link }) {
+  return (
+    <li>
+      <img src={icon} alt={`${text} icon`} />
+      {link ? (
+        <a href={link} rel='noopener noreferrer' target='_blank'>
+          {text}
+        </a>
+      ) : (
+        text
+      )}
+    </li>
+  );
+}
+
+function ContactDetails() {
+  return (
+    <div id='contactDetails'>
+      <ul>
+        <ContactDetail
+          icon='/images/icons/email.svg'
+          text='contact@dermothughes.com'
+          link='mailto:contact@dermothughes.com'
+        />
+        <ContactDetail
+          icon='/images/icons/web.svg'
+          text='www.dermothughes.com'
+          link='http://www.dermothughes.com'
+        />
+        <ContactDetail icon='/images/icons/phone.svg' text='(+44) 7818893798' />
+      </ul>
+    </div>
+  );
+}
+
+function Section({ title, children }) {
+  return (
+    <section>
+      <div className='sectionTitle'>
+        <h1>{title}</h1>
+      </div>
+      <div className='sectionContent'>{children}</div>
+      <div className='clear' />
+    </section>
+  );
+}
+
+function JobExperience({ title, company, date, description }) {
+  return (
+    <article>
+      <h2>{title}</h2>
+      {company && <h3>{company}</h3>}
+      <p className='subDetails'>{date}</p>
+      {description && <p>{description}</p>}
+    </article>
+  );
+}
+
+function EducationItem({ degree, institution, details }) {
+  return (
+    <article>
+      <h2>{degree}</h2>
+      <h3>{institution}</h3>
+      <p className='subDetails'>{details}</p>
+      <br />
+    </article>
+  );
+}
 
 function CVRaw() {
   return (
     <>
-      <Helmet>
-        <meta name='robots' content='noindex' />
-        <link
-          href='https://fonts.googleapis.com/css2?family=Lato:wght@300;400;500;700&display=swap'
-          rel='stylesheet'
-        />
-        <link
-          href='https://fonts.googleapis.com/css2?family=Exo:wght@300;400;500;700&display=swap'
-          rel='stylesheet'
-        />
-        <title>Dermot Hughes CV</title>
-      </Helmet>
+      <MetaData />
 
       <div id='cv-body'>
         <div id='cv'>
@@ -26,179 +100,106 @@ function CVRaw() {
               <h1>Dermot Hughes</h1>
               <h2>Front End Developer</h2>
             </div>
-            <div id='contactDetails'>
-              <ul>
-                <li>
-                  <img src='/images/icons/email.svg' alt='email icon' />
-                  <a
-                    href='mailto:contact@dermothughes.com'
-                    rel='noopener noreferrer'
-                    target='_blank'
-                  >
-                    contact@dermothughes.com
-                  </a>
-                </li>
-                <li>
-                  <img src='/images/icons/web.svg' alt='website icon' />
-                  <a href='http://www.dermothughes.com'>www.dermothughes.com</a>
-                </li>
-                <li>
-                  <img src='/images/icons/phone.svg' alt='phone icon' />
-                  (+44) 7818893798
-                </li>
-              </ul>
-            </div>
+            <ContactDetails />
             <div className='clear' />
           </div>
-          <div id='mainArea'>
-            <section>
-              <article>
-                <div className='sectionTitle'>
-                  <h1>Personal Profile</h1>
-                </div>
-                <div className='coverLetter sectionContent'>
-                  <p>
-                    UX Engineer based in Belfast, Northern Ireland, specializing in{' '}
-                    <a
-                      href='https://dermothughes.com/is-the-title-front-end-developer-dead/'
-                      target='_blank'
-                      rel='noreferrer'
-                    >
-                      &quot;Front of the Front End&quot;.
-                    </a>{' '}
-                    Passionate about bridging the gap between design and development to create
-                    seamless user experiences.
-                  </p>
-                </div>
-              </article>
-              <div className='clear' />
-            </section>
-            <section>
-              <div className='sectionTitle'>
-                <h1>Work Experience</h1>
-              </div>
-              <div className='sectionContent'>
-                <article>
-                  <h2>Senior Software Engineer</h2>
-                  <p className='subDetails'>April 2022 - Present</p>
-                  <p>
-                    Technical Lead Engineer for internal Design System team. React, Node, NPM,
-                    Storybook, React Testing Library, Jenkins, Github Actions, and more.
-                  </p>
-                  <h2>Software Engineer II</h2>
-                  <h3>Bazaarvoice</h3>
-                  <p className='subDetails'>Feburary 2021 - April 2022</p>
-                  <p>
-                    Front End Developer using React. Focusing on developing and managing an internal
-                    design system of reusable React components, Design Tokens, and more.
-                  </p>
-                </article>
-                <article>
-                  <h2>UX Developer</h2>
-                  <h3>Atto Partners</h3>
-                  <p className='subDetails'>September 2020 - December 2020</p>
-                  <p>
-                    Front End Development with a particular focus on UI and UX. Worked on a series
-                    of projects both greenfield and legacy, with a variety of stacks including Vue
-                    and Ruby on Rails.
-                  </p>
-                </article>
-                <article>
-                  <h2>Front End Engineer</h2>
-                  <h3>Micro Focus</h3>
-                  <p className='subDetails'>October 2019 - September 2020</p>
-                  <p>
-                    Front End Development using the Angular framework. Developing and maintaining an
-                    open and closed source design system and UI Angular component library,
-                    <a href='https://uxaspects.github.io/UXAspects/#/landing'> UX Aspects</a>.
-                    Application development for UI of
-                    <a href='https://www.microfocus.com/en-us/products/digital-safe-cloud-archiving/overview'>
-                      {' '}
-                      Digital Safe
-                    </a>
-                    .
-                  </p>
-                </article>
 
-                <article className='second-job'>
-                  <h2>Front End Engineer</h2>
-                  <h3>Reward</h3>
-                  <p className='subDetails'>April 2018 - October 2019</p>
-                  <p>
-                    Front End Development incorporating HTML5, CSS3, and JavaScript ES6+/TypeScript
-                    using the Angular framework. UX and UI Design for Web applications. Wireframing,
-                    rapid prototyping, mockups, user research, and analytics. Public facing sites
-                    and internal/client facing interfaces, including front-end development and UX
-                    design. Email design and development for award winning bank loyalty programmes.
-                  </p>
-                </article>
-                <article>
-                  <h2>Email Development Lead</h2>
-                  <h3>Chain Reaction Cycles</h3>
-                  <p className='subDetails'>October 2016 - April 2018</p>
-                  <p>
-                    Lead Developer and Line Manager for the Email Marketing team for Chain Reaction
-                    Cycles - The World&apos;s Largest Online Bike Store. Responsible for the
-                    creation and delivery of responsive mobile-first commercial and CRM emails
-                    worldwide. Working to extreme deadlines and turnarounds as short as hours.
-                  </p>
-                </article>
-                <article>
-                  <h2>Technical Support Engineer</h2>
-                  <h3>Engage</h3>
-                  <p className='subDetails'>April 2016 - October 2016</p>
-                </article>
-                <article>
-                  <h2>Desktop Support Engineer</h2>
-                  <h3>Egton Health (EMIS)</h3>
-                  <p className='subDetails'>June 2014 - March 2016</p>
-                </article>
-              </div>
-              <div className='clear' />
-            </section>
-            <section id='education'>
-              <div className='sectionTitle'>
-                <h1>Education</h1>
-              </div>
-              <div className='sectionContent'>
-                <article>
-                  <h2>BSc (Hons) Creative Technologies</h2>
-                  <h3>University of Ulster, Magee</h3>
-                  <p className='subDetails'>First Class Honours</p>
-                  <br />
-                </article>
-                <article>
-                  <h2>BTEC National Diploma in Multimedia</h2>
-                  <h3>Southern Regional College, Newry</h3>
-                  <p className='subDetails'>MMM</p>
-                  <br />
-                </article>
-                <article>
-                  <h2>GCSE/A Level</h2>
-                  <h3>Abbey Grammar School, Newry</h3>
-                  <p className='subDetails'>A-C including English, Maths, and ICT</p>
-                  <br />
-                </article>
-              </div>
-              <div className='clear' />
-            </section>
-            <section>
-              <div className='sectionTitle'>
-                <h1>Interests</h1>
-              </div>
-              <div className='sectionContent'>
-                <article>
-                  <p>
-                    In my free time I enjoy being creative if I can. I like photography and video
-                    production, recording music, mountain biking, playing bass guitar, listening to
-                    new music, watching ice hockey, cooking, and occasionally I’ve taken part as an
-                    extra in TV and Film productions such as Game of Thrones and The Fall.
-                  </p>
-                  <p className='ref'>A list of references is available on request.</p>
-                </article>
-              </div>
-              <div className='clear' />
-            </section>
+          <div id='mainArea'>
+            <Section title='Personal Profile'>
+              <p>
+                UX Engineer based in Belfast, Northern Ireland, specializing in{' '}
+                <a
+                  href='https://dermothughes.com/is-the-title-front-end-developer-dead/'
+                  target='_blank'
+                  rel='noreferrer'
+                >
+                  &quot;Front of the Front End&quot;.
+                </a>{' '}
+                Passionate about bridging the gap between design and development to create seamless
+                user experiences.
+              </p>
+            </Section>
+
+            <Section title='Work Experience'>
+              <JobExperience
+                title='Staff Software Engineer'
+                date='July 2024 - Present'
+                description='Technical Lead Engineer for internal Design System team. React, Node, NPM, Storybook, React Testing Library, Jenkins, Github Actions, and more.'
+              />
+              <JobExperience
+                title='Senior Software Engineer'
+                date='April 2022 - June 2024'
+                description='Technical Lead Engineer for internal Design System team. React, Node, NPM, Storybook, React Testing Library, Jenkins, Github Actions, and more.'
+              />
+              <JobExperience
+                title='Software Engineer II'
+                company='Bazaarvoice'
+                date='February 2021 - April 2022'
+                description='Front End Developer using React. Focusing on developing and managing an internal design system of reusable React components, Design Tokens, and more.'
+              />
+              <JobExperience
+                title='UX Developer'
+                company='Atto Partners'
+                date='September 2020 - December 2020'
+                description='Front End Development with a focus on UI and UX. Worked on a series of projects with various stacks including Vue and Ruby on Rails.'
+              />
+              <JobExperience
+                title='Front End Engineer'
+                company='Micro Focus'
+                date='October 2019 - September 2020'
+                description='Front End Development using Angular. Developed and maintained a design system and UI Angular component library.'
+              />
+              <JobExperience
+                title='Front End Engineer'
+                company='Reward'
+                date='April 2018 - October 2019'
+                description='Front End Development with HTML5, CSS3, and JavaScript ES6+/TypeScript using Angular. UX and UI Design for Web applications.'
+              />
+              <JobExperience
+                title='Email Development Lead'
+                company='Chain Reaction Cycles'
+                date='October 2016 - April 2018'
+                description='Lead Developer and Line Manager for the Email Marketing team. Responsible for the creation and delivery of responsive mobile-first commercial and CRM emails worldwide.'
+              />
+              <JobExperience
+                title='Technical Support Engineer'
+                company='Engage'
+                date='April 2016 - October 2016'
+              />
+              <JobExperience
+                title='Desktop Support Engineer'
+                company='Egton Health (EMIS)'
+                date='June 2014 - March 2016'
+              />
+            </Section>
+
+            <Section title='Education'>
+              <EducationItem
+                degree='BSc (Hons) Creative Technologies'
+                institution='University of Ulster, Magee'
+                details='First Class Honours'
+              />
+              <EducationItem
+                degree='BTEC National Diploma in Multimedia'
+                institution='Southern Regional College, Newry'
+                details='MMM'
+              />
+              <EducationItem
+                degree='GCSE/A Level'
+                institution='Abbey Grammar School, Newry'
+                details='A-C including English, Maths, and ICT'
+              />
+            </Section>
+
+            <Section title='Interests'>
+              <p>
+                In my free time, I enjoy being creative. I like photography and video production,
+                recording music, mountain biking, playing bass guitar, listening to new music,
+                watching ice hockey, cooking, and occasionally I’ve taken part as an extra in TV and
+                Film productions such as Game of Thrones and The Fall.
+              </p>
+              <p className='ref'>A list of references is available on request.</p>
+            </Section>
           </div>
         </div>
       </div>
