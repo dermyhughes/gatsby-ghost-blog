@@ -79,8 +79,10 @@ function CVRaw() {
               </div>
               <div className='sectionContent'>
                 <article>
+                  <h2>Staff Software Engineer</h2>
+                  <p className='subDetails'>July 2024 - Present</p>
                   <h2>Senior Software Engineer</h2>
-                  <p className='subDetails'>April 2022 - Present</p>
+                  <p className='subDetails'>April 2022 - June 2024</p>
                   <p>
                     Technical Lead Engineer for internal Design System team. React, Node, NPM,
                     Storybook, React Testing Library, Jenkins, Github Actions, and more.
