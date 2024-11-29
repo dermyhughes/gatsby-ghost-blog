@@ -32,6 +32,24 @@ function DefaultLayout({ data, children, bodyClass, isHome }) {
     Prism.highlightAll();
   }, [children]);
 
+  React.useEffect(() => {
+    const scrollProgress = document.getElementById('scroll-progress');
+    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+
+    const handleScroll = () => {
+      const scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+      if (scrollProgress) {
+        scrollProgress.style.width = `${(scrollTop / height) * 100}%`;
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
     <>
       <Helmet>

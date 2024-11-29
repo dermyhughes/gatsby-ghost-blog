@@ -25,6 +25,7 @@ function Post({ data, location }) {
         <style type='text/css'>{`${post.codeinjection_styles}`}</style>
       </Helmet>
       <Layout>
+        <div id='scroll-progress' />
         <div className='container'>
           <article className='content'>
             {image ? (
