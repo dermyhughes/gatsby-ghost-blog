@@ -4,3 +4,7 @@
 
 [template]
   incoming-hooks = ["Ghost"]
+
+[[plugins]]
+  package = "netlify-plugin-gatsby-cache"
+  enabled = false
