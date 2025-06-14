@@ -32,19 +32,9 @@ const SocialLinks = ({ isHome = false }: SocialLinksProps) => {
       alt: 'GitHub',
     },
     {
-      href: 'https://codepen.io/dermyhughes/',
-      icon: 'codepen',
-      alt: 'Codepen',
-    },
-    {
       href: 'https://www.linkedin.com/in/dermot-hughes-a96b67b6',
       icon: 'linkedin',
       alt: 'LinkedIn',
-    },
-    {
-      href: 'https://twitter.com/DermyHughes',
-      icon: 'twitter',
-      alt: 'Twitter',
     },
   ];
 
