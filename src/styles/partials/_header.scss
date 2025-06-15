@@ -106,6 +106,12 @@
   background-size: 120%;
   background-repeat: no-repeat;
   background-position: center;
+  /* Effects via custom prop, JS sets --scroll-progress: 0 to 1 */
+  filter: blur(calc(var(--title-blur, 0) * 20px));
+  opacity: calc(1 - var(--title-blur, 0));
+  pointer-events: none;
+  transform: scale(calc(1 - var(--title-blur, 0) * 0.08));
+  transition: filter 0.2s, opacity 0.2s, transform 0.2s;
 }
 
 @keyframes fadeIn {
@@ -133,6 +139,12 @@
   letter-spacing: 0.8rem;
   opacity: 0;
   animation: fadeIn 2500ms ease-in-out forwards;
+  // position: fixed;
+  // left: 50%;
+  // top: 0;
+  // transform: translate(-50%, 0);
+  // z-index: 10;
+  // transition: filter 0.2s, opacity 0.2s;
 }
 
 .three-d {

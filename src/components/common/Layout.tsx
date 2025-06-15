@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { Link, StaticQuery, graphql } from 'gatsby';
@@ -50,6 +50,29 @@ function DefaultLayout({ data, children, bodyClass, isHome }) {
     };
   }, []);
 
+  const bannerTitleRef = useRef();
+
+  useEffect(() => {
+    function handleScroll() {
+      const buffer = window.innerHeight * 0.2; // 20% of the viewport height
+      const maxAnim = window.innerHeight;
+      const scrollY = window.scrollY;
+
+      let progress = 0;
+      if (scrollY > buffer) {
+        progress = (scrollY - buffer) / maxAnim;
+        if (progress > 1) progress = 1;
+        if (progress < 0) progress = 0;
+      }
+      if (bannerTitleRef.current) {
+        bannerTitleRef.current.style.setProperty('--title-blur', progress);
+      }
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <>
       <Helmet>
@@ -82,12 +105,8 @@ function DefaultLayout({ data, children, bodyClass, isHome }) {
               )}
               {isHome && (
                 <div>
-                  <div className='site-banner'>
-                    <h1
-                      // style={{ visibility: isFontLoaded ? 'visible' : 'hidden' }}
-                      className='site-banner-title three-d'
-                      data-line={site.title}
-                    >
+                  <div className='site-banner' ref={bannerTitleRef}>
+                    <h1 className='site-banner-title three-d' data-line={site.title}>
                       {site.title}
                     </h1>
 
