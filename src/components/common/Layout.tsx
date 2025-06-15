@@ -9,11 +9,34 @@ import 'prismjs/components/prism-jsx';
 import 'prismjs/components/prism-tsx';
 
 import { Navigation, SocialLinks } from '.';
-
-// Styles
 import '../../styles/app.scss';
 
 const CURRENT_YEAR = new Date().getFullYear();
+
+interface GhostSettingsNode {
+  title: string;
+  description: string;
+  lang: string;
+  codeinjection_styles: string;
+  navigation: any;
+  cover_image?: string | null;
+}
+
+interface AllGhostSettings {
+  edges: { node: GhostSettingsNode }[];
+}
+
+interface DataProps {
+  file?: any;
+  allGhostSettings: AllGhostSettings;
+}
+
+interface DefaultLayoutProps {
+  data: DataProps;
+  children: ReactNode;
+  bodyClass?: string;
+  isHome?: boolean;
+}
 
 /**
  * Main layout component
@@ -23,7 +46,7 @@ const CURRENT_YEAR = new Date().getFullYear();
  * styles, and meta data for each page.
  *
  */
-function DefaultLayout({ data, children, bodyClass, isHome }) {
+function DefaultLayout({ data, children, bodyClass = '', isHome = false }: DefaultLayoutProps) {
   const site = { ...data.allGhostSettings.edges[0].node, cover_image: null };
   const descriptionParts = site.description.split('.');
   descriptionParts.pop();
@@ -92,11 +115,7 @@ function DefaultLayout({ data, children, bodyClass, isHome }) {
           {/* The main header section on top of the screen */}
           <header
             className='site-head'
-            style={{
-              ...(site.cover_image && {
-                backgroundImage: `url(${site.cover_image})`,
-              }),
-            }}
+            style={site.cover_image ? { backgroundImage: `url(${site.cover_image})` } : {}}
           >
             <div className='container'>
               {!isHome && (
@@ -159,22 +178,7 @@ function DefaultLayout({ data, children, bodyClass, isHome }) {
   );
 }
 
-DefaultLayout.propTypes = {
-  children: PropTypes.node.isRequired,
-  bodyClass: PropTypes.string,
-  isHome: PropTypes.bool,
-  data: PropTypes.shape({
-    file: PropTypes.object,
-    allGhostSettings: PropTypes.object.isRequired,
-  }).isRequired,
-};
-
-DefaultLayout.defaultProps = {
-  bodyClass: '',
-  isHome: false,
-};
-
-function DefaultLayoutSettingsQuery(props) {
+function DefaultLayoutSettingsQuery(props: Omit<DefaultLayoutProps, 'data'>) {
   return (
     <StaticQuery
       query={graphql`
@@ -193,7 +197,7 @@ function DefaultLayoutSettingsQuery(props) {
           }
         }
       `}
-      render={(data) => <DefaultLayout data={data} {...props} />}
+      render={(data: DataProps) => <DefaultLayout data={data} {...props} />}
     />
   );
 }
