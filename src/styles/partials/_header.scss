@@ -110,7 +110,7 @@
   filter: blur(calc(var(--title-blur, 0) * 20px));
   opacity: calc(1 - var(--title-blur, 0));
   pointer-events: none;
-  transform: scale(calc(1 - var(--title-blur, 0) * 0.08));
+  transform: scale(calc(1 - var(--title-blur, 0) * 0.15));
   transition: filter 0.2s, opacity 0.2s, transform 0.2s;
 }
 
