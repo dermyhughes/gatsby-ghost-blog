@@ -50,23 +50,29 @@ function DefaultLayout({ data, children, bodyClass, isHome }) {
     };
   }, []);
 
-  const bannerTitleRef = useRef();
+  const bannerTitleRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     function handleScroll() {
-      const buffer = window.innerHeight * 0.2; // 20% of the viewport height
-      const maxAnim = window.innerHeight;
-      const scrollY = window.scrollY;
+      if (!bannerTitleRef.current) return;
+      const banner = bannerTitleRef.current;
+      const rect = banner.getBoundingClientRect();
+      const bannerHeight = rect.height;
 
+      // The point at which 40% of the banner has left the viewport (from the top)
+      const trigger = -bannerHeight * 0.4;
       let progress = 0;
-      if (scrollY > buffer) {
-        progress = (scrollY - buffer) / maxAnim;
+
+      if (rect.top < trigger) {
+        // How much of the banner has scrolled past the trigger point
+        progress = (trigger - rect.top) / (bannerHeight * 0.5);
         if (progress > 1) progress = 1;
         if (progress < 0) progress = 0;
+      } else {
+        progress = 0;
       }
-      if (bannerTitleRef.current) {
-        bannerTitleRef.current.style.setProperty('--title-blur', progress);
-      }
+
+      banner.style.setProperty('--title-blur', progress.toString());
     }
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
