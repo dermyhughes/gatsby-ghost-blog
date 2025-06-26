@@ -1,6 +1,9 @@
 [build]
-  command = "NODE_ENV=production npm run build"
+  command = "NODE_ENV=production gatsby clean && npm run build"
   publish = "public/"
 
 [template]
   incoming-hooks = ["Ghost"]
+
+[[plugins]]
+package = "@netlify/plugin-gatsby"
