@@ -78,3 +78,10 @@ yarn-error.log
 
 # Local Netlify folder
 .netlify
+
+# Astro project artifacts
+blog-portfolio/node_modules
+blog-portfolio/.astro
+blog-portfolio/dist
+blog-portfolio/.vercel
+blog-portfolio/.netlify
