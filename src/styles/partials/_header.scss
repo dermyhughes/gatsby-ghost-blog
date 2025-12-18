@@ -10,25 +10,25 @@
 }
 
 .site-head {
-  padding-top: 20px;
-  padding-bottom: 20px;
-  color: #fff;
+  padding-top: var(--space-lg);
+  padding-bottom: var(--space-lg);
+  color: var(--color-text-inverse);
   background: var(--color-base);
   @include dots-bg;
   position: relative;
-  z-index: 99;
+  z-index: var(--z-nav);
 }
 
 .site-nav-item {
   display: inline-block;
-  padding: 5px 10px;
-  color: #fff;
+  padding: var(--space-2xs) var(--space-sm);
+  color: var(--color-text-inverse);
   opacity: 0.8;
   position: relative;
-  font-size: 2rem;
+  font-size: var(--heading-6);
 
   &.home {
-    padding-top: 4rem;
+    padding-top: var(--space-2xl);
 
     .site-nav-icon {
       height: 35px;
