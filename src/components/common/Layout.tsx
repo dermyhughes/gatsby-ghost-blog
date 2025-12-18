@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { Link, StaticQuery, graphql } from 'gatsby';
@@ -8,7 +8,15 @@ import 'prismjs/components/prism-typescript';
 import 'prismjs/components/prism-jsx';
 import 'prismjs/components/prism-tsx';
 
-import { Navigation, SocialLinks } from '.';
+import { Navigation, SocialLinks, ThemeToggle } from '.';
+import {
+  applyTheme,
+  getInitialTheme,
+  getStoredTheme,
+  persistTheme,
+  subscribeToSystemTheme,
+  ThemePreference,
+} from '../../utils/theme';
 import '../../styles/app.scss';
 
 const CURRENT_YEAR = new Date().getFullYear();
@@ -33,7 +41,7 @@ interface DataProps {
 
 interface DefaultLayoutProps {
   data: DataProps;
-  children: ReactNode;
+  children: React.ReactNode;
   bodyClass?: string;
   isHome?: boolean;
 }
@@ -74,6 +82,39 @@ function DefaultLayout({ data, children, bodyClass = '', isHome = false }: Defau
   }, []);
 
   const bannerTitleRef = useRef<HTMLDivElement | null>(null);
+  const preferenceRef = useRef({ hasExplicitPreference: false });
+  const [theme, setTheme] = useState<ThemePreference>(() =>
+    typeof window === 'undefined' ? 'light' : getInitialTheme()
+  );
+
+  useEffect(() => {
+    const storedTheme = getStoredTheme();
+    const initialTheme = storedTheme ?? getInitialTheme();
+
+    preferenceRef.current.hasExplicitPreference = Boolean(storedTheme);
+    setTheme(initialTheme);
+
+    const unsubscribe = subscribeToSystemTheme((systemTheme) => {
+      if (!preferenceRef.current.hasExplicitPreference) {
+        setTheme(systemTheme);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  useEffect(() => {
+    applyTheme(theme);
+  }, [theme]);
+
+  const handleThemeToggle = () => {
+    setTheme((current) => {
+      const nextTheme = current === 'dark' ? 'light' : 'dark';
+      preferenceRef.current.hasExplicitPreference = true;
+      persistTheme(nextTheme);
+      return nextTheme;
+    });
+  };
 
   useEffect(() => {
     function handleScroll() {
@@ -124,7 +165,10 @@ function DefaultLayout({ data, children, bodyClass = '', isHome = false }: Defau
                     <Navigation data={site.navigation} navClass='site-nav-item' />
                   </div>
                   <div className='site-mast-right mast-small'>
-                    <SocialLinks isHome={isHome} />
+                    <div className='site-actions'>
+                      <ThemeToggle onToggle={handleThemeToggle} theme={theme} />
+                      <SocialLinks isHome={isHome} />
+                    </div>
                   </div>
                 </div>
               )}
@@ -147,6 +191,11 @@ function DefaultLayout({ data, children, bodyClass = '', isHome = false }: Defau
                   <nav className='site-nav'>
                     <div className='site-nav-left'>
                       <Navigation data={site.navigation} navClass='site-nav-item' />
+                    </div>
+                    <div className='site-nav-right'>
+                      <div className='site-actions'>
+                        <ThemeToggle onToggle={handleThemeToggle} theme={theme} />
+                      </div>
                     </div>
                   </nav>
                 </div>

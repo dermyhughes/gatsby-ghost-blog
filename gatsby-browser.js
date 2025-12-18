@@ -32,3 +32,14 @@ var trustAllScripts = function () {
 exports.onRouteUpdate = function () {
     trustAllScripts();
 };
+
+var themeUtils = require('./src/utils/theme');
+
+exports.onClientEntry = function () {
+    if (typeof document === 'undefined') {
+        return;
+    }
+
+    var initialTheme = themeUtils.getInitialTheme();
+    themeUtils.applyTheme(initialTheme);
+};

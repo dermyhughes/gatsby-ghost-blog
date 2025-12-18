@@ -4,3 +4,4 @@ export { default as Pagination } from './Pagination';
 export { default as Navigation } from './Navigation';
 export { default as CVRaw } from './cvRaw';
 export { default as SocialLinks } from './SocialLinks';
+export { default as ThemeToggle } from './ThemeToggle';
