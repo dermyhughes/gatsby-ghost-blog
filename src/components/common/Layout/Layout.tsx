@@ -8,7 +8,7 @@ import 'prismjs/components/prism-typescript';
 import 'prismjs/components/prism-jsx';
 import 'prismjs/components/prism-tsx';
 
-import { Navigation, SocialLinks, ThemeToggle } from '.';
+import { Navigation, SocialLinks, ThemeToggle } from '..';
 import {
   applyTheme,
   getInitialTheme,
@@ -16,8 +16,9 @@ import {
   persistTheme,
   subscribeToSystemTheme,
   ThemePreference,
-} from '../../utils/theme';
-import '../../styles/app.scss';
+} from '../../../utils/theme';
+import '../../../styles/base.scss';
+import './Layout.scss';
 
 const CURRENT_YEAR = new Date().getFullYear();
 
