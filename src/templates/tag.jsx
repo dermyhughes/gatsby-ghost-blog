@@ -5,6 +5,7 @@ import { graphql } from 'gatsby';
 
 import { Layout, PostCard, Pagination } from '../components/common';
 import { MetaData } from '../components/common/meta';
+import './tag.scss';
 
 /**
  * Tag page (/tag/:slug)

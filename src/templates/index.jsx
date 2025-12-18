@@ -5,6 +5,7 @@ import { graphql } from 'gatsby';
 
 import { Layout, PostCard, Pagination } from '../components/common';
 import { MetaData } from '../components/common/meta';
+import './index.scss';
 
 /**
  * Main index page (home page)

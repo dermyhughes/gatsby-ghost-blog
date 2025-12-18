@@ -1,6 +1,7 @@
 import Helmet from 'react-helmet';
 import React from 'react';
-import '../../styles/app.scss';
+import '../../../styles/base.scss';
+import './CVRaw.scss';
 
 function MetaData() {
   return (

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Link } from 'gatsby';
+import './Pagination.scss';
 
 interface PageContext {
   previousPagePath?: string;

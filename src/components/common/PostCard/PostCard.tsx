@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Link } from 'gatsby';
 import { Tags } from '@tryghost/helpers-gatsby';
 import { readingTime as readingTimeHelper } from '@tryghost/helpers';
+import './PostCard.scss';
 
 interface Tag {
   name?: string;
