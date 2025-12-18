@@ -84,7 +84,7 @@ function DefaultLayout({ data, children, bodyClass = '', isHome = false }: Defau
   const bannerTitleRef = useRef<HTMLDivElement | null>(null);
   const preferenceRef = useRef({ hasExplicitPreference: false });
   const [theme, setTheme] = useState<ThemePreference>(() =>
-    typeof window === 'undefined' ? 'light' : getInitialTheme()
+    typeof window === 'undefined' ? 'light' : getInitialTheme(),
   );
 
   useEffect(() => {
@@ -203,7 +203,7 @@ function DefaultLayout({ data, children, bodyClass = '', isHome = false }: Defau
             </div>
           </header>
           <section aria-hidden='true' className='skewed' />
-          <main className='site-main'>
+          <main id='site-main'>
             {/* All the main content gets inserted here, index.js, post.js */}
             {children}
           </main>
