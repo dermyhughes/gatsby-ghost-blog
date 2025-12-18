@@ -300,10 +300,10 @@
   display: inline-flex;
   align-items: center;
   gap: var(--space-2xs);
-  padding: var(--space-3xs) var(--space-sm);
+  padding: var(--space-3xs);
   border-radius: 999px;
   border: 1px solid var(--color-border-strong);
-  background: var(--color-surface);
+  background: transparent;
   color: var(--color-text-primary);
   font-weight: var(--font-weight-semibold);
   font-size: var(--text-sm);
@@ -337,42 +337,50 @@
   border-color: var(--color-border-strong);
 }
 
-.theme-toggle__icon {
-  font-size: var(--text-lg);
-  line-height: 1;
-}
-
-.theme-toggle__track {
+.theme-toggle__rail {
   position: relative;
-  width: 52px;
-  height: 30px;
+  width: 68px;
+  height: 36px;
   border-radius: 999px;
-  background: linear-gradient(120deg, var(--color-surface-muted), var(--color-surface-subtle));
+  background: linear-gradient(120deg, #f9f3e7, #d9ecff);
   border: 1px solid var(--color-border-strong);
   display: inline-flex;
   align-items: center;
-  padding: 3px;
+  padding: 4px 10px;
   transition: background var(--transition-medium), border-color var(--transition-medium),
-    box-shadow var(--transition-medium);
+    box-shadow var(--transition-medium), transform var(--transition-medium);
   overflow: hidden;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.4), 0 10px 25px rgba(0, 0, 0, 0.05);
 }
 
-.theme-toggle__thumb {
+.theme-toggle__horizon {
+  position: absolute;
+  left: 6px;
+  right: 6px;
+  bottom: 8px;
+  height: 3px;
+  border-radius: 99px;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.08), rgba(255, 255, 255, 0.6));
+  transition: opacity var(--transition-medium), transform var(--transition-medium);
+}
+
+.theme-toggle__sun-moon {
   position: relative;
   width: 22px;
   height: 22px;
+  margin-left: -4px;
   border-radius: 50%;
-  background: radial-gradient(circle at 30% 30%, #fff5d7 0%, #f6c065 55%, #f59e0b 100%);
-  box-shadow: var(--shadow-sm);
-  transform: translateX(0);
+  background: radial-gradient(circle at 30% 30%, #fff4c4 0%, #f3ba4c 60%, #f59e0b 100%);
+  box-shadow: 0 5px 18px rgba(245, 158, 11, 0.45), inset 0 0 0 2px rgba(255, 255, 255, 0.6);
+  transform: translateX(-6px) translateY(3px) scale(1);
   transition: transform var(--transition-medium), background var(--transition-medium),
-    box-shadow var(--transition-fast), filter var(--transition-medium);
+    box-shadow var(--transition-medium), filter var(--transition-medium);
 }
 
-.theme-toggle__thumb::after {
+.theme-toggle__sun-moon::after {
   content: '';
   position: absolute;
-  inset: -8px;
+  inset: -10px;
   border-radius: 50%;
   box-shadow:
     0 -14px 0 0 #f6c065,
@@ -384,49 +392,104 @@
     10px 10px 0 0 #f6c065,
     -10px 10px 0 0 #f6c065;
   opacity: 1;
-  transform: scale(0.85);
-  transition: opacity var(--transition-medium), transform var(--transition-medium);
+  transform: scale(0.9);
+  transition: opacity var(--transition-medium), transform var(--transition-medium),
+    filter var(--transition-medium);
 }
 
-.theme-toggle__thumb::before {
+.theme-toggle__sun-moon::before {
   content: '';
   position: absolute;
   inset: 0;
   border-radius: 50%;
-  background: transparent;
+  background: #f5f5f5;
   box-shadow:
-    8px 2px 0 0 rgba(255, 255, 255, 0.2),
-    10px 8px 0 0 rgba(255, 255, 255, 0.15),
+    8px 2px 0 0 rgba(255, 255, 255, 0.25),
+    10px 8px 0 0 rgba(255, 255, 255, 0.18),
     4px 10px 0 0 rgba(255, 255, 255, 0.18);
   opacity: 0;
-  transform: translateX(-6px);
-  transition: opacity var(--transition-medium), transform var(--transition-medium);
+  transform: translateX(-8px);
+  transition: opacity var(--transition-medium), transform var(--transition-medium),
+    box-shadow var(--transition-medium);
 }
 
-.theme-toggle[data-theme='dark'] .theme-toggle__track {
-  background: linear-gradient(120deg, #0f172a, #111827);
+.theme-toggle__stars {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.theme-toggle__stars span {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: #ffffff;
+  border-radius: 50%;
+  opacity: 0;
+  transform: scale(0.4);
+  transition: opacity var(--transition-medium), transform var(--transition-medium),
+    filter var(--transition-medium);
+}
+
+.theme-toggle__stars span:nth-child(1) {
+  top: 8px;
+  left: 16px;
+}
+
+.theme-toggle__stars span:nth-child(2) {
+  top: 14px;
+  left: 32px;
+  width: 3px;
+  height: 3px;
+}
+
+.theme-toggle__stars span:nth-child(3) {
+  top: 6px;
+  right: 12px;
+  width: 5px;
+  height: 5px;
+}
+
+.theme-toggle[data-theme='dark'] .theme-toggle__rail {
+  background: linear-gradient(135deg, #0b1220, #1f2937);
   border-color: #1f2937;
-  box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.08);
+  box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.1), 0 12px 24px rgba(0, 0, 0, 0.35);
 }
 
-.theme-toggle[data-theme='dark'] .theme-toggle__thumb {
-  background: radial-gradient(circle at 60% 40%, #f0f4ff 0%, #cdd5e5 55%, #94a3b8 100%);
-  transform: translateX(20px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
-  filter: drop-shadow(0 0 6px rgba(148, 163, 184, 0.4));
+.theme-toggle[data-theme='dark'] .theme-toggle__horizon {
+  opacity: 0.6;
+  transform: translateY(2px);
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.4), rgba(0, 0, 0, 0.25));
 }
 
-.theme-toggle[data-theme='dark'] .theme-toggle__thumb::after {
+.theme-toggle[data-theme='dark'] .theme-toggle__sun-moon {
+  background: radial-gradient(circle at 40% 40%, #e8edf7 0%, #cdd5e5 60%, #9ca3af 100%);
+  transform: translateX(18px) translateY(-2px) scale(0.96);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.35), inset 0 0 0 2px rgba(148, 163, 184, 0.25);
+  filter: drop-shadow(0 0 6px rgba(148, 163, 184, 0.45));
+}
+
+.theme-toggle[data-theme='dark'] .theme-toggle__sun-moon::after {
   opacity: 0;
   transform: scale(0.5);
 }
 
-.theme-toggle[data-theme='dark'] .theme-toggle__thumb::before {
+.theme-toggle[data-theme='dark'] .theme-toggle__sun-moon::before {
   opacity: 1;
   transform: translateX(0);
+  box-shadow:
+    -8px 0 0 0 #0b1220,
+    -6px -4px 0 0 #0b1220,
+    -6px 4px 0 0 #0b1220;
 }
 
-.theme-toggle:active .theme-toggle__thumb {
+.theme-toggle[data-theme='dark'] .theme-toggle__stars span {
+  opacity: 1;
+  transform: scale(1);
+  filter: drop-shadow(0 0 4px rgba(148, 163, 184, 0.5));
+}
+
+.theme-toggle:active .theme-toggle__sun-moon {
   box-shadow: var(--shadow-sm), 0 0 0 6px rgba(62, 176, 239, 0.1);
 }
 

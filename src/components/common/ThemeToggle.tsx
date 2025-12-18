@@ -19,8 +19,14 @@ const ThemeToggle = ({ theme, onToggle }: ThemeToggleProps) => {
       aria-pressed={isDark}
       data-theme={theme}
     >
-      <span className='theme-toggle__track' aria-hidden='true'>
-        <span className='theme-toggle__thumb' />
+      <span className='theme-toggle__rail' aria-hidden='true'>
+        <span className='theme-toggle__stars'>
+          <span />
+          <span />
+          <span />
+        </span>
+        <span className='theme-toggle__sun-moon' />
+        <span className='theme-toggle__horizon' />
       </span>
       <span className='sr-only'>{label}</span>
     </button>
