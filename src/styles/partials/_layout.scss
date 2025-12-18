@@ -9,15 +9,15 @@
 }
 
 .container {
-  max-width: 1120px;
+  max-width: var(--layout-width-content);
   margin: 0 auto;
-  padding: 0 4vw;
+  padding: 0 var(--layout-gutter);
 }
 
 .content {
   margin: 0 auto;
-  font-size: 2rem;
-  line-height: 1.7em;
+  font-size: var(--text-lg);
+  line-height: var(--leading-relaxed);
 }
 
 .content-body {
@@ -27,9 +27,10 @@
 }
 
 .post-full-content {
-  max-width: 720px;
+  max-width: var(--layout-width-reading);
   margin: 0 auto;
-  background: #fff;
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
 }
 
 .post-feature-image.poster {
@@ -38,9 +39,9 @@
   padding: 2%;
   position: relative;
   box-sizing: border-box;
-  background-color: #fff;
+  background-color: var(--color-surface);
   transform: rotate(-1.5deg);
-  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--shadow-lg);
   -webkit-filter: saturate(70%) contrast(85%);
   filter: saturate(70%) contrast(85%);
   margin: 0 0 3vw;
@@ -137,68 +138,68 @@
   }
 
   h1 {
-    margin: 1em 0 0.5em 0;
-    font-size: 3.4rem;
-    font-weight: 700;
+    margin: var(--space-xl) 0 var(--space-md) 0;
+    font-size: var(--heading-1);
+    font-weight: var(--font-weight-bold);
   }
 }
 
 .content-title {
   margin: 0 0 0.8em;
-  font-size: 5rem;
+  font-size: var(--text-4xl);
 }
 
 @media (max-width: 500px) {
   .content-title {
     margin: 0.8em 0;
-    font-size: 3.4rem;
+    font-size: var(--heading-1);
   }
 
   .content-body h1 {
-    font-size: 2.8rem;
+    font-size: var(--heading-2);
   }
 
   .content {
-    font-size: 1.8rem;
+    font-size: var(--text-md);
   }
 }
 
 .content-body {
   h2 {
-    margin: 0.8em 0 0.4em 0;
-    font-size: 3.2rem;
-    font-weight: 700;
+    margin: var(--space-lg) 0 var(--space-sm) 0;
+    font-size: var(--heading-2);
+    font-weight: var(--font-weight-bold);
   }
 
   h3 {
-    margin: 0.5em 0 0.2em 0;
-    font-size: 2.8rem;
-    font-weight: 700;
+    margin: var(--space-md) 0 var(--space-2xs) 0;
+    font-size: var(--heading-3);
+    font-weight: var(--font-weight-bold);
   }
 
   h4 {
-    margin: 0.5em 0 0.2em 0;
-    font-size: 2.4rem;
-    font-weight: 700;
+    margin: var(--space-md) 0 var(--space-2xs) 0;
+    font-size: var(--heading-4);
+    font-weight: var(--font-weight-bold);
   }
 
   h5 {
     display: block;
-    margin: 0.5em 0;
-    padding: 1em 0 1.5em;
+    margin: var(--space-md) 0;
+    padding: var(--space-lg) 0 var(--space-xl);
     border: 0;
     font-family: Georgia, serif;
     color: var(--color-primary);
     font-style: italic;
-    font-size: 3.2rem;
-    line-height: 1.35em;
+    font-size: var(--heading-5);
+    line-height: var(--leading-snug);
     text-align: center;
   }
 
   h6 {
-    margin: 0.5em 0 0.2em 0;
-    font-size: 2rem;
-    font-weight: 700;
+    margin: var(--space-md) 0 var(--space-2xs) 0;
+    font-size: var(--heading-6);
+    font-weight: var(--font-weight-bold);
   }
 
   figure {
