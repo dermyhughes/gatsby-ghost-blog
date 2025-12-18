@@ -192,4 +192,23 @@
 
 :root[data-theme='light'] {
     color-scheme: light;
+    --color-surface: #ffffff;
+    --color-surface-subtle: #f5f7fa;
+    --color-surface-muted: #edf1f5;
+    --color-surface-contrast: var(--color-gray-900);
+    --color-surface-inverse: #0a0f1a;
+    --color-border-subtle: var(--color-gray-200);
+    --color-border-strong: var(--color-gray-300);
+    --color-text-primary: var(--color-gray-900);
+    --color-text-strong: #1b2636;
+    --color-text-secondary: var(--color-gray-600);
+    --color-text-muted: var(--color-gray-500);
+    --color-text-inverse: var(--color-gray-50);
+    --color-base: var(--color-gray-900);
+    --color-border: var(--color-border-subtle);
+    --color-bg: var(--color-surface-subtle);
+    --color-link: #1d7db1;
+    --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.08);
+    --shadow-md: 0 8px 24px rgba(15, 23, 42, 0.1);
+    --shadow-lg: 0 12px 36px rgba(15, 23, 42, 0.14);
 }

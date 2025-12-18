@@ -17,14 +17,12 @@ const ThemeToggle = ({ theme, onToggle }: ThemeToggleProps) => {
       onClick={onToggle}
       aria-label={label}
       aria-pressed={isDark}
+      data-theme={theme}
     >
-      <span className='theme-toggle__icon' aria-hidden='true'>
-        {isDark ? '🌙' : '☀️'}
-      </span>
       <span className='theme-toggle__track' aria-hidden='true'>
-        <span className={`theme-toggle__thumb ${isDark ? 'is-dark' : 'is-light'}`} />
+        <span className='theme-toggle__thumb' />
       </span>
-      <span className='theme-toggle__text'>{isDark ? 'Dark' : 'Light'} mode</span>
+      <span className='sr-only'>{label}</span>
     </button>
   );
 };
