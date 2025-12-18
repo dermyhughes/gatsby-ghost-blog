@@ -14,13 +14,13 @@ interface NavigationProps {
 const Navigation = ({ data, navClass = 'site-nav-item' }: NavigationProps) => {
   return (
     <>
-      {data.map((navItem, i) => {
+      {data.map((navItem) => {
         if (navItem.url.match(/^\s?http(s?)/gi)) {
           return (
             <a
               className={navClass}
               href={navItem.url}
-              key={i}
+              key={navItem.url}
               target='_blank'
               rel='noopener noreferrer'
             >
@@ -28,13 +28,27 @@ const Navigation = ({ data, navClass = 'site-nav-item' }: NavigationProps) => {
             </a>
           );
         }
+
         return (
           <Link
-            className={navClass}
-            activeClassName='active-link'
-            partiallyActive={navItem.url !== '/'}
+            key={navItem.url}
             to={navItem.url}
-            key={i}
+            getProps={({ isCurrent, location }) => {
+              const path = location.pathname;
+
+              const isHome = navItem.url === '/';
+              const isHomeActive = isHome && (path === '/' || path.startsWith('/page/'));
+
+              const isSectionActive =
+                !isHome &&
+                (path === navItem.url || path.startsWith(`${navItem.url.replace(/\/$/, '')}/`));
+
+              const isActive = isCurrent || isHomeActive || isSectionActive;
+
+              return {
+                className: `${navClass}${isActive ? ' active-link' : ''}`,
+              };
+            }}
           >
             {navItem.label}
           </Link>

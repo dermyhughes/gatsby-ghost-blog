@@ -135,6 +135,7 @@
   h5,
   h6 {
     font-family: var(--font-sans-serif);
+    color: var(--color-text-strong);
   }
 
   h1 {
@@ -147,6 +148,7 @@
 .content-title {
   margin: 0 0 0.8em;
   font-size: var(--text-4xl);
+  color: var(--color-text-strong);
 }
 
 @media (max-width: 500px) {
