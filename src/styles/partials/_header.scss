@@ -114,6 +114,12 @@
   transition: filter 0.2s, opacity 0.2s, transform 0.2s;
 }
 
+.site-hero .site-banner {
+  min-height: 50vh;
+  max-height: calc(100vh - 140px);
+  padding-bottom: clamp(var(--space-2xl), 10vw, var(--space-4xl));
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -273,6 +279,13 @@
   font-weight: 600;
 }
 
+.site-nav-home {
+  margin-top: 0;
+  justify-self: stretch;
+  padding: 0 0 var(--space-xs);
+  background: linear-gradient(180deg, transparent 0%, var(--color-base) 60%);
+}
+
 .site-nav-right {
   display: flex;
   align-items: center;
@@ -326,6 +339,16 @@
   .site-actions {
     justify-content: center;
   }
+}
+
+.site-hero {
+  position: relative;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  align-items: center;
+  min-height: 100vh;
+  gap: var(--space-xl);
+  padding-bottom: var(--space-lg);
 }
 
 .site-nav-left {
