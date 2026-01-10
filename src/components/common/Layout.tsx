@@ -72,18 +72,15 @@ function DefaultLayout({ data, children, bodyClass = '', isHome = false }: Defau
     Prism.highlightAll();
   }, [children]);
 
-  // Scroll progress bar
-  const scrollProgressRef = useRef<HTMLElement | null>(null);
-  useEffect(() => {
+  // Scroll progress 
+ useEffect(() => {
     const scrollProgress = document.getElementById('scroll-progress');
-    scrollProgressRef.current = scrollProgress as HTMLElement | null;
-    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    if (!scrollProgress) return;
 
+    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
     const handleScroll = () => {
       const scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
-      if (scrollProgressRef.current) {
-        scrollProgressRef.current.style.width = `${(scrollTop / height) * 100}%`;
-      }
+      scrollProgress.style.width = `${(scrollTop / height) * 100}%`;
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -95,9 +92,10 @@ function DefaultLayout({ data, children, bodyClass = '', isHome = false }: Defau
   // Banner blur effect
   const bannerTitleRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
+    if (!isHome || !bannerTitleRef.current) return;
+
+    const banner = bannerTitleRef.current;
     const handleScroll = () => {
-      if (!bannerTitleRef.current) return;
-      const banner = bannerTitleRef.current;
       const rect = banner.getBoundingClientRect();
       const bannerHeight = rect.height;
       const trigger = -bannerHeight * 0.4;
@@ -115,20 +113,15 @@ function DefaultLayout({ data, children, bodyClass = '', isHome = false }: Defau
     handleScroll(); // initial update
 
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [isHome]);
 
   // Theme handling
   const preferenceRef = useRef({ hasExplicitPreference: false });
-  const [theme, setTheme] = useState<ThemePreference>(() =>
-    typeof window === 'undefined' ? 'light' : getInitialTheme(),
-  );
+  const [theme, setTheme] = useState<ThemePreference>(() => getInitialTheme());
 
   useEffect(() => {
     const storedTheme = getStoredTheme();
-    const initialTheme = storedTheme ?? getInitialTheme();
-
     preferenceRef.current.hasExplicitPreference = Boolean(storedTheme);
-    setTheme(initialTheme);
 
     const unsubscribe = subscribeToSystemTheme((systemTheme) => {
       if (!preferenceRef.current.hasExplicitPreference) {
