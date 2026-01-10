@@ -73,17 +73,14 @@ function DefaultLayout({ data, children, bodyClass = '', isHome = false }: Defau
   }, [children]);
 
   // Scroll progress bar
-  const scrollProgressRef = useRef<HTMLElement | null>(null);
   useEffect(() => {
     const scrollProgress = document.getElementById('scroll-progress');
-    scrollProgressRef.current = scrollProgress as HTMLElement | null;
-    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    if (!scrollProgress) return;
 
+    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
     const handleScroll = () => {
       const scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
-      if (scrollProgressRef.current) {
-        scrollProgressRef.current.style.width = `${(scrollTop / height) * 100}%`;
-      }
+      scrollProgress.style.width = `${(scrollTop / height) * 100}%`;
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -95,9 +92,10 @@ function DefaultLayout({ data, children, bodyClass = '', isHome = false }: Defau
   // Banner blur effect
   const bannerTitleRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
+    if (!isHome || !bannerTitleRef.current) return;
+
+    const banner = bannerTitleRef.current;
     const handleScroll = () => {
-      if (!bannerTitleRef.current) return;
-      const banner = bannerTitleRef.current;
       const rect = banner.getBoundingClientRect();
       const bannerHeight = rect.height;
       const trigger = -bannerHeight * 0.4;
@@ -115,13 +113,12 @@ function DefaultLayout({ data, children, bodyClass = '', isHome = false }: Defau
     handleScroll(); // initial update
 
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [isHome]);
 
   // Theme handling
   const preferenceRef = useRef({ hasExplicitPreference: false });
-  const [theme, setTheme] = useState<ThemePreference>(() =>
-    typeof window === 'undefined' ? 'light' : getInitialTheme(),
-  );
+  const [theme, setTheme] = useState<ThemePreference>('light');
+  const [hasMounted, setHasMounted] = useState(false);
 
   useEffect(() => {
     const storedTheme = getStoredTheme();
@@ -129,6 +126,7 @@ function DefaultLayout({ data, children, bodyClass = '', isHome = false }: Defau
 
     preferenceRef.current.hasExplicitPreference = Boolean(storedTheme);
     setTheme(initialTheme);
+    setHasMounted(true);
 
     const unsubscribe = subscribeToSystemTheme((systemTheme) => {
       if (!preferenceRef.current.hasExplicitPreference) {
@@ -175,7 +173,9 @@ function DefaultLayout({ data, children, bodyClass = '', isHome = false }: Defau
                   </div>
                   <div className='site-mast-right mast-small'>
                     <div className='site-actions'>
-                      <ThemeToggle onToggle={handleThemeToggle} theme={theme} />
+                      {hasMounted && (
+                        <ThemeToggle onToggle={handleThemeToggle} theme={theme} />
+                      )}
                       <SocialLinks isHome={isHome} />
                     </div>
                   </div>
@@ -203,7 +203,9 @@ function DefaultLayout({ data, children, bodyClass = '', isHome = false }: Defau
                     </div>
                     <div className='site-nav-right'>
                       <div className='site-actions'>
-                        <ThemeToggle onToggle={handleThemeToggle} theme={theme} />
+                        {hasMounted && (
+                          <ThemeToggle onToggle={handleThemeToggle} theme={theme} />
+                        )}
                       </div>
                     </div>
                   </nav>
