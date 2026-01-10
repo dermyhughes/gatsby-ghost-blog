@@ -72,8 +72,8 @@ function DefaultLayout({ data, children, bodyClass = '', isHome = false }: Defau
     Prism.highlightAll();
   }, [children]);
 
-  // Scroll progress bar
-  useEffect(() => {
+  // Scroll progress 
+ useEffect(() => {
     const scrollProgress = document.getElementById('scroll-progress');
     if (!scrollProgress) return;
 
