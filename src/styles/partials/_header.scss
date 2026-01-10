@@ -67,6 +67,7 @@
     background-color: transparent;
     width: 0px;
   }
+
   100% {
     width: 100%;
   }
@@ -119,6 +120,7 @@
     opacity: 0;
     filter: blur(5px);
   }
+
   to {
     opacity: 1;
     filter: blur(0);
@@ -184,9 +186,11 @@
   0% {
     transform: translate3d(-2px, 0, 0);
   }
+
   2% {
     transform: translate3d(0px, 0, 0);
   }
+
   4% {
     transform: translate3d(2px, 0, 0);
   }
@@ -194,9 +198,11 @@
   8% {
     transform: translate3d(-2px, 0, 0);
   }
+
   70% {
     transform: translate3d(-2px, 0, 0);
   }
+
   100% {
     transform: translate3d(-2px, 0, 0);
   }
@@ -206,9 +212,11 @@
   0% {
     transform: translate3d(2px, 0, 0);
   }
+
   2% {
     transform: translate3d(0px, 0, 0);
   }
+
   4% {
     transform: translate3d(-2px, 0, 0);
   }
@@ -216,9 +224,11 @@
   8% {
     transform: translate3d(2px, 0, 0);
   }
+
   70% {
     transform: translate3d(2px, 0, 0);
   }
+
   100% {
     transform: translate3d(2px, 0, 0);
   }
@@ -261,7 +271,7 @@
 // Animation delay. Will add 0.5s per item.
 @for $i from 1 through 4 {
   .highlight-container:nth-child(#{$i})::before {
-    animation-delay: calc($i / 2) s;
+    animation-delay: ($i / 2) * 1s; // 0.5s, 1s, 1.5s, 2s
   }
 }
 
@@ -305,24 +315,29 @@
   .site-nav {
     justify-content: center;
   }
+
   .site-mast {
     flex-direction: column;
     align-items: center;
     gap: var(--space-sm);
   }
+
   .site-nav-item {
     font-size: 1.7rem;
   }
+
   .site-nav-left {
     width: 100%;
     margin: 0 !important;
     display: flex;
     justify-content: center;
   }
+
   .site-mast-right.mast-small {
     width: 100%;
     justify-content: center;
   }
+
   .site-actions {
     justify-content: center;
   }
