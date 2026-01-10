@@ -117,7 +117,20 @@ function DefaultLayout({ data, children, bodyClass = '', isHome = false }: Defau
 
   // Theme handling
   const preferenceRef = useRef({ hasExplicitPreference: false });
-  const [theme, setTheme] = useState<ThemePreference>(() => getInitialTheme());
+  const [theme, setTheme] = useState<ThemePreference>(() => {
+    if (typeof document !== 'undefined') {
+      const currentTheme = document.documentElement.dataset.theme;
+      if (currentTheme === 'light' || currentTheme === 'dark') {
+        return currentTheme;
+      }
+    }
+    return getInitialTheme();
+  });
+
+  const updateTheme = useCallback((nextTheme: ThemePreference) => {
+    applyTheme(nextTheme);
+    setTheme(nextTheme);
+  }, []);
 
   useEffect(() => {
     const storedTheme = getStoredTheme();
@@ -125,22 +138,19 @@ function DefaultLayout({ data, children, bodyClass = '', isHome = false }: Defau
 
     const unsubscribe = subscribeToSystemTheme((systemTheme) => {
       if (!preferenceRef.current.hasExplicitPreference) {
-        setTheme(systemTheme);
+        updateTheme(systemTheme);
       }
     });
 
     return () => unsubscribe();
-  }, []);
-
-  useEffect(() => {
-    applyTheme(theme);
-  }, [theme]);
+  }, [updateTheme]);
 
   const handleThemeToggle = useCallback(() => {
     setTheme((current) => {
       const nextTheme = current === 'dark' ? 'light' : 'dark';
       preferenceRef.current.hasExplicitPreference = true;
       persistTheme(nextTheme);
+      applyTheme(nextTheme);
       return nextTheme;
     });
   }, []);
