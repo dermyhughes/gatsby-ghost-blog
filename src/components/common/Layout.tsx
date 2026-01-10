@@ -72,8 +72,8 @@ function DefaultLayout({ data, children, bodyClass = '', isHome = false }: Defau
     Prism.highlightAll();
   }, [children]);
 
-  // Scroll progress bar
-  useEffect(() => {
+  // Scroll progress 
+ useEffect(() => {
     const scrollProgress = document.getElementById('scroll-progress');
     if (!scrollProgress) return;
 
@@ -117,14 +117,11 @@ function DefaultLayout({ data, children, bodyClass = '', isHome = false }: Defau
 
   // Theme handling
   const preferenceRef = useRef({ hasExplicitPreference: false });
-  const [theme, setTheme] = useState<ThemePreference>('light');
+  const [theme, setTheme] = useState<ThemePreference>(() => getInitialTheme());
 
   useEffect(() => {
     const storedTheme = getStoredTheme();
-    const initialTheme = storedTheme ?? getInitialTheme();
-
     preferenceRef.current.hasExplicitPreference = Boolean(storedTheme);
-    setTheme(initialTheme);
 
     const unsubscribe = subscribeToSystemTheme((systemTheme) => {
       if (!preferenceRef.current.hasExplicitPreference) {
