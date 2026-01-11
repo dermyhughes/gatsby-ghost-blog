@@ -117,19 +117,27 @@ function DefaultLayout({ data, children, bodyClass = '', isHome = false }: Defau
 
   // Theme handling
   const preferenceRef = useRef({ hasExplicitPreference: false });
-  const [theme, setTheme] = useState<ThemePreference>(() => {
-    if (typeof document !== 'undefined') {
-      const currentTheme = document.documentElement.dataset.theme;
-      if (currentTheme === 'light' || currentTheme === 'dark') {
-        return currentTheme;
-      }
-    }
-    return getInitialTheme();
-  });
+  const [theme, setTheme] = useState<ThemePreference>('light');
 
   const updateTheme = useCallback((nextTheme: ThemePreference) => {
     applyTheme(nextTheme);
     setTheme(nextTheme);
+  }, []);
+
+  useEffect(() => {
+    if (typeof document === 'undefined') {
+      return;
+    }
+
+    const currentTheme = document.documentElement.dataset.theme;
+    if (currentTheme === 'light' || currentTheme === 'dark') {
+      setTheme(currentTheme);
+      return;
+    }
+
+    const initialTheme = getInitialTheme();
+    applyTheme(initialTheme);
+    setTheme(initialTheme);
   }, []);
 
   useEffect(() => {
