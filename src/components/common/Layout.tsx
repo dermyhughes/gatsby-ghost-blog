@@ -193,7 +193,7 @@ function DefaultLayout({ data, children, bodyClass = '', isHome = false }: Defau
                 </div>
               )}
               {isHome && (
-                <div>
+                <div className='site-hero'>
                   <div className='site-banner' ref={bannerTitleRef}>
                     <h1 className='site-banner-title three-d' data-line={site.title}>
                       {site.title}
@@ -208,7 +208,7 @@ function DefaultLayout({ data, children, bodyClass = '', isHome = false }: Defau
                     </div>
                     <SocialLinks isHome={isHome} />
                   </div>
-                  <nav className='site-nav'>
+                  <nav className='site-nav site-nav-home'>
                     <div className='site-nav-left'>
                       <Navigation data={site.navigation} navClass='site-nav-item' />
                     </div>
