@@ -72,7 +72,7 @@
     "gatsby-source-filesystem": "^5.13.1",
     "gatsby-source-ghost": "^5.0.2",
     "gatsby-transformer-sharp": "^5.13.1",
-    "lodash": "4.17.21",
+    "lodash": "4.17.23",
     "prismjs": "^1.30.0",
     "prop-types": "^15.8.1",
     "puppeteer": "^22.12.1",
