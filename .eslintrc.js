@@ -10,11 +10,50 @@ module.exports = {
         "airbnb/hooks",
         "prettier"
     ],
+    "parser": "@typescript-eslint/parser",
     "overrides": [
+        {
+            "files": ["*.ts", "*.tsx"],
+            "plugins": ["@typescript-eslint"],
+            "rules": {
+                "no-unused-vars": "off",
+                "@typescript-eslint/no-unused-vars": [
+                    "error",
+                    {
+                        "argsIgnorePattern": "^_",
+                        "varsIgnorePattern": "^_"
+                    }
+                ],
+                "react/prop-types": "off",
+                "react/require-default-props": "off",
+                "react/jsx-filename-extension": [
+                    "error",
+                    {
+                        "extensions": [".jsx", ".tsx"]
+                    }
+                ]
+            }
+        }
     ],
     "parserOptions": {
         "ecmaVersion": "latest",
-        "sourceType": "module"
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": true
+        }
+    },
+    "settings": {
+        "react": {
+            "version": "detect"
+        },
+        "import/parsers": {
+            "@typescript-eslint/parser": [".ts", ".tsx"]
+        },
+        "import/resolver": {
+            "node": {
+                "extensions": [".js", ".jsx", ".ts", ".tsx"]
+            }
+        }
     },
     "plugins": [
         "react"
@@ -22,5 +61,15 @@ module.exports = {
     "rules": {
         "react/forbid-prop-types": "off",
         "react/jsx-props-no-spreading": "off",
+        "import/extensions": [
+            "error",
+            "ignorePackages",
+            {
+                "js": "never",
+                "jsx": "never",
+                "ts": "never",
+                "tsx": "never"
+            }
+        ]
     }
 }

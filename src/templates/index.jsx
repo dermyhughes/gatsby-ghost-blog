@@ -45,6 +45,10 @@ Index.propTypes = {
   pageContext: PropTypes.object,
 };
 
+Index.defaultProps = {
+  pageContext: null,
+};
+
 export default Index;
 
 // This page query loads all posts sorted descending by published date

@@ -11,7 +11,7 @@ interface NavigationProps {
   navClass?: string;
 }
 
-const Navigation = ({ data, navClass = 'site-nav-item' }: NavigationProps) => {
+function Navigation({ data, navClass = 'site-nav-item' }: NavigationProps) {
   return (
     <>
       {data.map((navItem) => {
@@ -56,6 +56,6 @@ const Navigation = ({ data, navClass = 'site-nav-item' }: NavigationProps) => {
       })}
     </>
   );
-};
+}
 
 export default Navigation;

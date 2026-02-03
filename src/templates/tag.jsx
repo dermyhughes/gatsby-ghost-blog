@@ -52,6 +52,10 @@ Tag.propTypes = {
   pageContext: PropTypes.object,
 };
 
+Tag.defaultProps = {
+  pageContext: null,
+};
+
 export default Tag;
 
 export const pageQuery = graphql`query GhostTagQuery($slug: String!, $limit: Int!, $skip: Int!) {

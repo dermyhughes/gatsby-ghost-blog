@@ -12,7 +12,7 @@ interface PaginationProps {
   pageContext: PageContext;
 }
 
-const Pagination = ({ pageContext }: PaginationProps) => {
+function Pagination({ pageContext }: PaginationProps) {
   const { previousPagePath, nextPagePath, humanPageNumber, numberOfPages } = pageContext;
 
   return (
@@ -38,6 +38,6 @@ const Pagination = ({ pageContext }: PaginationProps) => {
       </div>
     </nav>
   );
-};
+}
 
 export default Pagination;

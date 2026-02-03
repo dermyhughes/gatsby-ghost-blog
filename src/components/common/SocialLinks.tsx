@@ -7,7 +7,7 @@ interface SocialLinkProps {
   alt: string;
 }
 
-const SocialLink = ({ isHome = false, href, icon, alt }: SocialLinkProps) => {
+function SocialLink({ isHome = false, href, icon, alt }: SocialLinkProps) {
   return (
     <a
       className={`site-nav-item ${isHome ? 'home' : ''}`}
@@ -18,13 +18,13 @@ const SocialLink = ({ isHome = false, href, icon, alt }: SocialLinkProps) => {
       <img className='site-nav-icon' src={`/images/icons/${icon}.svg`} alt={alt} />
     </a>
   );
-};
+}
 
 interface SocialLinksProps {
   isHome?: boolean;
 }
 
-const SocialLinks = ({ isHome = false }: SocialLinksProps) => {
+function SocialLinks({ isHome = false }: SocialLinksProps) {
   const socialLinks: SocialLinkProps[] = [
     {
       href: 'https://github.com/dermyhughes',
@@ -45,6 +45,6 @@ const SocialLinks = ({ isHome = false }: SocialLinksProps) => {
       ))}
     </div>
   );
-};
+}
 
 export default SocialLinks;
