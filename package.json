@@ -33,7 +33,7 @@
   },
   "devDependencies": {
     "concurrently": "^7.6.0",
-    "eslint": "^8.25.0",
+    "eslint": "^9.26.0",
     "eslint-config-airbnb": "19.0.4",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-ghost": "2.16.0",
