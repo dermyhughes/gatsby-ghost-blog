@@ -7,7 +7,9 @@ import 'prismjs/components/prism-typescript';
 import 'prismjs/components/prism-jsx';
 import 'prismjs/components/prism-tsx';
 
-import { Navigation, SocialLinks, ThemeToggle } from '.';
+import Navigation from './Navigation';
+import SocialLinks from './SocialLinks';
+import ThemeToggle from './ThemeToggle';
 import {
   applyTheme,
   getInitialTheme,
@@ -75,7 +77,7 @@ function DefaultLayout({ data, children, bodyClass = '', isHome = false }: Defau
   // Scroll progress 
  useEffect(() => {
     const scrollProgress = document.getElementById('scroll-progress');
-    if (!scrollProgress) return;
+  if (!scrollProgress) return undefined;
 
     const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
     const handleScroll = () => {
@@ -92,7 +94,7 @@ function DefaultLayout({ data, children, bodyClass = '', isHome = false }: Defau
   // Banner blur effect
   const bannerTitleRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
-    if (!isHome || !bannerTitleRef.current) return;
+    if (!isHome || !bannerTitleRef.current) return undefined;
 
     const banner = bannerTitleRef.current;
     const handleScroll = () => {
@@ -200,8 +202,8 @@ function DefaultLayout({ data, children, bodyClass = '', isHome = false }: Defau
                     </h1>
 
                     <div className='site-banner-desc'>
-                      {descriptionParts.map((item, i) => (
-                        <div className='highlight-container' key={i}>
+                      {descriptionParts.map((item) => (
+                        <div className='highlight-container' key={item}>
                           <span className='highlight'>{item}.</span>
                         </div>
                       ))}

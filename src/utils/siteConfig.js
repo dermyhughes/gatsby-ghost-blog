@@ -1,5 +1,3 @@
-const config = require('../../.ghost.json').production;
-
 module.exports = {
   siteUrl: 'https://dermothughes.com', // Site domain. Do not include a trailing slash!
 

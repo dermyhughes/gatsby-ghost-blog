@@ -23,7 +23,7 @@ interface PostCardProps {
   post: Post;
 }
 
-const PostCard = ({ post }: PostCardProps) => {
+function PostCard({ post }: PostCardProps) {
   const postTag = post.primary_tag ? post.primary_tag.slug : 'post';
   const url = `/${postTag}/${post.slug}/`;
   const readingTime = readingTimeHelper(post);
@@ -56,6 +56,6 @@ const PostCard = ({ post }: PostCardProps) => {
       </footer>
     </Link>
   );
-};
+}
 
 export default PostCard;

@@ -7,7 +7,7 @@ interface ThemeToggleProps {
   onToggle?: (toggled?: boolean) => void;
 }
 
-const ThemeToggle = ({ theme, onToggle }: ThemeToggleProps) => {
+function ThemeToggle({ theme, onToggle }: ThemeToggleProps) {
   const isDark = theme === 'dark';
   const label = `Switch to ${isDark ? 'light' : 'dark'} mode`;
 
@@ -30,6 +30,6 @@ const ThemeToggle = ({ theme, onToggle }: ThemeToggleProps) => {
       <span className='sr-only'>{label}</span>
     </div>
   );
-};
+}
 
 export default ThemeToggle;
