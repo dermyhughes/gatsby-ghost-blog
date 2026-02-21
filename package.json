@@ -1,5 +1,5 @@
 {
-  "name": "dermot-hughes-blog",
+  "name": "dermot-blog",
   "description": "Portfolio site for Dermot Hughes based on Ghost and Astro",
   "version": "3.0.0",
   "license": "MIT",
@@ -7,10 +7,10 @@
   "homepage": "https://dermothughes.com",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dermyhughes/gatsby-ghost-blog/.git"
+    "url": "git+https://github.com/dermyhughes/dermot-blog.git"
   },
   "bugs": {
-    "url": "https://github.com/dermyhughes/gatsby-ghost-blog/issues"
+    "url": "https://github.com/dermyhughes/dermot-blog/issues"
   },
   "keywords": [
     "astro",
