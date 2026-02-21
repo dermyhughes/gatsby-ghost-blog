@@ -1,0 +1,55 @@
+---
+interface Props {
+  isHome?: boolean;
+}
+
+const { isHome = false } = Astro.props;
+
+const socialLinks = [
+  {
+    href: 'https://github.com/dermyhughes',
+    icon: 'github',
+    alt: 'GitHub',
+  },
+  {
+    href: 'https://www.linkedin.com/in/dermot-hughes-a96b67b6',
+    icon: 'linkedin',
+    alt: 'LinkedIn',
+  },
+];
+---
+
+<div class='social-container'>
+  {
+    socialLinks.map((link) => (
+      <a
+        class={`site-nav-item ${isHome ? 'home' : ''}`}
+        href={link.href}
+        target='_blank'
+        rel='noopener noreferrer'
+      >
+        <img class='site-nav-icon' src={`/images/icons/${link.icon}.svg`} alt={link.alt} />
+      </a>
+    ))
+  }
+</div>
+
+<style is:global lang='scss'>
+.site-nav-icon {
+  height: 20px;
+  margin: -5px 0 0;
+}
+
+.site-nav-item.home {
+  padding-top: var(--space-2xl);
+
+  .site-nav-icon {
+    height: 35px;
+    width: 35px;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+</style>

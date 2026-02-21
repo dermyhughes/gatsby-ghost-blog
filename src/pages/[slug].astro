@@ -3,6 +3,9 @@ import Layout from '../components/Layout.astro';
 import MetaData from '../components/meta/MetaData.astro';
 import Pagination from '../components/Pagination.astro';
 import PostCard from '../components/PostCard.astro';
+import ArticleContent from '../ui/layout/ArticleContent.astro';
+import PostFeed from '../ui/posts/PostFeed.astro';
+import TagHeader from '../ui/layout/TagHeader.astro';
 import {
   buildPaginationContext,
   getTagPagePath,
@@ -98,20 +101,14 @@ const pagination = buildPaginationContext(1, numberOfPages, (pageNumber) =>
   {
     page ? (
       <div class='container'>
-        <article class='content'>
-          <h1 class='content-title'>{page.title}</h1>
-          <section class='content-body load-external-scripts' set:html={page.html} />
-        </article>
+        <ArticleContent title={page.title} html={page.html} />
       </div>
     ) : (
       <div class='container'>
-        <header class='tag-header'>
-          <h1>{tag?.name}</h1>
-          {tag?.description ? <p>{tag.description}</p> : null}
-        </header>
-        <section class='post-feed'>
+        <TagHeader title={tag?.name || ''} description={tag?.description} />
+        <PostFeed>
           {paginatedPosts.map((post) => <PostCard post={post} />)}
-        </section>
+        </PostFeed>
         <Pagination {...pagination} />
       </div>
     )

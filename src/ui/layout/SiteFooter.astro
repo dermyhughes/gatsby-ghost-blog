@@ -1,0 +1,56 @@
+---
+import Navigation from '../navigation/Navigation.astro';
+import type { GhostSettings } from '../../lib/ghost-types';
+
+interface Props {
+  settings: GhostSettings;
+  currentPath: string;
+  currentYear: number;
+}
+
+const { settings, currentPath, currentYear } = Astro.props;
+---
+
+<footer class='site-foot'>
+  <div class='site-foot-nav container'>
+    <div class='site-foot-nav-left'>
+      <a href='/'>{settings.title}</a> ©{currentYear}.
+    </div>
+    <div class='site-foot-nav-right'>
+      <Navigation data={settings.navigation || []} navClass='site-foot-nav-item' currentPath={currentPath} />
+    </div>
+  </div>
+</footer>
+
+<style is:global lang='scss'>
+.site-foot {
+  padding: 20px 0 40px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1.3rem;
+  background: var(--color-base);
+}
+
+.site-foot-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  a {
+    color: rgba(255, 255, 255, 0.7);
+
+    &:hover {
+      text-decoration: none;
+      color: rgba(255, 255, 255, 1);
+    }
+  }
+}
+
+.site-foot-nav-right a {
+  display: inline-block;
+  padding: 2px 5px;
+
+  &:last-child {
+    padding-right: 0;
+  }
+}
+</style>

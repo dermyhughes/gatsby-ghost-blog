@@ -1,6 +1,7 @@
 ---
 import Layout from '../../components/Layout.astro';
 import MetaData from '../../components/meta/MetaData.astro';
+import PostArticle from '../../ui/layout/PostArticle.astro';
 import { getPostTagSlug } from '../../lib/content';
 import { getAllPosts, getGhostSettings } from '../../lib/ghost';
 import { canonicalFromPath } from '../../lib/site';
@@ -40,21 +41,7 @@ const canonical = canonicalFromPath(currentPath);
     <MetaData settings={settings} canonical={canonical} post={post} />
   </Fragment>
 
-  <div id='scroll-progress' />
   <div class='container'>
-    <article class='content'>
-      {
-        post.feature_image && (
-          <figure class='post-feature-image poster'>
-            <img src={post.feature_image} alt={post.title} loading='lazy' />
-          </figure>
-        )
-      }
-      <section class='post-full-content'>
-        <h1 class='content-title'>{post.title}</h1>
-
-        <section class='content-body load-external-scripts' set:html={post.html} />
-      </section>
-    </article>
+    <PostArticle title={post.title} html={post.html} featureImage={post.feature_image} />
   </div>
 </Layout>

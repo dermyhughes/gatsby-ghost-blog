@@ -22,6 +22,7 @@ Set these before running dev/build:
 - `npm run preview` - preview production build
 - `npm run check` - run Astro type/content checks
 - `npm run lint` - run ESLint for JS/TS files
+- `npm run test:visual` - run Playwright visual regression tests
 
 ## Routing
 

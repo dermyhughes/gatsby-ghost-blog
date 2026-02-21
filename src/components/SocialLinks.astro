@@ -1,35 +1,5 @@
 ---
-interface Props {
-  isHome?: boolean;
-}
-
-const { isHome = false } = Astro.props;
-
-const socialLinks = [
-  {
-    href: 'https://github.com/dermyhughes',
-    icon: 'github',
-    alt: 'GitHub',
-  },
-  {
-    href: 'https://www.linkedin.com/in/dermot-hughes-a96b67b6',
-    icon: 'linkedin',
-    alt: 'LinkedIn',
-  },
-];
+import UiSocialLinks from '../ui/navigation/SocialLinks.astro';
 ---
 
-<div class='social-container'>
-  {
-    socialLinks.map((link) => (
-      <a
-        class={`site-nav-item ${isHome ? 'home' : ''}`}
-        href={link.href}
-        target='_blank'
-        rel='noopener noreferrer'
-      >
-        <img class='site-nav-icon' src={`/images/icons/${link.icon}.svg`} alt={link.alt} />
-      </a>
-    ))
-  }
-</div>
+<UiSocialLinks {...Astro.props} />

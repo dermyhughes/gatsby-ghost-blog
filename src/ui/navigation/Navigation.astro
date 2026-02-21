@@ -1,0 +1,117 @@
+---
+import type { GhostNavigationItem } from '../../lib/ghost-types';
+import { siteUrl } from '../../lib/site';
+
+interface Props {
+  data?: GhostNavigationItem[];
+  currentPath: string;
+  navClass?: string;
+}
+
+const { data = [], currentPath, navClass = 'site-nav-item' } = Astro.props;
+
+const ensureTrailingSlash = (path: string) => {
+  if (path === '/') {
+    return '/';
+  }
+
+  return `${path.replace(/\/+$/, '')}/`;
+};
+
+const getInternalPath = (rawUrl: string) => {
+  if (!rawUrl) {
+    return null;
+  }
+
+  if (/^https?:\/\//i.test(rawUrl)) {
+    if (rawUrl.startsWith(siteUrl)) {
+      const parsed = new URL(rawUrl);
+      return ensureTrailingSlash(parsed.pathname || '/');
+    }
+
+    return null;
+  }
+
+  return ensureTrailingSlash(rawUrl.startsWith('/') ? rawUrl : `/${rawUrl}`);
+};
+
+const normalizedCurrentPath = ensureTrailingSlash(currentPath);
+---
+
+{
+  data.map((navItem) => {
+    const internalPath = getInternalPath(navItem.url);
+
+    if (!internalPath) {
+      return (
+        <a class={navClass} href={navItem.url} target='_blank' rel='noopener noreferrer'>
+          {navItem.label}
+        </a>
+      );
+    }
+
+    const isHome = internalPath === '/';
+    const isHomeActive = isHome && (normalizedCurrentPath === '/' || normalizedCurrentPath.startsWith('/page/'));
+    const isSectionActive =
+      !isHome &&
+      (normalizedCurrentPath === internalPath ||
+        normalizedCurrentPath.startsWith(`${internalPath.replace(/\/$/, '')}/`));
+
+    const isActive = isHomeActive || isSectionActive;
+
+    return (
+      <a class={`${navClass}${isActive ? ' active-link' : ''}`} href={internalPath}>
+        {navItem.label}
+      </a>
+    );
+  })
+}
+
+<style is:global lang='scss'>
+.site-nav-item {
+  display: inline-block;
+  padding: var(--space-2xs) var(--space-sm);
+  color: var(--color-text-inverse);
+  opacity: 0.8;
+  position: relative;
+  font-size: var(--heading-6);
+
+  &:hover {
+    text-decoration: none;
+  }
+
+  &.active-link:before {
+    content: '';
+    position: absolute;
+    display: block;
+    bottom: 5px;
+    left: 0;
+    right: 0;
+    z-index: -1;
+    height: 30%;
+    opacity: 0.7;
+    background-color: var(--color-pink);
+    width: 100%;
+    transform: rotate(-2deg);
+    animation: nav-link-reveal 0.3s ease;
+    animation-fill-mode: backwards;
+  }
+}
+
+@keyframes nav-link-reveal {
+  0% {
+    background-color: transparent;
+    width: 0;
+  }
+
+  100% {
+    width: 100%;
+  }
+}
+
+@media (max-width: 580px) {
+  .site-nav-item {
+    font-size: 1.7rem;
+  }
+}
+</style>

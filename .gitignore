@@ -78,3 +78,7 @@ dist/
 
 # Local Netlify folder
 .netlify
+
+# Playwright outputs
+playwright-report/
+test-results/
