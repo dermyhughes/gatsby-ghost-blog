@@ -1,12 +1,48 @@
 import GhostContentAPI from '@tryghost/content-api';
+import fs from 'node:fs';
+import path from 'node:path';
 import type { GhostPage, GhostPost, GhostSettings, GhostTag } from './ghost-types';
 
-const apiUrl = process.env.GHOST_API_URL;
-const contentApiKey = process.env.GHOST_CONTENT_API_KEY;
+type GhostRuntimeConfig = {
+  apiUrl?: string;
+  contentApiKey?: string;
+};
+
+type GhostConfigFile = {
+  development?: GhostRuntimeConfig;
+  production?: GhostRuntimeConfig;
+};
+
+const readGhostConfigFile = (): GhostConfigFile => {
+  const configCandidates = ['.ghost.json', '.ghost'];
+
+  for (const candidate of configCandidates) {
+    const filePath = path.join(process.cwd(), candidate);
+
+    if (!fs.existsSync(filePath)) {
+      continue;
+    }
+
+    try {
+      const rawConfig = fs.readFileSync(filePath, 'utf8');
+      return JSON.parse(rawConfig) as GhostConfigFile;
+    } catch {
+      continue;
+    }
+  }
+
+  return {};
+};
+
+const environment = process.env.NODE_ENV === 'development' ? 'development' : 'production';
+const fileConfig = readGhostConfigFile()[environment] || {};
+
+const apiUrl = process.env.GHOST_API_URL || fileConfig.apiUrl;
+const contentApiKey = process.env.GHOST_CONTENT_API_KEY || fileConfig.contentApiKey;
 
 if (!apiUrl || !contentApiKey || /<key>/.test(contentApiKey)) {
   throw new Error(
-    'GHOST_API_URL and GHOST_CONTENT_API_KEY are required to build. Set them in your environment.',
+    'GHOST_API_URL and GHOST_CONTENT_API_KEY are required to build. Set them in Netlify environment variables or .ghost.json/.ghost.',
   );
 }
 
@@ -53,12 +89,14 @@ export const getGhostSettings = async () => {
 
 export const getAllPosts = async () => {
   if (!postsPromise) {
-    postsPromise = (api.posts.browse({
-      include: POST_INCLUDE,
-      limit: 'all',
-      order: 'published_at desc',
-      filter: 'visibility:public',
-    }) as Promise<GhostPost[]>).then((posts) => sortByPublishedAtDesc(posts.map(normalizePost)));
+    postsPromise = (
+      api.posts.browse({
+        include: POST_INCLUDE,
+        limit: 'all',
+        order: 'published_at desc',
+        filter: 'visibility:public',
+      }) as Promise<GhostPost[]>
+    ).then((posts) => sortByPublishedAtDesc(posts.map(normalizePost)));
   }
 
   return postsPromise;
@@ -66,12 +104,14 @@ export const getAllPosts = async () => {
 
 export const getAllPages = async () => {
   if (!pagesPromise) {
-    pagesPromise = (api.pages.browse({
-      include: POST_INCLUDE,
-      limit: 'all',
-      order: 'published_at desc',
-      filter: 'visibility:public',
-    }) as Promise<GhostPage[]>).then((pages) => sortByPublishedAtDesc(pages.map(normalizePage)));
+    pagesPromise = (
+      api.pages.browse({
+        include: POST_INCLUDE,
+        limit: 'all',
+        order: 'published_at desc',
+        filter: 'visibility:public',
+      }) as Promise<GhostPage[]>
+    ).then((pages) => sortByPublishedAtDesc(pages.map(normalizePage)));
   }
 
   return pagesPromise;
@@ -79,12 +119,14 @@ export const getAllPages = async () => {
 
 export const getAllTags = async () => {
   if (!tagsPromise) {
-    tagsPromise = (api.tags.browse({
-      include: TAG_INCLUDE,
-      limit: 'all',
-      order: 'name asc',
-      filter: 'visibility:public',
-    }) as Promise<GhostTag[]>).then((tags) =>
+    tagsPromise = (
+      api.tags.browse({
+        include: TAG_INCLUDE,
+        limit: 'all',
+        order: 'name asc',
+        filter: 'visibility:public',
+      }) as Promise<GhostTag[]>
+    ).then((tags) =>
       tags
         .filter((tag) => tag.visibility !== 'internal')
         .sort((a, b) => a.name.localeCompare(b.name, 'en', { sensitivity: 'base' })),
