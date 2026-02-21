@@ -25,14 +25,19 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "preview:ci": "astro build && astro preview --host 127.0.0.1 --port 4173",
     "check": "astro check",
     "lint": "eslint --no-error-on-unmatched-pattern src/**/*.{js,jsx,ts,tsx,json}",
     "lint:fix": "eslint --fix --no-error-on-unmatched-pattern 'src/**/*.{js,jsx,ts,tsx,json}'",
-    "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,astro,css,md,json}' --config ./.prettierrc"
+    "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,astro,css,md,json}' --config ./.prettierrc",
+    "test:visual:setup": "playwright install chromium webkit",
+    "test:visual": "playwright test",
+    "test:visual:update": "playwright test --update-snapshots"
   },
   "devDependencies": {
     "@astrojs/react": "^4.4.0",
     "@astrojs/sitemap": "^3.6.0",
+    "@playwright/test": "^1.58.2",
     "@types/node": "^24.0.0",
     "@types/react": "^18.2.67",
     "@types/react-dom": "^18.2.22",

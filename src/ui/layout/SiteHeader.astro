@@ -1,0 +1,152 @@
+---
+import ThemeToggle from '../navigation/ThemeToggle';
+import Navigation from '../navigation/Navigation.astro';
+import SocialLinks from '../navigation/SocialLinks.astro';
+import SiteBanner from './SiteBanner.astro';
+import type { GhostSettings } from '../../lib/ghost-types';
+
+interface Props {
+  settings: GhostSettings;
+  currentPath: string;
+  isHome?: boolean;
+  descriptionParts: string[];
+}
+
+const { settings, currentPath, isHome = false, descriptionParts } = Astro.props;
+---
+
+<header
+  class='site-head'
+  style={settings.cover_image ? `background-image: url(${settings.cover_image});` : undefined}
+>
+  <div class='container'>
+    {
+      !isHome && (
+        <div class='site-mast'>
+          <div class='site-nav-left'>
+            <Navigation data={settings.navigation || []} navClass='site-nav-item' currentPath={currentPath} />
+          </div>
+          <div class='site-mast-right mast-small'>
+            <div class='site-actions'>
+              <ThemeToggle client:load />
+              <SocialLinks isHome={false} />
+            </div>
+          </div>
+        </div>
+      )
+    }
+
+    {
+      isHome && (
+        <div>
+          <SiteBanner title={settings.title} descriptionParts={descriptionParts} />
+          <nav class='site-nav'>
+            <div class='site-nav-left'>
+              <Navigation data={settings.navigation || []} navClass='site-nav-item' currentPath={currentPath} />
+            </div>
+            <div class='site-nav-right'>
+              <div class='site-actions'>
+                <ThemeToggle client:load />
+              </div>
+            </div>
+          </nav>
+        </div>
+      )
+    }
+  </div>
+</header>
+<section aria-hidden='true' class='skewed' />
+
+<style lang='scss'>
+@mixin dots-bg {
+  background: var(--color-base);
+  background-size: 1%;
+  background-position: top;
+  background-attachment: fixed;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%23000000' fill-opacity='0.4' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");
+}
+
+.site-head {
+  padding-top: var(--space-lg);
+  padding-bottom: var(--space-lg);
+  color: var(--color-text-inverse);
+  background: var(--color-base);
+  @include dots-bg;
+  position: relative;
+  z-index: var(--z-nav);
+}
+
+.site-mast {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 600;
+}
+
+.site-mast-right {
+  display: flex;
+  align-items: center;
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 15px 0 0;
+  font-weight: 600;
+}
+
+.site-nav-right {
+  display: flex;
+  align-items: center;
+}
+
+.site-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.site-nav-left {
+  margin: 0 20px 0 -10px;
+}
+
+.skewed {
+  height: 42px;
+  height: clamp(15px, 5vw, 42px);
+  background: var(--color-base);
+  clip-path: polygon(0 0, 100% 0%, 100% 100%, 0 0%);
+  @include dots-bg;
+  position: relative;
+  z-index: 1;
+  margin-top: -1px;
+}
+
+@media (max-width: 580px) {
+  .site-nav {
+    justify-content: center;
+  }
+
+  .site-mast {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+
+  .site-nav-left {
+    width: 100%;
+    margin: 0 !important;
+    display: flex;
+    justify-content: center;
+  }
+
+  .site-mast-right.mast-small {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .site-actions {
+    justify-content: center;
+  }
+}
+</style>

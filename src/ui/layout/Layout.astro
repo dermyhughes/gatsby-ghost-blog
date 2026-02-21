@@ -1,0 +1,141 @@
+---
+import SiteHeader from './SiteHeader.astro';
+import SiteFooter from './SiteFooter.astro';
+import type { GhostSettings } from '../../lib/ghost-types';
+
+import '../../styles/app.scss';
+
+interface Props {
+  settings: GhostSettings;
+  currentPath: string;
+  bodyClass?: string;
+  isHome?: boolean;
+  extraStyles?: string | null;
+  extraHeadHtml?: string | null;
+  extraFootHtml?: string | null;
+}
+
+const {
+  settings,
+  currentPath,
+  bodyClass = '',
+  isHome = false,
+  extraStyles = null,
+  extraHeadHtml = null,
+  extraFootHtml = null,
+} = Astro.props;
+
+const descriptionParts = (settings.description || '')
+  .split('.')
+  .map((part) => part.trim())
+  .filter(Boolean);
+
+const currentYear = new Date().getFullYear();
+---
+
+<!doctype html>
+<html lang={settings.lang || 'en'}>
+  <head>
+    <meta charset='utf-8' />
+    <meta name='viewport' content='width=device-width,initial-scale=1' />
+    <link rel='icon' href='/favicon.png' />
+    <link rel='manifest' href='/manifest.webmanifest' />
+    <meta name='theme-color' content='#15171A' />
+    <script is:inline>
+      (() => {
+        const root = document.documentElement;
+        let storedTheme = null;
+
+        try {
+          storedTheme = window.localStorage.getItem('preferred-theme');
+        } catch (error) {
+          storedTheme = null;
+        }
+
+        const theme =
+          storedTheme === 'light' || storedTheme === 'dark'
+            ? storedTheme
+            : window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+              ? 'dark'
+              : 'light';
+
+        root.dataset.theme = theme;
+        root.style.colorScheme = theme;
+      })();
+    </script>
+    <script>
+      import Prism from 'prismjs';
+      import 'prismjs/components/prism-typescript';
+      import 'prismjs/components/prism-jsx';
+      import 'prismjs/components/prism-tsx';
+
+      const trustAllScripts = () => {
+        const scriptNodes = document.querySelectorAll<HTMLScriptElement>(
+          '.load-external-scripts script',
+        );
+
+        scriptNodes.forEach((node) => {
+          const script = document.createElement('script');
+          script.type = node.type || 'text/javascript';
+
+          const source = node.getAttribute('src');
+          if (source) {
+            script.src = source;
+          } else {
+            script.textContent = node.textContent;
+          }
+
+          document.head.appendChild(script);
+        });
+      };
+
+      const setScrollProgress = () => {
+        const progress = document.getElementById('scroll-progress');
+        if (!progress) return;
+
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+        progress.style.width = `${(scrollTop / height) * 100}%`;
+      };
+
+      window.addEventListener('scroll', setScrollProgress, { passive: true });
+      window.addEventListener('load', () => {
+        Prism.highlightAll();
+        trustAllScripts();
+        setScrollProgress();
+      });
+    </script>
+    {settings.codeinjection_head && <Fragment set:html={settings.codeinjection_head} />}
+    {extraHeadHtml && <Fragment set:html={extraHeadHtml} />}
+    {settings.codeinjection_styles && <style is:inline set:html={settings.codeinjection_styles} />}
+    {extraStyles && <style is:inline set:html={extraStyles} />}
+    <slot name='head' />
+  </head>
+  <body class={bodyClass}>
+    <div class='viewport'>
+      <div class='viewport-top'>
+        <SiteHeader
+          settings={settings}
+          currentPath={currentPath}
+          isHome={isHome}
+          descriptionParts={descriptionParts}
+        />
+        <main id='site-main'>
+          <slot />
+        </main>
+      </div>
+
+      <div class='viewport-bottom'>
+        <SiteFooter settings={settings} currentPath={currentPath} currentYear={currentYear} />
+      </div>
+    </div>
+    {settings.codeinjection_foot && <Fragment set:html={settings.codeinjection_foot} />}
+    {extraFootHtml && <Fragment set:html={extraFootHtml} />}
+  </body>
+</html>
+
+<style is:global lang='scss'>
+@use '../styles/layout-primitives' as layout;
+
+@include layout.layout-primitives-contract;
+</style>

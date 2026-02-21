@@ -1,0 +1,33 @@
+---
+interface Props {
+  title: string;
+  html: string;
+  featureImage?: string | null;
+}
+
+const { title, html, featureImage = null } = Astro.props;
+---
+
+<div id='scroll-progress'></div>
+<article class='content'>
+  {
+    featureImage && (
+      <figure class='post-feature-image poster'>
+        <img src={featureImage} alt={title} loading='lazy' />
+      </figure>
+    )
+  }
+  <section class='post-full-content'>
+    <h1 class='content-title'>{title}</h1>
+
+    <section class='content-body load-external-scripts' set:html={html} />
+  </section>
+</article>
+
+<style is:global lang='scss'>
+  @use '../styles/content-typography' as content;
+  @use '../styles/post-shell' as post;
+
+  @include content.content-typography-contract;
+  @include post.post-shell-contract;
+</style>

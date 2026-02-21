@@ -1,0 +1,143 @@
+:root {
+  --code-bg: #f6f8fa;
+  --code-border: #d0d7de;
+  --code-text: #24292f;
+  --code-comment: #6e7781;
+  --code-punctuation: #57606a;
+  --code-property: #0550ae;
+  --code-selector: #1a7f37;
+  --code-operator: #57606a;
+  --code-keyword: #cf222e;
+  --code-string: #0a3069;
+  --code-function: #8250df;
+  --code-boolean: #953800;
+  --code-number: #953800;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --code-bg: #111827;
+    --code-border: #334155;
+    --code-text: #d1d5db;
+    --code-comment: #94a3b8;
+    --code-punctuation: #94a3b8;
+    --code-property: #93c5fd;
+    --code-selector: #86efac;
+    --code-operator: #cbd5e1;
+    --code-keyword: #f9a8d4;
+    --code-string: #fcd34d;
+    --code-function: #c4b5fd;
+    --code-boolean: #fdba74;
+    --code-number: #fdba74;
+  }
+}
+
+:root[data-theme='dark'] {
+  --code-bg: #111827;
+  --code-border: #334155;
+  --code-text: #d1d5db;
+  --code-comment: #94a3b8;
+  --code-punctuation: #94a3b8;
+  --code-property: #93c5fd;
+  --code-selector: #86efac;
+  --code-operator: #cbd5e1;
+  --code-keyword: #f9a8d4;
+  --code-string: #fcd34d;
+  --code-function: #c4b5fd;
+  --code-boolean: #fdba74;
+  --code-number: #fdba74;
+}
+
+:root[data-theme='light'] {
+  --code-bg: #f6f8fa;
+  --code-border: #d0d7de;
+  --code-text: #24292f;
+  --code-comment: #6e7781;
+  --code-punctuation: #57606a;
+  --code-property: #0550ae;
+  --code-selector: #1a7f37;
+  --code-operator: #57606a;
+  --code-keyword: #cf222e;
+  --code-string: #0a3069;
+  --code-function: #8250df;
+  --code-boolean: #953800;
+  --code-number: #953800;
+}
+
+code[class*='language-'],
+pre[class*='language-'] {
+  color: var(--code-text);
+  text-shadow: none;
+}
+
+pre[class*='language-'] {
+  background: var(--code-bg);
+}
+
+:where(code[class*='language-'], pre[class*='language-']) .token.comment,
+:where(code[class*='language-'], pre[class*='language-']) .token.prolog,
+:where(code[class*='language-'], pre[class*='language-']) .token.doctype,
+:where(code[class*='language-'], pre[class*='language-']) .token.cdata {
+  color: var(--code-comment);
+}
+
+:where(code[class*='language-'], pre[class*='language-']) .token.punctuation {
+  color: var(--code-punctuation);
+}
+
+:where(code[class*='language-'], pre[class*='language-']) .token.property,
+:where(code[class*='language-'], pre[class*='language-']) .token.tag,
+:where(code[class*='language-'], pre[class*='language-']) .token.constant,
+:where(code[class*='language-'], pre[class*='language-']) .token.symbol,
+:where(code[class*='language-'], pre[class*='language-']) .token.deleted {
+  color: var(--code-property);
+}
+
+:where(code[class*='language-'], pre[class*='language-']) .token.boolean,
+:where(code[class*='language-'], pre[class*='language-']) .token.number {
+  color: var(--code-number);
+}
+
+:where(code[class*='language-'], pre[class*='language-']) .token.selector,
+:where(code[class*='language-'], pre[class*='language-']) .token.attr-name,
+:where(code[class*='language-'], pre[class*='language-']) .token.char,
+:where(code[class*='language-'], pre[class*='language-']) .token.builtin,
+:where(code[class*='language-'], pre[class*='language-']) .token.inserted {
+  color: var(--code-selector);
+}
+
+:where(code[class*='language-'], pre[class*='language-']) .token.string {
+  color: var(--code-string);
+}
+
+:where(code[class*='language-'], pre[class*='language-']) .token.operator,
+:where(code[class*='language-'], pre[class*='language-']) .token.entity,
+:where(code[class*='language-'], pre[class*='language-']) .token.url {
+  color: var(--code-operator);
+}
+
+:where(code[class*='language-'], pre[class*='language-']) .token.atrule,
+:where(code[class*='language-'], pre[class*='language-']) .token.attr-value,
+:where(code[class*='language-'], pre[class*='language-']) .token.keyword {
+  color: var(--code-keyword);
+}
+
+:where(code[class*='language-'], pre[class*='language-']) .token.function,
+:where(code[class*='language-'], pre[class*='language-']) .token.class-name {
+  color: var(--code-function);
+}
+
+:where(code[class*='language-'], pre[class*='language-']) .token.regex,
+:where(code[class*='language-'], pre[class*='language-']) .token.important,
+:where(code[class*='language-'], pre[class*='language-']) .token.variable {
+  color: var(--code-boolean);
+}
+
+:where(code[class*='language-'], pre[class*='language-']) .token.important,
+:where(code[class*='language-'], pre[class*='language-']) .token.bold {
+  font-weight: var(--font-weight-bold);
+}
+
+:where(code[class*='language-'], pre[class*='language-']) .token.italic {
+  font-style: italic;
+}

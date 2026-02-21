@@ -1,0 +1,29 @@
+---
+interface Props {
+  title: string;
+  html?: string | null;
+  centered?: boolean;
+}
+
+const { title, html = null, centered = false } = Astro.props;
+const articleClass = centered ? 'content content-centered' : 'content';
+---
+
+<article class={articleClass}>
+  <h1 class='content-title'>{title}</h1>
+  {
+    html !== null ? (
+      <section class='content-body load-external-scripts' set:html={html} />
+    ) : (
+      <section class='content-body'>
+        <slot />
+      </section>
+    )
+  }
+</article>
+
+<style is:global lang='scss'>
+  @use '../styles/content-typography' as content;
+
+  @include content.content-typography-contract;
+</style>

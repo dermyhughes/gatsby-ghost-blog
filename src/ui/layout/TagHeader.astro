@@ -1,12 +1,24 @@
-/* Tag Archives
-  /* ---------------------------------------------------------- */
+---
+interface Props {
+  title: string;
+  description?: string | null;
+}
 
+const { title, description = null } = Astro.props;
+---
+
+<header class='tag-header'>
+  <h1>{title}</h1>
+  {description ? <p>{description}</p> : null}
+</header>
+
+<style lang='scss'>
 .tag-header {
   max-width: 690px;
   margin: 0 0 4vw;
 
   h1 {
-    margin: 0 0 1rem 0;
+    margin: 0 0 1rem;
   }
 
   p {
@@ -27,3 +39,4 @@
     }
   }
 }
+</style>

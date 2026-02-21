@@ -1,0 +1,68 @@
+@mixin nav-item-contract {
+  .site-nav-item {
+    display: inline-block;
+    padding: var(--space-2xs) var(--space-sm);
+    color: var(--color-text-inverse);
+    opacity: 0.8;
+    position: relative;
+    font-size: var(--heading-6);
+
+    &:hover {
+      text-decoration: none;
+    }
+
+    &.active-link:before {
+      content: '';
+      position: absolute;
+      display: block;
+      bottom: 5px;
+      left: 0;
+      right: 0;
+      z-index: -1;
+      height: 30%;
+      opacity: 0.7;
+      background-color: var(--color-pink);
+      width: 100%;
+      transform: rotate(-2deg);
+      animation: nav-link-reveal 0.3s ease;
+      animation-fill-mode: backwards;
+    }
+  }
+
+  @keyframes nav-link-reveal {
+    0% {
+      background-color: transparent;
+      width: 0;
+    }
+
+    100% {
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 580px) {
+    .site-nav-item {
+      font-size: 1.7rem;
+    }
+  }
+}
+
+@mixin nav-social-contract {
+  .site-nav-icon {
+    height: 20px;
+    margin: -5px 0 0;
+  }
+
+  .site-nav-item.home {
+    padding-top: var(--space-2xl);
+
+    .site-nav-icon {
+      height: 35px;
+      width: 35px;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+}
