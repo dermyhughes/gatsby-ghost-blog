@@ -7,15 +7,19 @@ declare module '@tryghost/content-api' {
 
   export default class GhostContentAPI {
     constructor(options: GhostContentAPIOptions);
+
     settings: {
       browse(): Promise<unknown>;
     };
+
     posts: {
       browse(options?: unknown): Promise<unknown[]>;
     };
+
     pages: {
       browse(options?: unknown): Promise<unknown[]>;
     };
+
     tags: {
       browse(options?: unknown): Promise<unknown[]>;
     };

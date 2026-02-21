@@ -1,14 +1,14 @@
-@import './partials/variables';
-@import './partials/reset';
-@import './partials/defaults';
-@import './partials/quotation';
-@import './partials/layout';
-@import './partials/header';
-@import './partials/index';
-@import './partials/archives';
-@import './partials/footer';
-@import './partials/pagination';
-@import './partials/koenig';
+@use './partials/variables';
+@use './partials/reset';
+@use './partials/defaults';
+@use './partials/quotation';
+@use './partials/layout';
+@use './partials/header';
+@use './partials/index';
+@use './partials/archives';
+@use './partials/footer';
+@use './partials/pagination';
+@use './partials/koenig';
 
 @font-face {
   font-family: 'Permanent Marker';

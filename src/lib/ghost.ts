@@ -16,22 +16,26 @@ type GhostConfigFile = {
 const readGhostConfigFile = (): GhostConfigFile => {
   const configCandidates = ['.ghost.json', '.ghost'];
 
-  for (const candidate of configCandidates) {
-    const filePath = path.join(process.cwd(), candidate);
+  return (
+    configCandidates.reduce<GhostConfigFile | null>((resolvedConfig, candidate) => {
+      if (resolvedConfig) {
+        return resolvedConfig;
+      }
 
-    if (!fs.existsSync(filePath)) {
-      continue;
-    }
+      const filePath = path.join(process.cwd(), candidate);
 
-    try {
-      const rawConfig = fs.readFileSync(filePath, 'utf8');
-      return JSON.parse(rawConfig) as GhostConfigFile;
-    } catch {
-      continue;
-    }
-  }
+      if (!fs.existsSync(filePath)) {
+        return null;
+      }
 
-  return {};
+      try {
+        const rawConfig = fs.readFileSync(filePath, 'utf8');
+        return JSON.parse(rawConfig) as GhostConfigFile;
+      } catch {
+        return null;
+      }
+    }, null) || {}
+  );
 };
 
 const environment = process.env.NODE_ENV === 'development' ? 'development' : 'production';
