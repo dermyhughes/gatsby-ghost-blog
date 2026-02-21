@@ -11,6 +11,7 @@ const { title, descriptionParts } = Astro.props;
 
 <section class='site-banner' aria-labelledby='site-banner-title'>
   <div class='site-banner-bg' aria-hidden='true'></div>
+  <div class='site-banner-bokeh' aria-hidden='true'></div>
   <div class='site-banner-focus' aria-hidden='true'></div>
   <div class='site-banner-content'>
     <h1 id='site-banner-title' class='site-banner-title three-d' data-line={title}>
@@ -39,9 +40,11 @@ const { title, descriptionParts } = Astro.props;
       const bannerHeight = rect.height;
       const scrollTop = window.scrollY || document.documentElement.scrollTop || 0;
       const progress = Math.max(0, Math.min(1, scrollTop / (bannerHeight * 0.9)));
+      const zoomProgress = Math.pow(progress, 1.85);
       const parallaxOffset = Math.max(-40, Math.min(40, -rect.top * 0.2));
 
       banner.style.setProperty('--banner-progress', progress.toString());
+      banner.style.setProperty('--banner-zoom-progress', zoomProgress.toString());
       banner.style.setProperty('--banner-parallax-y', `${parallaxOffset}px`);
     };
 
@@ -67,7 +70,9 @@ const { title, descriptionParts } = Astro.props;
 
 .site-banner {
   --banner-progress: 0;
+  --banner-zoom-progress: 0;
   --banner-parallax-y: 0px;
+  --banner-bokeh-opacity: calc(0.08 + var(--banner-progress, 0) * 0.42);
   position: relative;
   isolation: isolate;
   overflow: visible;
@@ -75,6 +80,7 @@ const { title, descriptionParts } = Astro.props;
 }
 
 .site-banner-bg,
+.site-banner-bokeh,
 .site-banner-focus {
   position: absolute;
   pointer-events: none;
@@ -88,15 +94,72 @@ const { title, descriptionParts } = Astro.props;
   background-position: center;
   z-index: 0;
   opacity: calc(1 - var(--banner-progress, 0) * 0.12);
-  filter: blur(calc(var(--banner-progress, 0) * 14px));
+  filter: blur(calc(var(--banner-progress, 0) * 24px)) saturate(calc(1 + var(--banner-progress, 0) * 0.35))
+    brightness(calc(1 - var(--banner-progress, 0) * 0.08));
   transform: translate3d(0, calc(var(--banner-parallax-y, 0px) + (var(--banner-progress, 0) * -8px)), 0)
-    scale(calc(1.12 - var(--banner-progress, 0) * 0.18));
-  transition: filter 0.2s linear, opacity 0.2s linear, transform 0.2s linear;
+    scale(calc(1.12 - var(--banner-zoom-progress, 0) * 0.22));
+  transition: filter 0.24s linear, opacity 0.24s linear, transform 0.24s linear;
+  will-change: transform, filter, opacity;
+}
+
+.site-banner-bokeh {
+  inset: -18% -12% -44%;
+  z-index: 1;
+  opacity: var(--banner-bokeh-opacity);
+  mix-blend-mode: screen;
+  background:
+    radial-gradient(circle at 12% 22%, rgba(255, 255, 255, 0.32) 0, rgba(255, 255, 255, 0.1) 8%, transparent 18%),
+    radial-gradient(circle at 86% 18%, rgba(255, 255, 255, 0.28) 0, rgba(255, 255, 255, 0.08) 10%, transparent 22%),
+    radial-gradient(circle at 76% 68%, rgba(255, 255, 255, 0.2) 0, rgba(255, 255, 255, 0.06) 7%, transparent 18%),
+    radial-gradient(circle at 22% 82%, rgba(255, 255, 255, 0.26) 0, rgba(255, 255, 255, 0.08) 9%, transparent 20%),
+    radial-gradient(circle at 58% 38%, rgba(255, 255, 255, 0.18) 0, rgba(255, 255, 255, 0.05) 6%, transparent 14%),
+    radial-gradient(circle at 40% 56%, rgba(255, 255, 255, 0.16) 0, rgba(255, 255, 255, 0.03) 5%, transparent 11%);
+  filter: blur(calc(1px + var(--banner-progress, 0) * 2px));
+  transform: translate3d(0, calc(var(--banner-parallax-y, 0px) * 0.35), 0)
+    scale(calc(1.03 + var(--banner-progress, 0) * 0.08));
+  transition: opacity 0.24s linear, transform 0.24s linear, filter 0.24s linear;
+  will-change: transform, opacity, filter;
+}
+
+.site-banner-bokeh:before,
+.site-banner-bokeh:after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  transition: transform 0.24s linear, opacity 0.24s linear, filter 0.24s linear;
+}
+
+.site-banner-bokeh:before {
+  opacity: calc(0.32 + var(--banner-progress, 0) * 0.2);
+  background:
+    radial-gradient(circle at 8% 48%, rgba(255, 255, 255, 0.22) 0, rgba(255, 255, 255, 0.06) 7%, transparent 16%),
+    radial-gradient(circle at 29% 14%, rgba(255, 255, 255, 0.24) 0, rgba(255, 255, 255, 0.08) 7%, transparent 16%),
+    radial-gradient(circle at 52% 26%, rgba(255, 255, 255, 0.16) 0, rgba(255, 255, 255, 0.06) 6%, transparent 14%),
+    radial-gradient(circle at 72% 84%, rgba(255, 255, 255, 0.23) 0, rgba(255, 255, 255, 0.06) 8%, transparent 18%),
+    radial-gradient(circle at 92% 52%, rgba(255, 255, 255, 0.18) 0, rgba(255, 255, 255, 0.05) 6%, transparent 14%);
+  filter: blur(calc(2px + var(--banner-progress, 0) * 3px));
+  transform: translate3d(0, calc(var(--banner-parallax-y, 0px) * -0.22), 0)
+    scale(calc(1 + var(--banner-progress, 0) * 0.06));
+}
+
+.site-banner-bokeh:after {
+  opacity: calc(0.2 + var(--banner-progress, 0) * 0.28);
+  background:
+    radial-gradient(circle at 16% 64%, rgba(255, 255, 255, 0.18) 0, rgba(255, 255, 255, 0.06) 6%, transparent 14%),
+    radial-gradient(circle at 34% 78%, rgba(255, 255, 255, 0.26) 0, rgba(255, 255, 255, 0.09) 9%, transparent 19%),
+    radial-gradient(circle at 60% 12%, rgba(255, 255, 255, 0.22) 0, rgba(255, 255, 255, 0.08) 8%, transparent 18%),
+    radial-gradient(circle at 82% 36%, rgba(255, 255, 255, 0.2) 0, rgba(255, 255, 255, 0.07) 8%, transparent 17%),
+    radial-gradient(circle at 90% 76%, rgba(255, 255, 255, 0.15) 0, rgba(255, 255, 255, 0.04) 6%, transparent 13%);
+  filter: blur(calc(4px + var(--banner-progress, 0) * 4px));
+  transform: translate3d(0, calc(var(--banner-parallax-y, 0px) * 0.5), 0)
+    scale(calc(0.98 + var(--banner-progress, 0) * 0.12));
 }
 
 .site-banner-focus {
   inset: 0;
-  z-index: 1;
+  z-index: 2;
   opacity: calc(0.08 + var(--banner-progress, 0) * 0.32);
   background: radial-gradient(
     ellipse at 50% 42%,
@@ -109,7 +172,7 @@ const { title, descriptionParts } = Astro.props;
 
 .site-banner-content {
   position: relative;
-  z-index: 2;
+  z-index: 3;
   display: grid;
   place-content: center;
   text-align: center;
@@ -294,6 +357,20 @@ const { title, descriptionParts } = Astro.props;
     filter: none;
     transition: none;
     opacity: 1;
+  }
+
+  .site-banner-bokeh {
+    opacity: 0.12;
+    transform: none;
+    filter: blur(1px);
+    transition: none;
+  }
+
+  .site-banner-bokeh:before,
+  .site-banner-bokeh:after {
+    transform: none;
+    filter: blur(1px);
+    transition: none;
   }
 
   .site-banner-focus {
