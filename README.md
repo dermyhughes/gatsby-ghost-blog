@@ -22,7 +22,9 @@ Set these before running dev/build:
 - `npm run preview` - preview production build
 - `npm run check` - run Astro type/content checks
 - `npm run lint` - run ESLint for JS/TS files
+- `npm run test:visual:setup` - install Playwright browser binaries (Chromium + WebKit)
 - `npm run test:visual` - run Playwright visual regression tests
+- `npm run test:visual:update` - create/update visual snapshot baselines
 
 ## Routing
 
