@@ -1,0 +1,123 @@
+@mixin post-shell-contract {
+  #scroll-progress {
+    position: fixed;
+    top: 0;
+    width: 0;
+    height: 4px;
+    background: var(--color-pink);
+    z-index: 10000;
+  }
+
+  .post-full-content {
+    max-width: var(--layout-width-reading);
+    margin: 0 auto;
+    background: var(--color-surface);
+    border-radius: var(--radius-md);
+  }
+
+  .post-feature-image.poster {
+    width: 100%;
+    height: 100%;
+    padding: 2%;
+    position: relative;
+    box-sizing: border-box;
+    background-color: var(--color-surface);
+    transform: rotate(-1.5deg);
+    box-shadow: var(--shadow-lg);
+    -webkit-filter: saturate(70%) contrast(85%);
+    filter: saturate(70%) contrast(85%);
+    margin: 0 0 3vw;
+
+    img {
+      width: 100%;
+      height: 500px;
+      margin: 0;
+      display: block;
+      z-index: 1;
+      object-fit: cover;
+    }
+
+    &:before,
+    &:after {
+      content: '';
+      width: 100%;
+      left: 0;
+      position: absolute;
+    }
+
+    &:before {
+      height: 4%;
+      bottom: -4%;
+      left: 1%;
+      background-repeat: no-repeat;
+      background-image:
+        linear-gradient(177deg, rgba(0, 0, 0, 0.22) 10%, transparent 50%),
+        linear-gradient(-177deg, rgba(0, 0, 0, 0.22) 10%, transparent 50%);
+      background-size: 49% 100%;
+      background-position:
+        2% 0,
+        98% 0;
+    }
+
+    &:after {
+      height: 100%;
+      top: 0;
+      z-index: 2;
+      background-repeat: no-repeat;
+      background-image:
+        linear-gradient(
+          to right,
+          rgba(255, 255, 255, 0.1) 0.5%,
+          rgba(0, 0, 0, 0.15) 0%,
+          transparent 0.7%
+        ),
+        linear-gradient(
+          to bottom,
+          rgba(255, 255, 255, 0.1) 0.5%,
+          rgba(0, 0, 0, 0.15) 0%,
+          transparent 0.7%
+        ),
+        linear-gradient(
+          to bottom,
+          rgba(255, 255, 255, 0.1) 0.5%,
+          rgba(0, 0, 0, 0.15) 0%,
+          transparent 2%
+        ),
+        linear-gradient(265deg, rgba(0, 0, 0, 0.2), transparent 10%),
+        linear-gradient(5deg, rgba(0, 0, 0, 0.2), transparent 15%),
+        linear-gradient(-5deg, rgba(0, 0, 0, 0.1), transparent 10%),
+        linear-gradient(5deg, rgba(0, 0, 0, 0.1), transparent 10%),
+        linear-gradient(-265deg, rgba(0, 0, 0, 0.2), transparent 10%),
+        linear-gradient(-5deg, rgba(0, 0, 0, 0.2), transparent 15%),
+        linear-gradient(266deg, rgba(0, 0, 0, 0.2), transparent 10%);
+      background-size:
+        50% 100%,
+        100% 33.3333%,
+        100% 33.3333%,
+        50% 33.3333%,
+        50% 33.3333%,
+        50% 33.3333%,
+        50% 33.3333%,
+        50% 33.3333%,
+        50% 33.3333%,
+        50% 33.3333%;
+      background-position:
+        right top,
+        left center,
+        left bottom,
+        left top,
+        left top,
+        right top,
+        left center,
+        right center,
+        right center,
+        left bottom;
+    }
+  }
+
+  @media (max-width: 500px) {
+    .post-feature-image.poster img {
+      height: 250px;
+    }
+  }
+}

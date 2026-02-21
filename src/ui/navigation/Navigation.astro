@@ -68,50 +68,7 @@ const normalizedCurrentPath = ensureTrailingSlash(currentPath);
 }
 
 <style is:global lang='scss'>
-.site-nav-item {
-  display: inline-block;
-  padding: var(--space-2xs) var(--space-sm);
-  color: var(--color-text-inverse);
-  opacity: 0.8;
-  position: relative;
-  font-size: var(--heading-6);
+@use '../styles/navigation-contract' as nav;
 
-  &:hover {
-    text-decoration: none;
-  }
-
-  &.active-link:before {
-    content: '';
-    position: absolute;
-    display: block;
-    bottom: 5px;
-    left: 0;
-    right: 0;
-    z-index: -1;
-    height: 30%;
-    opacity: 0.7;
-    background-color: var(--color-pink);
-    width: 100%;
-    transform: rotate(-2deg);
-    animation: nav-link-reveal 0.3s ease;
-    animation-fill-mode: backwards;
-  }
-}
-
-@keyframes nav-link-reveal {
-  0% {
-    background-color: transparent;
-    width: 0;
-  }
-
-  100% {
-    width: 100%;
-  }
-}
-
-@media (max-width: 580px) {
-  .site-nav-item {
-    font-size: 1.7rem;
-  }
-}
+@include nav.nav-item-contract;
 </style>

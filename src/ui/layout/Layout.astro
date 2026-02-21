@@ -135,20 +135,7 @@ const currentYear = new Date().getFullYear();
 </html>
 
 <style is:global lang='scss'>
-.viewport {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  min-height: 100vh;
-}
+@use '../styles/layout-primitives' as layout;
 
-.container {
-  max-width: var(--layout-width-content);
-  margin: 0 auto;
-  padding: 0 var(--layout-gutter);
-}
-
-#site-main {
-  padding: 4vw 0;
-}
+@include layout.layout-primitives-contract;
 </style>
