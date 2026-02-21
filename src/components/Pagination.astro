@@ -1,0 +1,32 @@
+---
+interface Props {
+  previousPagePath?: string;
+  nextPagePath?: string;
+  humanPageNumber: number;
+  numberOfPages: number;
+}
+
+const { previousPagePath, nextPagePath, humanPageNumber, numberOfPages } = Astro.props;
+---
+
+<nav class='pagination' role='navigation'>
+  <div>
+    {previousPagePath && (
+      <a href={previousPagePath} rel='prev'>
+        Previous
+      </a>
+    )}
+  </div>
+  {numberOfPages > 1 && (
+    <div class='pagination-location'>
+      Page {humanPageNumber} of {numberOfPages}
+    </div>
+  )}
+  <div>
+    {nextPagePath && (
+      <a href={nextPagePath} rel='next'>
+        Next
+      </a>
+    )}
+  </div>
+</nav>

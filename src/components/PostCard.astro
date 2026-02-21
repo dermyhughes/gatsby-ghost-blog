@@ -1,0 +1,42 @@
+---
+import type { GhostPost } from '../lib/ghost-types';
+import { formatReadingTime, getPostPath, getPublicTags } from '../lib/content';
+
+interface Props {
+  post: GhostPost;
+}
+
+const { post } = Astro.props;
+const url = getPostPath(post);
+const publicTags = getPublicTags(post.tags);
+const excerpt = post.excerpt || post.custom_excerpt || '';
+const readingTime = formatReadingTime(post);
+---
+
+<a href={url} class='post-card'>
+  <header class='post-card-header'>
+    {post.feature_image && (
+      <div class='post-card-image' style={`background-image: url(${post.feature_image});`} />
+    )}
+    {publicTags.length > 0 && (
+      <div class='post-card-tags'>
+        {
+          publicTags.map((tag, index) => (
+            <span>
+              {tag.name}
+              {index < publicTags.length - 1 ? ', ' : ''}
+            </span>
+          ))
+        }
+      </div>
+    )}
+    {post.featured && <span>Featured</span>}
+    <h2 class='post-card-title'>{post.title}</h2>
+  </header>
+  <section class='post-card-excerpt'>{excerpt}</section>
+  <footer class='post-card-footer'>
+    <div class='reading-time'>
+      <div>{readingTime}</div>
+    </div>
+  </footer>
+</a>

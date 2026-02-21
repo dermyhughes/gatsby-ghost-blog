@@ -33,7 +33,7 @@
 }
 
 .kg-bookmark-title {
-    color: color(var(--color-secondary) l(-30%));
+    color: color-mix(in srgb, var(--color-secondary) 70%, black);
     font-size: 1.6rem;
     line-height: 1.5em;
     font-weight: 600;
@@ -49,7 +49,7 @@
     overflow-y: hidden;
     margin-top: 12px;
     max-height: 48px;
-    color: color(var(--color-secondary) l(-10%));
+    color: color-mix(in srgb, var(--color-secondary) 90%, black);
     font-size: 1.5rem;
     line-height: 1.5em;
     font-weight: 400;
@@ -78,7 +78,7 @@
     flex-wrap: wrap;
     align-items: center;
     margin-top: 14px;
-    color: color(var(--color-secondary) l(-10%));
+    color: color-mix(in srgb, var(--color-secondary) 90%, black);
     font-size: 1.5rem;
     font-weight: 400;
 }

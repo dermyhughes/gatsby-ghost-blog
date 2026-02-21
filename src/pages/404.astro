@@ -1,0 +1,33 @@
+---
+import Layout from '../components/Layout.astro';
+import MetaData from '../components/meta/MetaData.astro';
+import { getGhostSettings } from '../lib/ghost';
+import { canonicalFromPath } from '../lib/site';
+
+const settings = await getGhostSettings();
+const canonical = canonicalFromPath('/404/');
+---
+
+<Layout settings={settings} currentPath='/404/'>
+  <Fragment slot='head'>
+    <MetaData
+      settings={settings}
+      canonical={canonical}
+      title='Page Not Found'
+      description='The page you requested could not be found.'
+    />
+  </Fragment>
+
+  <div class='container'>
+    <article class='content' style='text-align: center;'>
+      <h1 class='content-title'>Error 404</h1>
+      <section class='content-body'>
+        <p>
+          Huh. It looks like that page cannot be found. You can <a href='/'>return home</a> to start over.
+        </p>
+        <p>Here is a cute picture to make it up to you.</p>
+      </section>
+      <img class='random-image' alt='Random cute animal' src='https://source.unsplash.com/640x480?cute-animals' />
+    </article>
+  </div>
+</Layout>

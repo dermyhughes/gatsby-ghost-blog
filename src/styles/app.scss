@@ -9,11 +9,10 @@
 @import './partials/footer';
 @import './partials/pagination';
 @import './partials/koenig';
-@import './partials/cv';
 
 @font-face {
   font-family: 'Permanent Marker';
-  src: url('../../static/fonts/PermanentMarker-Regular.ttf') format('truetype');
+  src: url('/fonts/PermanentMarker-Regular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }

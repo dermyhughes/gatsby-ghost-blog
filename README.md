@@ -1,7 +1,52 @@
 # Dermot Hughes Blog and Portfolio
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/cbfdd454-5633-4ee5-80df-225622a4f25d/deploy-status)](https://app.netlify.com/sites/dermothughes/deploys)
+Astro static site using Ghost as a headless CMS via the Ghost Content API.
 
-I decided a needed a new portfolio website and somewhere to post the odd blog. I wasn't interested in WordPress and wanted to use this to learn some new skills.
+## Requirements
 
-This is built using [Ghost](https://ghost.org) & [Gatsby](https://gatsbyjs.org) so I can learn some React, Node and GraphQL. It uses Ghost as a headless CMS to manage my content, images, posts etc without needing to make code changes. It's hooked via Netlify so when I make a post, it rebuilds and deploys a new version of the static site created by Gastby.
+- Node 24 (`.nvmrc` is set to `24`)
+- npm 10+
+
+## Environment Variables
+
+Set these before running dev/build:
+
+- `GHOST_API_URL` (example: `https://blog.dermothughes.com`)
+- `GHOST_CONTENT_API_KEY`
+- `SITEURL` (optional override for canonical URLs; defaults to `https://dermothughes.com`)
+
+## Scripts
+
+- `npm run dev` - start Astro dev server
+- `npm run build` - build static site into `dist/`
+- `npm run preview` - preview production build
+- `npm run check` - run Astro type/content checks
+- `npm run lint` - run ESLint for JS/TS files
+
+## Routing
+
+- Home: `/` and `/page/:n/`
+- Posts: `/:tag/:slug/`
+- Pages: `/:slug/`
+- Tags: `/:tagSlug/` and `/:tagSlug/page/:n/`
+- RSS: `/rss`
+
+Build fails if a Ghost page slug collides with a Ghost tag slug.
+
+## CV Removal Redirects
+
+The previous CV flow has been retired:
+
+- `/cv/` -> `/` (301)
+- `/cvraw/` -> `/` (301)
+- `/dermot-hughes-cv.pdf` -> `/` (301)
+
+## Deployment (Netlify)
+
+`netlify.toml` is configured for Astro output:
+
+- Build command: `NODE_ENV=production npm run build`
+- Publish directory: `dist/`
+- Build runtime: Node `24`
+
+Ghost webhook trigger remains configured via Netlify incoming hooks.

@@ -1,0 +1,86 @@
+---
+import Layout from '../../../components/Layout.astro';
+import MetaData from '../../../components/meta/MetaData.astro';
+import Pagination from '../../../components/Pagination.astro';
+import PostCard from '../../../components/PostCard.astro';
+import {
+  buildPaginationContext,
+  getTagPagePath,
+  paginateItems,
+  POSTS_PER_PAGE,
+} from '../../../lib/content';
+import {
+  assertNoPageTagCollisions,
+  getAllPosts,
+  getAllTags,
+  getGhostSettings,
+  getPostsByTagSlug,
+  getTagBySlug,
+} from '../../../lib/ghost';
+import { canonicalFromPath } from '../../../lib/site';
+
+export async function getStaticPaths() {
+  await assertNoPageTagCollisions();
+
+  const [tags, posts] = await Promise.all([getAllTags(), getAllPosts()]);
+
+  const tagToPosts = new Map<string, number>();
+  posts.forEach((post) => {
+    post.tags.forEach((tag) => {
+      if (tag.visibility !== 'internal') {
+        tagToPosts.set(tag.slug, (tagToPosts.get(tag.slug) || 0) + 1);
+      }
+    });
+  });
+
+  const paths: Array<{ params: { slug: string; page: string } }> = [];
+
+  tags.forEach((tag) => {
+    const postCount = tagToPosts.get(tag.slug) || tag.count?.posts || 0;
+    const totalPages = Math.ceil(postCount / POSTS_PER_PAGE);
+
+    for (let page = 2; page <= totalPages; page += 1) {
+      paths.push({
+        params: {
+          slug: tag.slug,
+          page: String(page),
+        },
+      });
+    }
+  });
+
+  return paths;
+}
+
+const slug = Astro.params.slug || '';
+const pageNumber = Number(Astro.params.page);
+const settings = await getGhostSettings();
+const tag = await getTagBySlug(slug);
+
+if (!tag) {
+  throw new Error(`Unable to find Ghost tag for route /${slug}/`);
+}
+
+const allTagPosts = await getPostsByTagSlug(slug);
+const { items: paginatedPosts, numberOfPages } = paginateItems(allTagPosts, POSTS_PER_PAGE, pageNumber);
+const pagination = buildPaginationContext(pageNumber, numberOfPages, (page) => getTagPagePath(slug, page));
+const currentPath = getTagPagePath(slug, pageNumber);
+const canonical = canonicalFromPath(currentPath);
+---
+
+<Layout settings={settings} currentPath={currentPath}>
+  <Fragment slot='head'>
+    <MetaData settings={settings} canonical={canonical} tag={tag} />
+  </Fragment>
+
+  <div class='container'>
+    <header class='tag-header'>
+      <h1>{tag.name}</h1>
+      {tag.description ? <p>{tag.description}</p> : null}
+    </header>
+    <section class='post-feed'>
+      {paginatedPosts.map((post) => <PostCard post={post} />)}
+    </section>
+    <Pagination {...pagination} />
+  </div>
+</Layout>
