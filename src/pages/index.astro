@@ -1,0 +1,29 @@
+---
+import Layout from '../components/Layout.astro';
+import MetaData from '../components/meta/MetaData.astro';
+import Pagination from '../components/Pagination.astro';
+import PostCard from '../components/PostCard.astro';
+import { buildPaginationContext, getHomePagePath, paginateItems, POSTS_PER_PAGE } from '../lib/content';
+import { getAllPosts, getGhostSettings } from '../lib/ghost';
+import { canonicalFromPath } from '../lib/site';
+
+const settings = await getGhostSettings();
+const posts = await getAllPosts();
+
+const { items: paginatedPosts, numberOfPages } = paginateItems(posts, POSTS_PER_PAGE, 1);
+const pagination = buildPaginationContext(1, numberOfPages, getHomePagePath);
+const canonical = canonicalFromPath('/');
+---
+
+<Layout settings={settings} isHome currentPath='/'>
+  <Fragment slot='head'>
+    <MetaData settings={settings} canonical={canonical} />
+  </Fragment>
+
+  <div class='container'>
+    <section class='post-feed'>
+      {paginatedPosts.map((post) => <PostCard post={post} />)}
+    </section>
+    <Pagination {...pagination} />
+  </div>
+</Layout>

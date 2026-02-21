@@ -1,0 +1,119 @@
+---
+import Layout from '../components/Layout.astro';
+import MetaData from '../components/meta/MetaData.astro';
+import Pagination from '../components/Pagination.astro';
+import PostCard from '../components/PostCard.astro';
+import {
+  buildPaginationContext,
+  getTagPagePath,
+  paginateItems,
+  POSTS_PER_PAGE,
+} from '../lib/content';
+import {
+  assertNoPageTagCollisions,
+  getAllPages,
+  getAllTags,
+  getGhostSettings,
+  getPageBySlug,
+  getPostsByTagSlug,
+  getTagBySlug,
+} from '../lib/ghost';
+import type { GhostPage, GhostPost, GhostTag } from '../lib/ghost-types';
+import { canonicalFromPath } from '../lib/site';
+
+interface RouteProps {
+  kind: 'page' | 'tag';
+}
+
+export async function getStaticPaths() {
+  await assertNoPageTagCollisions();
+
+  const [pages, tags] = await Promise.all([getAllPages(), getAllTags()]);
+
+  return [
+    ...pages.map((page) => ({
+      params: { slug: page.slug },
+      props: { kind: 'page' as const },
+    })),
+    ...tags.map((tag) => ({
+      params: { slug: tag.slug },
+      props: { kind: 'tag' as const },
+    })),
+  ];
+}
+
+const { slug } = Astro.params;
+const { kind } = Astro.props as RouteProps;
+
+const settings = await getGhostSettings();
+const currentPath = `/${slug}/`;
+const canonical = canonicalFromPath(currentPath);
+
+let page: GhostPage | null = null;
+let tag: GhostTag | null = null;
+let paginatedPosts: GhostPost[] = [];
+let numberOfPages = 1;
+
+if (kind === 'page') {
+  page = await getPageBySlug(slug || '');
+
+  if (!page) {
+    throw new Error(`Unable to find Ghost page for route ${currentPath}`);
+  }
+} else {
+  tag = await getTagBySlug(slug || '');
+
+  if (!tag) {
+    throw new Error(`Unable to find Ghost tag for route ${currentPath}`);
+  }
+
+  const allTagPosts = await getPostsByTagSlug(slug || '');
+  const paginated = paginateItems(allTagPosts, POSTS_PER_PAGE, 1);
+  paginatedPosts = paginated.items;
+  numberOfPages = paginated.numberOfPages;
+}
+
+const pagination = buildPaginationContext(1, numberOfPages, (pageNumber) =>
+  getTagPagePath(slug || '', pageNumber),
+);
+---
+
+<Layout
+  settings={settings}
+  currentPath={currentPath}
+  extraStyles={page?.codeinjection_styles}
+  extraHeadHtml={page?.codeinjection_head}
+  extraFootHtml={page?.codeinjection_foot}
+>
+  <Fragment slot='head'>
+    {
+      page ? (
+        <MetaData settings={settings} canonical={canonical} page={page} />
+      ) : (
+        <MetaData settings={settings} canonical={canonical} tag={tag!} />
+      )
+    }
+  </Fragment>
+
+  {
+    page ? (
+      <div class='container'>
+        <article class='content'>
+          <h1 class='content-title'>{page.title}</h1>
+          <section class='content-body load-external-scripts' set:html={page.html} />
+        </article>
+      </div>
+    ) : (
+      <div class='container'>
+        <header class='tag-header'>
+          <h1>{tag?.name}</h1>
+          {tag?.description ? <p>{tag.description}</p> : null}
+        </header>
+        <section class='post-feed'>
+          {paginatedPosts.map((post) => <PostCard post={post} />)}
+        </section>
+        <Pagination {...pagination} />
+      </div>
+    )
+  }
+</Layout>

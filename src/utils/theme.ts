@@ -43,18 +43,10 @@ export const subscribeToSystemTheme = (callback: (theme: ThemePreference) => voi
   const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
   const listener = (event: MediaQueryListEvent) => callback(event.matches ? 'dark' : 'light');
 
-  if (typeof mediaQuery.addEventListener === 'function') {
-    mediaQuery.addEventListener('change', listener);
-  } else {
-    mediaQuery.addListener(listener);
-  }
+  mediaQuery.addEventListener('change', listener);
 
   return () => {
-    if (typeof mediaQuery.removeEventListener === 'function') {
-      mediaQuery.removeEventListener('change', listener);
-    } else {
-      mediaQuery.removeListener(listener);
-    }
+    mediaQuery.removeEventListener('change', listener);
   };
 };
 

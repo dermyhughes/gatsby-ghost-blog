@@ -306,9 +306,26 @@
   border: 0;
 }
 
-.theme-toggle svg {
-  min-width: 2rem;
-  min-height: 2rem;
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.2rem;
+  height: 3.2rem;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: var(--color-surface);
+  color: var(--color-base);
+  font-size: 1.8rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background var(--transition-fast), color var(--transition-fast),
+    border-color var(--transition-fast);
+}
+
+.theme-toggle:hover {
+  background: var(--color-surface-muted);
+  border-color: var(--color-border-strong);
 }
 
 @media (max-width: 580px) {

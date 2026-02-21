@@ -70,10 +70,10 @@ typings/
 .DS_Store
 .vscode
 
-# Docs Custom
+# Build artifacts
 .cache/
-public
-yarn-error.log
+dist/
+.astro/
 .netlify/
 
 # Local Netlify folder

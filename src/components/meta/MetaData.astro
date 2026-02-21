@@ -1,0 +1,165 @@
+---
+import type { GhostPage, GhostPost, GhostSettings, GhostTag } from '../../lib/ghost-types';
+import { getPublicTags } from '../../lib/content';
+import { withSiteUrl } from '../../lib/site';
+import siteConfig from '../../utils/siteConfig';
+
+interface Props {
+  settings: GhostSettings;
+  canonical: string;
+  post?: GhostPost;
+  page?: GhostPage;
+  tag?: GhostTag;
+  title?: string;
+  description?: string;
+  image?: string | null;
+}
+
+const { settings, canonical, post, page, tag } = Astro.props;
+
+const siteTitle = settings.title;
+const siteDescription = settings.description;
+const twitterHandle = settings.twitter || '';
+const twitterProfile = twitterHandle ? `https://twitter.com/${twitterHandle.replace(/^@/, '')}/` : null;
+const publisherLogo = withSiteUrl(settings.logo || siteConfig.siteIcon);
+
+const postTags = post ? getPublicTags(post.tags).map((item) => item.name) : [];
+const primaryTag = postTags[0] || '';
+
+const pageType = tag ? 'Series' : 'WebSite';
+const pageTitleFromEntity = page?.title || tag?.name;
+const pageDescriptionFromEntity = page?.excerpt || tag?.description;
+const pageTitleBase =
+  Astro.props.title ||
+  page?.meta_title ||
+  tag?.meta_title ||
+  pageTitleFromEntity ||
+  siteConfig.siteTitleMeta ||
+  siteTitle;
+const pageTitle = `${pageTitleBase} - ${siteTitle}`;
+const pageDescription =
+  Astro.props.description ||
+  page?.meta_description ||
+  tag?.meta_description ||
+  pageDescriptionFromEntity ||
+  siteConfig.siteDescriptionMeta ||
+  siteDescription;
+
+const articleTitle = post?.meta_title || post?.title || pageTitle;
+const articleDescription = post?.meta_description || post?.excerpt || pageDescription;
+
+const shareImage = withSiteUrl(
+  Astro.props.image ||
+    post?.feature_image ||
+    page?.feature_image ||
+    tag?.feature_image ||
+    settings.cover_image ||
+    null,
+);
+
+const articleJsonLd = post
+  ? {
+      '@context': 'https://schema.org/',
+      '@type': 'Article',
+      keywords: postTags.length ? postTags.join(', ') : undefined,
+      headline: articleTitle,
+      url: canonical,
+      datePublished: post.published_at,
+      dateModified: post.updated_at,
+      image: shareImage
+        ? {
+            '@type': 'ImageObject',
+            url: shareImage,
+            width: siteConfig.shareImageWidth,
+            height: siteConfig.shareImageHeight,
+          }
+        : undefined,
+      publisher: {
+        '@type': 'Organization',
+        name: siteTitle,
+        logo: {
+          '@type': 'ImageObject',
+          url: publisherLogo,
+          width: 60,
+          height: 60,
+        },
+      },
+      description: articleDescription,
+      mainEntityOfPage: {
+        '@type': 'WebPage',
+        '@id': withSiteUrl('/'),
+      },
+    }
+  : null;
+
+const websiteJsonLd = {
+  '@context': 'https://schema.org/',
+  '@type': pageType,
+  url: canonical,
+  image: shareImage
+    ? {
+        '@type': 'ImageObject',
+        url: shareImage,
+        width: siteConfig.shareImageWidth,
+        height: siteConfig.shareImageHeight,
+      }
+    : undefined,
+  publisher: {
+    '@type': 'Organization',
+    name: siteTitle,
+    logo: {
+      '@type': 'ImageObject',
+      url: publisherLogo,
+      width: 60,
+      height: 60,
+    },
+  },
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': withSiteUrl('/'),
+  },
+  description: pageDescription,
+};
+---
+
+{post ? <title>{articleTitle}</title> : <title>{pageTitle}</title>}
+<meta name='description' content={post ? articleDescription : pageDescription} />
+<link rel='canonical' href={canonical} />
+
+<meta property='og:site_name' content={siteTitle} />
+<meta property='og:type' content={post ? 'article' : 'website'} />
+<meta property='og:title' content={post ? post.og_title || articleTitle : pageTitle} />
+<meta
+  property='og:description'
+  content={post ? post.og_description || articleDescription : pageDescription}
+/>
+<meta property='og:url' content={canonical} />
+
+{post && <meta property='article:published_time' content={post.published_at || ''} />}
+{post && <meta property='article:modified_time' content={post.updated_at || ''} />}
+{post && postTags.map((keyword) => <meta property='article:tag' content={keyword} />)}
+
+<meta name='twitter:title' content={post ? post.twitter_title || articleTitle : pageTitle} />
+<meta
+  name='twitter:description'
+  content={post ? post.twitter_description || articleDescription : pageDescription}
+/>
+<meta name='twitter:url' content={canonical} />
+{primaryTag && <meta name='twitter:label2' content='Filed under' />}
+{primaryTag && <meta name='twitter:data2' content={primaryTag} />}
+{twitterProfile && <meta name='twitter:site' content={twitterProfile} />}
+{twitterHandle && <meta name='twitter:creator' content={twitterHandle} />}
+
+{shareImage && <meta name='twitter:card' content='summary_large_image' />}
+{shareImage && <meta name='twitter:image' content={shareImage} />}
+{shareImage && <meta property='og:image' content={shareImage} />}
+{shareImage && <meta property='og:image:width' content={String(siteConfig.shareImageWidth)} />}
+{shareImage && <meta property='og:image:height' content={String(siteConfig.shareImageHeight)} />}
+
+{
+  post ? (
+    <script is:inline type='application/ld+json' set:html={JSON.stringify(articleJsonLd, null, 2)} />
+  ) : (
+    <script is:inline type='application/ld+json' set:html={JSON.stringify(websiteJsonLd, null, 2)} />
+  )
+}

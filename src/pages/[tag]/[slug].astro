@@ -1,0 +1,60 @@
+---
+import Layout from '../../components/Layout.astro';
+import MetaData from '../../components/meta/MetaData.astro';
+import { getPostTagSlug } from '../../lib/content';
+import { getAllPosts, getGhostSettings } from '../../lib/ghost';
+import { canonicalFromPath } from '../../lib/site';
+
+export async function getStaticPaths() {
+  const posts = await getAllPosts();
+
+  return posts.map((post) => ({
+    params: {
+      tag: getPostTagSlug(post),
+      slug: post.slug,
+    },
+  }));
+}
+
+const { tag, slug } = Astro.params;
+const settings = await getGhostSettings();
+const posts = await getAllPosts();
+const post = posts.find((item) => item.slug === slug && getPostTagSlug(item) === tag);
+
+if (!post) {
+  throw new Error(`Unable to find Ghost post for route /${tag}/${slug}/`);
+}
+
+const currentPath = `/${tag}/${slug}/`;
+const canonical = canonicalFromPath(currentPath);
+---
+
+<Layout
+  settings={settings}
+  currentPath={currentPath}
+  extraStyles={post.codeinjection_styles}
+  extraHeadHtml={post.codeinjection_head}
+  extraFootHtml={post.codeinjection_foot}
+>
+  <Fragment slot='head'>
+    <MetaData settings={settings} canonical={canonical} post={post} />
+  </Fragment>
+
+  <div id='scroll-progress' />
+  <div class='container'>
+    <article class='content'>
+      {
+        post.feature_image && (
+          <figure class='post-feature-image poster'>
+            <img src={post.feature_image} alt={post.title} loading='lazy' />
+          </figure>
+        )
+      }
+      <section class='post-full-content'>
+        <h1 class='content-title'>{post.title}</h1>
+
+        <section class='content-body load-external-scripts' set:html={post.html} />
+      </section>
+    </article>
+  </div>
+</Layout>
