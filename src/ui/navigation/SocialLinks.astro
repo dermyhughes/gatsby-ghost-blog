@@ -1,9 +1,10 @@
 ---
 interface Props {
   isHome?: boolean;
+  label?: string;
 }
 
-const { isHome = false } = Astro.props;
+const { isHome = false, label = 'Social links' } = Astro.props;
 
 const socialLinks = [
   {
@@ -19,7 +20,7 @@ const socialLinks = [
 ];
 ---
 
-<div class='social-container'>
+<nav class='social-container' aria-label={label}>
   {
     socialLinks.map((link) => (
       <a
@@ -27,12 +28,14 @@ const socialLinks = [
         href={link.href}
         target='_blank'
         rel='noopener noreferrer'
+        aria-label={link.alt}
+        title={link.alt}
       >
-        <img class='site-nav-icon' src={`/images/icons/${link.icon}.svg`} alt={link.alt} />
+        <img class='site-nav-icon' src={`/images/icons/${link.icon}.svg`} alt='' aria-hidden='true' />
       </a>
     ))
   }
-</div>
+</nav>
 
 <style is:global lang='scss'>
 @use '../styles/navigation-contract' as nav;

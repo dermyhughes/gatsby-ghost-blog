@@ -15,21 +15,23 @@ const readingTime = formatReadingTime(post);
 
 <a href={url} class='post-card'>
   <header class='post-card-header'>
-    {post.feature_image && (
-      <div class='post-card-image' style={`background-image: url(${post.feature_image});`} />
-    )}
-    {publicTags.length > 0 && (
-      <div class='post-card-tags'>
-        {
-          publicTags.map((tag, index) => (
+    {
+      post.feature_image && (
+        <div class='post-card-image' style={`background-image: url(${post.feature_image});`} />
+      )
+    }
+    {
+      publicTags.length > 0 && (
+        <div class='post-card-tags'>
+          {publicTags.map((tag, index) => (
             <span>
               {tag.name}
               {index < publicTags.length - 1 ? ', ' : ''}
             </span>
-          ))
-        }
-      </div>
-    )}
+          ))}
+        </div>
+      )
+    }
     {post.featured && <span>Featured</span>}
     <h2 class='post-card-title'>{post.title}</h2>
   </header>
@@ -42,57 +44,57 @@ const readingTime = formatReadingTime(post);
 </a>
 
 <style lang='scss'>
-.post-card {
-  color: inherit;
-  text-decoration: none;
-
-  &:hover {
+  .post-card {
+    color: inherit;
     text-decoration: none;
+
+    &:hover {
+      text-decoration: none;
+    }
   }
-}
 
-.post-card-tags {
-  margin: 0 0 5px;
-  font-size: 1.4rem;
-  line-height: 1.15em;
-  color: var(--color-secondary);
-}
-
-.post-card-title {
-  margin: 0 0 10px;
-  padding: 0;
-  color: var(--color-text-strong);
-}
-
-.post-card-excerpt {
-  font-size: 1.6rem;
-  line-height: 1.55em;
-}
-
-.post-card-image {
-  margin: 0 0 10px;
-  width: auto;
-  height: 200px;
-  background: var(--color-secondary) no-repeat center center;
-  background-size: cover;
-  border-radius: 4px;
-
-  &:hover {
-    transform: scale(1.05);
-    transition: 0.2s;
+  .post-card-tags {
+    margin: 0 0 5px;
+    font-size: 1.4rem;
+    line-height: 1.15em;
+    color: var(--color-secondary);
   }
-}
 
-.post-card-footer {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  margin: 10px 0 0;
-  color: var(--color-secondary);
+  .post-card-title {
+    margin: 0 0 10px;
+    padding: 0;
+    color: var(--color-text-strong);
+  }
 
-  .reading-time {
+  .post-card-excerpt {
+    font-size: 1.6rem;
+    line-height: 1.55em;
+  }
+
+  .post-card-image {
+    margin: 0 0 10px;
+    width: auto;
+    height: 200px;
+    background: var(--color-secondary) no-repeat center center;
+    background-size: cover;
+    border-radius: 12px;
+
+    &:hover {
+      transform: scale(1.05);
+      transition: 0.2s;
+    }
+  }
+
+  .post-card-footer {
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    margin: 10px 0 0;
+    color: var(--color-secondary);
+
+    .reading-time {
+      display: flex;
+      flex-direction: column;
+    }
   }
-}
 </style>
