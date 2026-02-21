@@ -113,12 +113,24 @@ const { title, html, featureImage = null } = Astro.props;
   pre {
     margin: 0.4em 0 1.8em;
     font-size: 1.6rem;
-    line-height: 1.4em;
-    white-space: pre-wrap;
+    line-height: 1.5em;
+    white-space: pre;
     padding: 20px;
-    background: var(--color-base);
-    color: #fff;
+    overflow-x: auto;
+    border: 1px solid var(--code-border);
+    background: var(--code-bg);
+    color: var(--code-text);
     border-radius: 12px;
+  }
+
+  pre code {
+    display: block;
+    padding: 0;
+    border-radius: 0;
+    white-space: inherit;
+    background: transparent;
+    color: inherit;
+    font-family: var(--font-family-mono);
   }
 }
 
