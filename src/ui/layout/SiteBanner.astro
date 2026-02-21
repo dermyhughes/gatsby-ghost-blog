@@ -9,22 +9,20 @@ interface Props {
 const { title, descriptionParts } = Astro.props;
 ---
 
-<div class='site-banner'>
-  <h1 class='site-banner-title three-d' data-line={title}>
+<section class='site-banner' aria-labelledby='site-banner-title'>
+  <h1 id='site-banner-title' class='site-banner-title three-d' data-line={title}>
     {title}
   </h1>
 
   <div class='site-banner-desc'>
     {
       descriptionParts.map((item) => (
-        <div class='highlight-container'>
-          <span class='highlight'>{item}.</span>
-        </div>
+        <span class='highlight-container'>{item}.</span>
       ))
     }
   </div>
   <SocialLinks isHome />
-</div>
+</section>
 
 <style lang='scss'>
 @use 'sass:math';
@@ -43,6 +41,11 @@ const { title, descriptionParts } = Astro.props;
   pointer-events: none;
   transform: scale(calc(1 - var(--title-blur, 0) * 0.15));
   transition: filter 0.2s, opacity 0.2s, transform 0.2s;
+}
+
+.site-banner :global(.social-container),
+.site-banner :global(.social-container a) {
+  pointer-events: auto;
 }
 
 @keyframes site-banner-fade-in {
@@ -167,9 +170,9 @@ const { title, descriptionParts } = Astro.props;
   opacity: 0.8;
 }
 
-.highlight-container,
-.highlight {
+.highlight-container {
   position: relative;
+  z-index: 0;
 }
 
 .highlight-container {
@@ -190,6 +193,7 @@ const { title, descriptionParts } = Astro.props;
   padding: 10px 3px 3px 10px;
   animation: site-highlight-reveal 0.5s ease;
   animation-fill-mode: backwards;
+  z-index: -1;
 }
 
 @keyframes site-highlight-reveal {
@@ -206,6 +210,28 @@ const { title, descriptionParts } = Astro.props;
 @for $i from 1 through 4 {
   .highlight-container:nth-child(#{$i})::before {
     animation-delay: math.div($i, 2) * 1s;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-banner {
+    transition: none;
+  }
+
+  .site-banner-title {
+    opacity: 1;
+    animation: none;
+  }
+
+  .three-d {
+    &:before,
+    &:after {
+      animation: none;
+    }
+  }
+
+  .highlight-container:before {
+    animation: none;
   }
 }
 </style>

@@ -23,11 +23,11 @@ const { settings, currentPath, isHome = false, descriptionParts } = Astro.props;
     {
       !isHome && (
         <div class='site-mast'>
-          <div class='site-nav-left'>
+          <nav class='site-nav-left' aria-label='Primary navigation'>
             <Navigation data={settings.navigation || []} navClass='site-nav-item' currentPath={currentPath} />
-          </div>
+          </nav>
           <div class='site-mast-right mast-small'>
-            <div class='site-actions'>
+            <div class='site-actions' role='group' aria-label='Display and social links'>
               <ThemeToggle client:load />
               <SocialLinks isHome={false} />
             </div>
@@ -38,19 +38,19 @@ const { settings, currentPath, isHome = false, descriptionParts } = Astro.props;
 
     {
       isHome && (
-        <div>
+        <>
           <SiteBanner title={settings.title} descriptionParts={descriptionParts} />
-          <nav class='site-nav'>
-            <div class='site-nav-left'>
+          <div class='site-nav'>
+            <nav class='site-nav-left' aria-label='Primary navigation'>
               <Navigation data={settings.navigation || []} navClass='site-nav-item' currentPath={currentPath} />
-            </div>
+            </nav>
             <div class='site-nav-right'>
-              <div class='site-actions'>
+              <div class='site-actions' role='group' aria-label='Display controls'>
                 <ThemeToggle client:load />
               </div>
             </div>
-          </nav>
-        </div>
+          </div>
+        </>
       )
     }
   </div>
