@@ -1,3 +1,5 @@
+@import url('https://cdn.jsdelivr.net/npm/theme-toggles@4.10.1/css/classic.min.css');
+
 .wrapper {
   display: inline-flex;
   align-items: center;
@@ -9,12 +11,13 @@
   justify-content: center;
   width: 3.2rem;
   height: 3.2rem;
+  padding: 0;
   border: 1px solid var(--color-border);
   border-radius: 999px;
   background: var(--color-surface);
   color: var(--color-base);
   font-size: 1.8rem;
-  line-height: 1;
+  line-height: 0;
   cursor: pointer;
   transition: background var(--transition-fast), color var(--transition-fast),
     border-color var(--transition-fast);
@@ -23,4 +26,8 @@
 .button:hover {
   background: var(--color-surface-muted);
   border-color: var(--color-border-strong);
+}
+
+.wrapper[data-theme='dark'] .button {
+  background: var(--color-surface-inverse);
 }

@@ -25,9 +25,11 @@ const { title, descriptionParts } = Astro.props;
   </div>
 </section>
 
-<script is:inline>
+<script>
+  import { annotate } from 'rough-notation';
+
   (() => {
-    const banner = document.querySelector('.site-banner');
+    const banner = document.querySelector<HTMLElement>('.site-banner');
 
     if (!banner) return;
 
@@ -58,6 +60,59 @@ const { title, descriptionParts } = Astro.props;
     window.addEventListener('resize', queueBannerProgressUpdate, { passive: true });
     window.addEventListener('load', queueBannerProgressUpdate);
     updateBannerProgress();
+
+    const initRoughHighlights = () => {
+      const highlightNodes = Array.from(
+        banner.querySelectorAll<HTMLElement>('.highlight-container'),
+      ).filter((node) => node.dataset.highlightEnhanced !== 'true');
+
+      if (highlightNodes.length === 0) return;
+
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const pink = getComputedStyle(document.documentElement).getPropertyValue('--color-pink').trim();
+      const color = pink || '#ff4fa3';
+      const variants = [
+        { strokeWidth: 7.5, padding: [0, 2, 1, 1] as [number, number, number, number], duration: 700 },
+        { strokeWidth: 8.25, padding: [1, 1, 2, 0] as [number, number, number, number], duration: 860 },
+        { strokeWidth: 6.75, padding: [0, 1, 2, 2] as [number, number, number, number], duration: 780 },
+        { strokeWidth: 7.9, padding: [1, 2, 1, 0] as [number, number, number, number], duration: 920 },
+      ];
+
+      let nextStartDelay = 450;
+      const strokeGap = 90;
+
+      highlightNodes.forEach((node, index) => {
+        const variant = variants[index % variants.length];
+        const annotation = annotate(node, {
+          type: 'underline',
+          color,
+          multiline: true,
+          animate: !prefersReducedMotion,
+          animationDuration: variant.duration,
+          strokeWidth: variant.strokeWidth,
+          padding: variant.padding,
+          iterations: 1,
+        });
+
+        node.dataset.highlightEnhanced = 'true';
+        if (prefersReducedMotion) {
+          annotation.show();
+          return;
+        }
+
+        window.setTimeout(() => {
+          annotation.show();
+        }, nextStartDelay);
+
+        nextStartDelay += variant.duration + strokeGap;
+      });
+    };
+
+    if (document.readyState === 'complete') {
+      initRoughHighlights();
+    } else {
+      window.addEventListener('load', initRoughHighlights, { once: true });
+    }
   })();
 </script>
 
@@ -419,39 +474,6 @@ const { title, descriptionParts } = Astro.props;
     margin-right: 0.5rem;
   }
 
-  .highlight-container:before {
-    content: ' ';
-    display: block;
-    height: 50%;
-    width: 100%;
-    position: absolute;
-    background: var(--color-pink);
-    transform: rotate(-2deg);
-    top: 25%;
-    left: 0;
-    padding: 10px 3px 3px 10px;
-    animation: site-highlight-reveal 0.5s ease;
-    animation-fill-mode: backwards;
-    z-index: -1;
-  }
-
-  @keyframes site-highlight-reveal {
-    0% {
-      background-color: transparent;
-      width: 0;
-    }
-
-    100% {
-      width: 100%;
-    }
-  }
-
-  @for $i from 1 through 4 {
-    .highlight-container:nth-child(#{$i})::before {
-      animation-delay: math.div($i, 2) * 1s;
-    }
-  }
-
   @media (prefers-reduced-motion: reduce) {
     .site-banner-bg {
       transform: none;
@@ -498,8 +520,5 @@ const { title, descriptionParts } = Astro.props;
       }
     }
 
-    .highlight-container:before {
-      animation: none;
-    }
   }
 </style>

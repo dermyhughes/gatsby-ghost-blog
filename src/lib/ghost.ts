@@ -40,6 +40,8 @@ const readGhostConfigFile = (): GhostConfigFile => {
 
 const environment = process.env.NODE_ENV === 'development' ? 'development' : 'production';
 const fileConfig = readGhostConfigFile()[environment] || {};
+const allowGhostOfflineFallback =
+  process.env.NODE_ENV === 'development' || process.env.GHOST_ALLOW_OFFLINE_FALLBACK === 'true';
 
 const apiUrl = process.env.GHOST_API_URL || fileConfig.apiUrl;
 const contentApiKey = process.env.GHOST_CONTENT_API_KEY || fileConfig.contentApiKey;
@@ -58,12 +60,18 @@ const api = new GhostContentAPI({
 
 const POST_INCLUDE = 'tags,authors';
 const TAG_INCLUDE = 'count.posts';
+const DEFAULT_GHOST_SETTINGS: GhostSettings = {
+  title: 'Dermot Hughes',
+  description: '',
+  navigation: [],
+};
 
 let settingsPromise: Promise<GhostSettings> | null = null;
 let postsPromise: Promise<GhostPost[]> | null = null;
 let pagesPromise: Promise<GhostPage[]> | null = null;
 let tagsPromise: Promise<GhostTag[]> | null = null;
 let collisionCheckPromise: Promise<void> | null = null;
+const loggedGhostFallbacks = new Set<string>();
 
 const sortByPublishedAtDesc = <T extends { published_at?: string | null }>(entries: T[]) =>
   entries.sort((a, b) => {
@@ -83,9 +91,69 @@ const normalizePage = (page: GhostPage): GhostPage => ({
   ...page,
 });
 
+const getErrorCode = (error: unknown): string | undefined => {
+  if (!error || typeof error !== 'object') {
+    return undefined;
+  }
+
+  const maybeCode = (error as { code?: unknown }).code;
+  if (typeof maybeCode === 'string') {
+    return maybeCode;
+  }
+
+  const maybeCause = (error as { cause?: unknown }).cause;
+  if (maybeCause && typeof maybeCause === 'object') {
+    const causeCode = (maybeCause as { code?: unknown }).code;
+    if (typeof causeCode === 'string') {
+      return causeCode;
+    }
+  }
+
+  return undefined;
+};
+
+const isRecoverableGhostNetworkError = (error: unknown) => {
+  const code = getErrorCode(error);
+  return code === 'ENOTFOUND' || code === 'EAI_AGAIN' || code === 'ECONNREFUSED' || code === 'ETIMEDOUT';
+};
+
+const logGhostFallback = (resource: string, error: unknown) => {
+  if (loggedGhostFallbacks.has(resource)) {
+    return;
+  }
+
+  loggedGhostFallbacks.add(resource);
+  const code = getErrorCode(error);
+  const message = error instanceof Error ? error.message : String(error);
+  process.stderr.write(
+    `[ghost] Falling back to empty ${resource} because Ghost API is unreachable${code ? ` (${code})` : ''}: ${message}\n`,
+  );
+};
+
+const withGhostFallback = async <T>(resource: string, fallback: T, request: () => Promise<T>) => {
+  try {
+    return await request();
+  } catch (error) {
+    if (!isRecoverableGhostNetworkError(error)) {
+      throw error;
+    }
+
+    if (!allowGhostOfflineFallback) {
+      throw error;
+    }
+
+    logGhostFallback(resource, error);
+    return fallback;
+  }
+};
+
 export const getGhostSettings = async () => {
   if (!settingsPromise) {
-    settingsPromise = api.settings.browse() as Promise<GhostSettings>;
+    settingsPromise = withGhostFallback(
+      'settings',
+      DEFAULT_GHOST_SETTINGS,
+      () => api.settings.browse() as Promise<GhostSettings>,
+    );
   }
 
   return settingsPromise;
@@ -93,14 +161,16 @@ export const getGhostSettings = async () => {
 
 export const getAllPosts = async () => {
   if (!postsPromise) {
-    postsPromise = (
-      api.posts.browse({
+    postsPromise = withGhostFallback('posts', [] as GhostPost[], async () => {
+      const posts = (await api.posts.browse({
         include: POST_INCLUDE,
         limit: 'all',
         order: 'published_at desc',
         filter: 'visibility:public',
-      }) as Promise<GhostPost[]>
-    ).then((posts) => sortByPublishedAtDesc(posts.map(normalizePost)));
+      })) as GhostPost[];
+
+      return sortByPublishedAtDesc(posts.map(normalizePost));
+    });
   }
 
   return postsPromise;
@@ -108,14 +178,16 @@ export const getAllPosts = async () => {
 
 export const getAllPages = async () => {
   if (!pagesPromise) {
-    pagesPromise = (
-      api.pages.browse({
+    pagesPromise = withGhostFallback('pages', [] as GhostPage[], async () => {
+      const pages = (await api.pages.browse({
         include: POST_INCLUDE,
         limit: 'all',
         order: 'published_at desc',
         filter: 'visibility:public',
-      }) as Promise<GhostPage[]>
-    ).then((pages) => sortByPublishedAtDesc(pages.map(normalizePage)));
+      })) as GhostPage[];
+
+      return sortByPublishedAtDesc(pages.map(normalizePage));
+    });
   }
 
   return pagesPromise;
@@ -123,18 +195,18 @@ export const getAllPages = async () => {
 
 export const getAllTags = async () => {
   if (!tagsPromise) {
-    tagsPromise = (
-      api.tags.browse({
+    tagsPromise = withGhostFallback('tags', [] as GhostTag[], async () => {
+      const tags = (await api.tags.browse({
         include: TAG_INCLUDE,
         limit: 'all',
         order: 'name asc',
         filter: 'visibility:public',
-      }) as Promise<GhostTag[]>
-    ).then((tags) =>
-      tags
+      })) as GhostTag[];
+
+      return tags
         .filter((tag) => tag.visibility !== 'internal')
-        .sort((a, b) => a.name.localeCompare(b.name, 'en', { sensitivity: 'base' })),
-    );
+        .sort((a, b) => a.name.localeCompare(b.name, 'en', { sensitivity: 'base' }));
+    });
   }
 
   return tagsPromise;
