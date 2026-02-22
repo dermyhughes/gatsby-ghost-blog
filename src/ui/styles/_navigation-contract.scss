@@ -27,6 +27,11 @@
       animation: nav-link-reveal 0.3s ease;
       animation-fill-mode: backwards;
     }
+
+    &.active-link.active-link--rough:before {
+      display: none;
+      animation: none;
+    }
   }
 
   @keyframes nav-link-reveal {
