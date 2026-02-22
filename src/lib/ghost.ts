@@ -40,6 +40,8 @@ const readGhostConfigFile = (): GhostConfigFile => {
 
 const environment = process.env.NODE_ENV === 'development' ? 'development' : 'production';
 const fileConfig = readGhostConfigFile()[environment] || {};
+const allowGhostOfflineFallback =
+  process.env.NODE_ENV === 'development' || process.env.GHOST_ALLOW_OFFLINE_FALLBACK === 'true';
 
 const apiUrl = process.env.GHOST_API_URL || fileConfig.apiUrl;
 const contentApiKey = process.env.GHOST_CONTENT_API_KEY || fileConfig.contentApiKey;
@@ -133,6 +135,10 @@ const withGhostFallback = async <T>(resource: string, fallback: T, request: () =
     return await request();
   } catch (error) {
     if (!isRecoverableGhostNetworkError(error)) {
+      throw error;
+    }
+
+    if (!allowGhostOfflineFallback) {
       throw error;
     }
 
